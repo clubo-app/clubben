@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/base64"
 
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	rg "github.com/clubo-app/protobuf/relation"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"

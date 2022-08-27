@@ -12,7 +12,7 @@ import (
 	profilehandler "github.com/clubo-app/aggregator-service/handler/profile_handler"
 	relationhandler "github.com/clubo-app/aggregator-service/handler/relation_handler"
 	storyhandler "github.com/clubo-app/aggregator-service/handler/story_handler"
-	"github.com/clubo-app/packages/utils/middleware"
+	"github.com/clubo-app/clubben/libs/utils/middleware"
 	ag "github.com/clubo-app/protobuf/auth"
 	cg "github.com/clubo-app/protobuf/comment"
 	"github.com/clubo-app/protobuf/participation"

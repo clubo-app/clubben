@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/protobuf/auth"
 )
 

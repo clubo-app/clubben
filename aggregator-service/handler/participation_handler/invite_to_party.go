@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/clubo-app/aggregator-service/datastruct"
-	"github.com/clubo-app/packages/utils"
-	"github.com/clubo-app/packages/utils/middleware"
+	"github.com/clubo-app/clubben/libs/utils"
+	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/clubo-app/protobuf/participation"
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/protobuf/types/known/durationpb"

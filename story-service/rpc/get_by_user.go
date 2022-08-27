@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/base64"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/story-service/repository"
-	"github.com/clubo-app/packages/utils"
 	sg "github.com/clubo-app/protobuf/story"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"

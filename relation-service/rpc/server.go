@@ -5,8 +5,8 @@ import (
 	"net"
 	"strings"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/relation-service/service"
-	"github.com/clubo-app/packages/stream"
 	rg "github.com/clubo-app/protobuf/relation"
 	"google.golang.org/grpc"
 )

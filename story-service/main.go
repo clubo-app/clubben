@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/story-service/config"
 	"github.com/clubo-app/clubben/story-service/repository"
 	rpc "github.com/clubo-app/clubben/story-service/rpc"
 	"github.com/clubo-app/clubben/story-service/service"
-	"github.com/clubo-app/packages/stream"
 	"github.com/go-playground/validator/v10"
 	"github.com/nats-io/nats.go"
 )

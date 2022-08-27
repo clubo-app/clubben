@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/search-service/config"
 	"github.com/clubo-app/clubben/search-service/consumer"
 	"github.com/clubo-app/clubben/search-service/repository"
-	"github.com/clubo-app/packages/stream"
 	"github.com/jonashiltl/govespa"
 	"github.com/nats-io/nats.go"
 )

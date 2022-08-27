@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/profile-service/dto"
-	"github.com/clubo-app/packages/utils"
 	pg "github.com/clubo-app/protobuf/profile"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

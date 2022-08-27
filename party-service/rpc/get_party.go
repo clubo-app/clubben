@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	pg "github.com/clubo-app/protobuf/party"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"

@@ -3,7 +3,8 @@ module github.com/clubo-app/clubben/auth-service
 go 1.18
 
 require (
-	github.com/clubo-app/packages v0.0.0-20220702211906-2e5fe92b7049
+	github.com/clubo-app/clubben/libs/types v0.0.0-20220827214751-554765ad172b
+	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/protobuf v0.0.0-20220707192159-36261792490b
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-jwt/jwt/v4 v4.4.2
@@ -14,17 +15,18 @@ require (
 	github.com/segmentio/ksuid v1.0.4
 	github.com/spf13/viper v1.12.0
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
-	google.golang.org/grpc v1.47.0
+	google.golang.org/grpc v1.49.0
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
-	github.com/gofiber/fiber/v2 v2.35.0 // indirect
-	github.com/gofiber/jwt/v3 v3.2.13 // indirect
+	github.com/gofiber/fiber/v2 v2.36.0 // indirect
+	github.com/gofiber/jwt/v3 v3.2.14 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
@@ -38,7 +40,7 @@ require (
 	github.com/jackc/pgtype v1.11.0 // indirect
 	github.com/jackc/puddle v1.2.1 // indirect
 	github.com/klauspost/compress v1.15.7 // indirect
-	github.com/labstack/echo/v4 v4.7.2 // indirect
+	github.com/labstack/echo/v4 v4.8.0 // indirect
 	github.com/labstack/gommon v0.3.1 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lib/pq v1.10.6 // indirect

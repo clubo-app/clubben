@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/relation-service/datastruct"
-	"github.com/clubo-app/packages/utils"
 	rg "github.com/clubo-app/protobuf/relation"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"

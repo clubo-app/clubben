@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/profile-service/dto"
-	"github.com/clubo-app/packages/utils"
 	pg "github.com/clubo-app/protobuf/profile"
 	"github.com/segmentio/ksuid"
 )

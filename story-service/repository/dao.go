@@ -3,7 +3,7 @@ package repository
 import (
 	"strings"
 
-	"github.com/clubo-app/packages/cqlx"
+	"github.com/clubo-app/clubben/libs/cqlx"
 	"github.com/go-playground/validator/v10"
 	"github.com/scylladb/gocqlx/v2"
 )

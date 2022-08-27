@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	cg "github.com/clubo-app/protobuf/common"
 	pg "github.com/clubo-app/protobuf/profile"
 	"github.com/segmentio/ksuid"

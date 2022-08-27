@@ -7,9 +7,9 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/scylla-sync/config"
 	"github.com/clubo-app/clubben/scylla-sync/consumer"
-	"github.com/clubo-app/packages/stream"
 	"github.com/nats-io/nats.go"
 	scyllacdc "github.com/scylladb/scylla-cdc-go"
 )

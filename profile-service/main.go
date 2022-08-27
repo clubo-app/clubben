@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/profile-service/config"
 	"github.com/clubo-app/clubben/profile-service/repository"
 	"github.com/clubo-app/clubben/profile-service/rpc"
 	"github.com/clubo-app/clubben/profile-service/service"
-	"github.com/clubo-app/packages/stream"
 	"github.com/nats-io/nats.go"
 )
 

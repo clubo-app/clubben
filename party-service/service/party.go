@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/party-service/dto"
 	"github.com/clubo-app/clubben/party-service/repository"
-	"github.com/clubo-app/packages/stream"
 	"github.com/segmentio/ksuid"
 )
 

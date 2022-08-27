@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/clubo-app/aggregator-service/datastruct"
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 )
 
 func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {

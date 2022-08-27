@@ -3,8 +3,8 @@ package rpc
 import (
 	"context"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/story-service/repository"
-	"github.com/clubo-app/packages/utils"
 	common "github.com/clubo-app/protobuf/common"
 	sg "github.com/clubo-app/protobuf/story"
 	"github.com/segmentio/ksuid"

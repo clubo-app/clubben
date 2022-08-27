@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/clubo-app/aggregator-service/datastruct"
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	cg "github.com/clubo-app/protobuf/comment"
 	"github.com/clubo-app/protobuf/profile"
 	"github.com/gofiber/fiber/v2"

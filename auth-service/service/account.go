@@ -7,7 +7,7 @@ import (
 
 	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

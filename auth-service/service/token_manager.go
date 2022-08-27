@@ -5,8 +5,8 @@ import (
 
 	"github.com/clubo-app/clubben/auth-service/datastruct"
 	"github.com/clubo-app/clubben/auth-service/repository"
-	"github.com/clubo-app/packages/types"
-	"github.com/clubo-app/packages/utils/middleware"
+	"github.com/clubo-app/clubben/libs/types"
+	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/golang-jwt/jwt/v4"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

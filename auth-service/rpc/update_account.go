@@ -6,7 +6,7 @@ import (
 	"net/mail"
 
 	"github.com/clubo-app/clubben/auth-service/dto"
-	"github.com/clubo-app/packages/utils"
+	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/protobuf/auth"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"

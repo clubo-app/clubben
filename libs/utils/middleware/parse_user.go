@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/clubo-app/packages/types"
+	"github.com/clubo-app/clubben/libs/types"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 )

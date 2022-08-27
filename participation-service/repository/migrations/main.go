@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/clubo-app/clubben/libs/cqlx"
 	"github.com/clubo-app/clubben/participation-service/repository/migrations/cql"
-	"github.com/clubo-app/packages/cqlx"
 	"github.com/scylladb/gocqlx/v2/migrate"
 )
 

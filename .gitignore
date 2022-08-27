@@ -1,2 +1,4 @@
 bindata.go
 credentials.txt
+
+.DS_Store

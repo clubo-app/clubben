@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/scylla-sync/consumer"
-	"github.com/clubo-app/packages/stream"
 	scyllacdc "github.com/scylladb/scylla-cdc-go"
 )
 
