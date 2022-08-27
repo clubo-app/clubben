@@ -1,0 +1,77 @@
+syntax="proto3";
+
+package events;
+option go_package = "github.com/clubo-app/clubben/protobuf/events";
+
+import "profile/profile.proto";
+import "google/protobuf/timestamp.proto";
+
+message ProfileCreated {
+    profile.Profile profile = 1;
+}
+// id must always be defined but for the rest just define the properties that got updated
+message ProfileUpdated {
+    profile.Profile profile = 1;
+}
+message UserDeleted {
+    string id = 1;
+}
+
+message PartyCreated {
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    bool is_public = 4;
+    float lat = 5;
+    float long = 6;
+    string street_address = 7;
+    string postal_code = 8;
+    string state = 9;
+    string country = 10;
+    string start_date = 11;
+    string end_date = 12;
+}
+
+message PartyUpdated { 
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    bool is_public = 4;
+    float lat = 5;
+    float long = 6;
+    string street_address = 7;
+    string postal_code = 8;
+    string state = 9;
+    string country = 10;
+    string start_date = 11;
+    string end_date = 12;
+}
+
+message FriendRemoved {
+  string user_id = 1;
+  string friend_id = 2;
+}
+
+message FriendRequested {
+  string user_id = 1;
+  string friend_id = 2;
+  google.protobuf.Timestamp requested_at = 3; 
+}
+
+message FriendCreated {
+  string user_id = 1;
+  string friend_id = 2;
+  google.protobuf.Timestamp accepted_at = 3; 
+}
+
+message PartyFavorited {
+  string user_id = 1;
+  string party_id = 2;
+  google.protobuf.Timestamp favorited_at= 3; 
+}
+
+message PartyUnfavorited {
+  string user_id = 1;
+  string party_id = 2;
+  google.protobuf.Timestamp unfavorited_at= 3; 
+}

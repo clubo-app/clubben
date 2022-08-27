@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package participation;
+option go_package = "github.com/clubo-app/clubben/protobuf/participation";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "common/common.proto";
+
+service ParticipationService {
+    rpc InviteToParty (InviteToPartyRequest) returns (PartyInvite) {};
+    rpc DeclinePartyInvite (DeclinePartyInviteRequest) returns (common.SuccessIndicator) {};
+    rpc AcceptPartyInvite (DeclinePartyInviteRequest) returns (PartyParticipant) {};
+    rpc GetUserInvites (GetUserInvitesRequest) returns (PagedPartyInvites) {};
+
+    rpc JoinParty (UserPartyRequest) returns (PartyParticipant) {};
+    rpc LeaveParty (UserPartyRequest) returns (common.SuccessIndicator) {};
+    rpc GetPartyParticipants (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
+    rpc GetPartyRequests (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
+}
+
+// Requests
+message InviteToPartyRequest {
+  string user_id = 1;
+  string inviter_id = 2; 
+  string party_id = 3;
+  google.protobuf.Duration valid_for = 4;
+}
+
+message DeclinePartyInviteRequest {
+  string user_id = 1;
+  string inviter_id = 2; 
+  string party_id = 3;
+}
+
+message UserPartyRequest {
+  string user_id = 1;
+  string party_id = 2;
+}
+
+message GetUserInvitesRequest {
+  string user_id = 1;
+  string next_page = 2;
+  uint32 limit = 3;
+}
+
+message GetPartyParticipantsRequest {
+  string party_id = 1;
+  string next_page = 2;
+  uint32 limit = 3;
+}
+
+// Responses
+message PartyInvite {
+  string user_id = 1;
+  string inviter_id = 2;
+  string party_id = 3;
+  google.protobuf.Timestamp valid_until = 4;
+}
+
+message PartyParticipant {
+  string user_id = 1;
+  string party_id = 2;
+  bool requested = 3;
+  google.protobuf.Timestamp joined_at = 4;
+  google.protobuf.Timestamp requested_at = 5;
+}
+
+message PagedPartyInvites {
+  repeated PartyInvite invites = 1;
+  string next_page = 2;
+}
+
+message PagedPartyParticipants {
+  repeated PartyParticipant participants = 1;
+  string next_page = 2;
+}
+

@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+package relation;
+option go_package = "github.com/clubo-app/clubben/protobuf/relation";
+
+import "google/protobuf/timestamp.proto";
+import "common/common.proto";
+
+service RelationService {
+    rpc CreateFriendRequest (CreateFriendRequestRequest) returns (common.SuccessIndicator) {};
+    rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (common.SuccessIndicator) {};
+    rpc DeclineFriendRequest (DeclineFriendRequestRequest) returns (common.SuccessIndicator) {};
+    rpc RemoveFriend (RemoveFriendRequest) returns (common.SuccessIndicator) {};
+    rpc GetFriendRelation (GetFriendRelationRequest) returns (FriendRelation) {};
+    rpc GetFriends (GetFriendsRequest) returns (PagedFriendRelations) {};
+    rpc GetIncomingFriendRequests (GetIncomingFriendRequestsRequest) returns (PagedFriendRelations) {}; 
+
+    rpc GetFriendCount (GetFriendCountRequest) returns (GetFriendCountResponse) {};
+    rpc GetManyFriendCount (GetManyFriendCountRequest) returns (GetManyFriendCountResponse) {};
+
+    rpc FavorParty (FavorPartyRequest) returns (FavoriteParty) {};
+    rpc DefavorParty (FavorPartyRequest) returns (common.SuccessIndicator) {};
+    rpc GetFavoritePartiesByUser (GetFavoritePartiesByUserRequest) returns (PagedFavoriteParties) {};
+    rpc GetFavorisingUsersByParty (GetFavorisingUsersByPartyRequest) returns (PagedFavoriteParties) {};
+
+    rpc GetFavoritePartyCount (GetFavoritePartyCountRequest) returns (GetFavoritePartyCountResponse) {};
+    rpc GetManyFavoritePartyCount (GetManyFavoritePartyCountRequest) returns (GetManyFavoritePartyCountResponse) {};
+}
+
+// Requests
+message CreateFriendRequestRequest {
+    string user_id = 1;
+    string friend_id = 2;
+}
+
+message AcceptFriendRequestRequest {
+    string user_id = 1;
+    string friend_id = 2;
+}
+
+message DeclineFriendRequestRequest {
+    string user_id = 1;
+    string friend_id = 2;
+}
+
+message RemoveFriendRequest {
+    string user_id = 1;
+    string friend_id = 2;
+}
+
+message GetFriendRelationRequest {
+    string user_id = 1;
+    string friend_id = 2;
+}
+
+message GetFriendsRequest {
+    string user_id = 1;
+    string next_page = 2;
+    uint64 limit = 3;
+}
+
+message GetIncomingFriendRequestsRequest {
+    string user_id = 1;
+    string next_page = 2;
+    uint64 limit = 3;
+}
+
+message GetFriendCountRequest {
+    string user_id = 1;
+}
+
+message GetManyFriendCountRequest {
+    repeated string user_ids = 1;
+}
+
+message FavorPartyRequest {
+    string user_id = 1;
+    string party_id = 2;
+}
+
+message GetFavoritePartiesByUserRequest {
+    string user_id = 1;
+    string next_page = 2;
+    uint64 limit = 3;
+}
+
+message GetFavorisingUsersByPartyRequest {
+    string party_id = 1;
+    string next_page = 2;
+    uint64 limit = 3;
+}
+
+message GetFavoritePartyCountRequest {
+    string party_id = 1;
+}
+
+message GetManyFavoritePartyCountRequest {
+    repeated string party_ids = 1;
+}
+
+// Responses
+message FriendRelation {
+    string user_id = 1;
+    string friend_id = 2;
+    bool accepted = 3;
+    google.protobuf.Timestamp requested_at = 4;
+    google.protobuf.Timestamp accepted_at = 5;
+}
+
+message PagedFriendRelations {
+  repeated FriendRelation relations = 1;
+  string next_page = 2;
+}
+
+message GetFriendCountResponse {
+    uint32 friend_count = 1;
+}
+
+message GetManyFriendCountResponse {
+    map<string, uint32> friend_counts = 1;
+}
+
+message FavoriteParty {
+    string user_id = 1;
+    string party_id = 2;
+    google.protobuf.Timestamp favorited_at = 3;
+}
+
+message PagedFavoriteParties {
+    repeated FavoriteParty favorite_parties = 1;
+    string next_page = 2;
+}
+
+message GetFavoritePartyCountResponse {
+    uint32 favorite_count = 1;
+}
+
+message GetManyFavoritePartyCountResponse {
+    map<string, uint32> favorite_counts = 1;
+}

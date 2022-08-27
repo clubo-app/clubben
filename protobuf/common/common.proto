@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package common;
+option go_package = "github.com/clubo-app/clubben/protobuf/common";
+
+message MessageResponse {
+    string message = 1;
+}
+
+message SuccessIndicator {
+    bool sucess = 1 ;
+}

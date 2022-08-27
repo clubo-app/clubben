@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package profile;
+option go_package = "github.com/clubo-app/clubben/protobuf/profile";
+
+import "common/common.proto";
+
+service ProfileService {
+    rpc CreateProfile(CreateProfileRequest) returns (Profile) {};
+    rpc GetProfile (GetProfileRequest) returns (Profile) {};
+    rpc UpdateProfile (UpdateProfileRequest) returns (Profile) {};
+    rpc DeleteProfile (DeleteProfileRequest) returns (common.SuccessIndicator) {};
+
+    rpc GetManyProfiles (GetManyProfilesRequest) returns (GetManyProfilesResponse) {};
+    rpc GetManyProfilesMap (GetManyProfilesRequest) returns (GetManyProfilesMapResponse) {};
+    rpc UsernameTaken (UsernameTakenRequest) returns (UsernameTakenResponse) {};
+}
+
+// Requests
+message CreateProfileRequest {
+    string id = 1;
+    string username = 2;
+    string firstname = 3;
+    string lastname = 4;
+    string avatar = 5;
+}
+
+message GetProfileRequest {
+    string id = 1;
+}
+
+message UpdateProfileRequest {
+    string id = 1;
+    string username = 2;
+    string firstname = 3;
+    string lastname = 4;
+    string avatar = 5;
+}
+
+message DeleteProfileRequest {
+    string id = 1;
+}
+
+message GetManyProfilesRequest {
+    repeated string ids = 1;
+}
+
+message UsernameTakenRequest {
+    string username = 1;
+}
+
+// Response
+message Profile {
+    string id = 1;
+    string username = 2;
+    string firstname = 3;
+    string lastname = 4;
+    string avatar = 5;
+}
+
+message GetManyProfilesResponse {
+    repeated Profile profiles = 1;
+}
+
+message GetManyProfilesMapResponse {
+    map<string, Profile> profiles = 1;
+}
+
+message UsernameTakenResponse {
+    bool taken = 1;
+}
