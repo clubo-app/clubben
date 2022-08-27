@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: okteto.dev/auth-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          command:
+            - air
+          ports:
+            - containerPort: 8081

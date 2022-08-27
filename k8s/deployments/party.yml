@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: party
+spec:
+  selector:
+    matchLabels:
+      app: party
+  template:
+    metadata:
+      labels:
+        app: party
+    spec:
+      containers:
+        - name: party
+          image: okteto.dev/party-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          command:
+            - air
+          ports:
+            - containerPort: 8081

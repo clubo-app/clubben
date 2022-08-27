@@ -1,0 +1,57 @@
+# The build section defines how to build the images of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#build
+build:
+  party-service:
+    image: okteto.dev/party-service
+    context: party-service 
+    target: dev
+  profile-service:
+    image: okteto.dev/profile-service
+    context: profile-service 
+    target: dev
+  auth-service:
+    image: okteto.dev/auth-service
+    context: auth-service 
+    target: dev
+  aggregator-service:
+    image: okteto.dev/aggregator-service
+    context: aggregator-service 
+    target: dev
+  participation-service:
+    image: okteto.dev/participation-service
+    context: participation-service 
+    target: dev
+
+
+# The deploy section defines how to deploy your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#deploy
+deploy:
+  - kubectl apply -f k8s --recursive
+
+# The dependencies section defines other git repositories to be deployed as part of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#dependencies
+# dependencies:
+#   - https://github.com/okteto/sample
+# The dev section defines how to activate a development container
+# More info: https://www.okteto.com/docs/reference/manifest/#dev
+dev:
+  party-service:
+    image: ${OKTETO_BUILD_PARTY_SERVICE_IMAGE}
+    sync:
+      - party-service:/go/src/app
+  profile-service:
+    image: ${OKTETO_BUILD_PROFILE_SERVICE_IMAGE}
+    sync:
+      - profile-service:/go/src/app
+  auth-service:
+    image: ${OKTETO_BUILD_AUTH_SERVICE_IMAGE}
+    sync:
+      - auth-service:/go/src/app
+  aggregator-service:
+    image: ${OKTETO_BUILD_AGGREGATOR_SERVICE_IMAGE}
+    sync:
+      - aggregator-service:/go/src/app
+  participation-service:
+    image: ${OKTETO_BUILD_PARTICIPATION_SERVICE_IMAGE}
+    sync:
+      - participation-service:/go/src/app

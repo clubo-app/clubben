@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: participation 
+spec:
+  selector:
+    matchLabels:
+      app: participation 
+  template:
+    metadata:
+      labels:
+        app: participation 
+    spec:
+      containers:
+        - name: participation 
+          image: okteto.dev/participation-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          command:
+            - air
+          ports:
+            - containerPort: 8081

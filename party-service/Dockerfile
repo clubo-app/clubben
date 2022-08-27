@@ -1,6 +1,6 @@
 FROM golang:1.19.0-alpine as base
 
-ENV APP_HOME /go/src/party-service
+ENV APP_HOME /go/src/app
 
 WORKDIR ${APP_HOME}
 COPY . .
@@ -14,7 +14,7 @@ FROM base as dev
 CMD ["air"]
 
 FROM alpine as prod
-ENV APP_HOME /go/src/party-service
+ENV APP_HOME /go/src/app
 RUN mkdir -p "$APP_HOME"
 WORKDIR ${APP_HOME}
 
