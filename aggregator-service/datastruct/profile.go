@@ -1,6 +1,6 @@
 package datastruct
 
-import "github.com/clubo-app/protobuf/profile"
+import "github.com/clubo-app/clubben/protobuf/profile"
 
 type AggregatedProfile struct {
 	Id          string `json:"id,omitempty"`

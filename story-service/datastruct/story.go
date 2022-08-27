@@ -1,7 +1,7 @@
 package datastruct
 
 import (
-	"github.com/clubo-app/protobuf/story"
+	"github.com/clubo-app/clubben/protobuf/story"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

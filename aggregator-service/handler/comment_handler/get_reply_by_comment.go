@@ -3,10 +3,10 @@ package commenthandler
 import (
 	"strconv"
 
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	cg "github.com/clubo-app/protobuf/comment"
-	"github.com/clubo-app/protobuf/profile"
+	cg "github.com/clubo-app/clubben/protobuf/comment"
+	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
 

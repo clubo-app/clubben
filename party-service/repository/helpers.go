@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/pgx"
 	"github.com/golang-migrate/migrate/v4/source/iofs"

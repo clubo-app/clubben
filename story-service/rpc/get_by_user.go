@@ -5,8 +5,8 @@ import (
 	"encoding/base64"
 
 	"github.com/clubo-app/clubben/libs/utils"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/clubo-app/clubben/story-service/repository"
-	sg "github.com/clubo-app/protobuf/story"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

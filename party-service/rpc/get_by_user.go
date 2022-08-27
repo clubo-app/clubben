@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/party-service/repository"
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 )
 
 func (s partyServer) GetByUser(c context.Context, req *pg.GetByUserRequest) (*pg.PagedParties, error) {

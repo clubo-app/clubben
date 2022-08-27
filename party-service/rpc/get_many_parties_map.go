@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 )
 
 func (s partyServer) GetManyPartiesMap(ctx context.Context, req *pg.GetManyPartiesRequest) (*pg.GetManyPartiesMapResponse, error) {

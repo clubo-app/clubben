@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	rg "github.com/clubo-app/protobuf/relation"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

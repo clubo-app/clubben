@@ -3,7 +3,7 @@ package commenthandler
 import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/protobuf/comment"
+	"github.com/clubo-app/clubben/protobuf/comment"
 	"github.com/gofiber/fiber/v2"
 )
 

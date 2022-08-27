@@ -3,11 +3,11 @@ package partyhandler
 import (
 	"time"
 
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/protobuf/party"
-	"github.com/clubo-app/protobuf/profile"
+	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

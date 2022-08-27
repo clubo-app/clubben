@@ -1,7 +1,7 @@
 package datastruct
 
 import (
-	"github.com/clubo-app/protobuf/profile"
+	"github.com/clubo-app/clubben/protobuf/profile"
 )
 
 type AggregatedComment struct {

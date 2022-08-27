@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 
-	pg "github.com/clubo-app/protobuf/profile"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
 )
 
 func (s *profileServer) UsernameTaken(ctx context.Context, req *pg.UsernameTakenRequest) (*pg.UsernameTakenResponse, error) {

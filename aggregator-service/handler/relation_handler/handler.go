@@ -1,8 +1,8 @@
 package relationhandler
 
 import (
-	pg "github.com/clubo-app/protobuf/profile"
-	rg "github.com/clubo-app/protobuf/relation"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 

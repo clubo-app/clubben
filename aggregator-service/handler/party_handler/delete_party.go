@@ -3,7 +3,7 @@ package partyhandler
 import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/gofiber/fiber/v2"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/protobuf/profile"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
 )
 
 func (s *profileServer) GetManyProfilesMap(ctx context.Context, req *pg.GetManyProfilesRequest) (*pg.GetManyProfilesMapResponse, error) {

@@ -1,9 +1,9 @@
 package participationhandler
 
 import (
-	"github.com/clubo-app/protobuf/participation"
-	"github.com/clubo-app/protobuf/party"
-	"github.com/clubo-app/protobuf/profile"
+	"github.com/clubo-app/clubben/protobuf/participation"
+	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
 

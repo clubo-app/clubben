@@ -2,7 +2,7 @@ package authhandler
 
 import (
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/protobuf/auth"
+	"github.com/clubo-app/clubben/protobuf/auth"
 	"github.com/gofiber/fiber/v2"
 )
 

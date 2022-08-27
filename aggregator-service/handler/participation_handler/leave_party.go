@@ -3,7 +3,7 @@ package participationhandler
 import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/protobuf/participation"
+	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/gofiber/fiber/v2"
 )
 

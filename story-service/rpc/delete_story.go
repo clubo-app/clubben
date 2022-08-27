@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
+	common "github.com/clubo-app/clubben/protobuf/common"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/clubo-app/clubben/story-service/repository"
-	common "github.com/clubo-app/protobuf/common"
-	sg "github.com/clubo-app/protobuf/story"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

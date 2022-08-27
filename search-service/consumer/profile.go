@@ -4,9 +4,9 @@ import (
 	"context"
 	"log"
 
+	"github.com/clubo-app/clubben/protobuf/events"
 	"github.com/clubo-app/clubben/search-service/datastruct"
 	"github.com/clubo-app/clubben/search-service/repository"
-	"github.com/clubo-app/protobuf/events"
 )
 
 type profileConsumer struct {

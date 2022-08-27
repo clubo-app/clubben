@@ -7,7 +7,7 @@ import (
 
 	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/party-service/service"
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 	"google.golang.org/grpc"
 )
 

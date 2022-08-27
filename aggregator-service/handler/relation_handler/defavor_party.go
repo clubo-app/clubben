@@ -3,7 +3,7 @@ package relationhandler
 import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	rg "github.com/clubo-app/protobuf/relation"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 

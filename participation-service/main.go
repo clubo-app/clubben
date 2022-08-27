@@ -8,7 +8,7 @@ import (
 	"github.com/clubo-app/clubben/participation-service/repository"
 	"github.com/clubo-app/clubben/participation-service/rpc"
 	"github.com/clubo-app/clubben/participation-service/service"
-	"github.com/clubo-app/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/go-playground/validator"
 	"github.com/nats-io/nats.go"
 )

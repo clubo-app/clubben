@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	rg "github.com/clubo-app/protobuf/relation"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 )
 
 func (s relationServer) GetManyFriendCount(ctx context.Context, req *rg.GetManyFriendCountRequest) (*rg.GetManyFriendCountResponse, error) {

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/clubo-app/clubben/auth-service/service"
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"google.golang.org/grpc"
 )
 

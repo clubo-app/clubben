@@ -3,7 +3,7 @@ package datastruct
 import (
 	"time"
 
-	sg "github.com/clubo-app/protobuf/story"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 )
 
 type AggregatedStory struct {

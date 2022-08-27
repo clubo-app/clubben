@@ -1,12 +1,12 @@
 package partyhandler
 
 import (
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/protobuf/party"
-	"github.com/clubo-app/protobuf/profile"
-	sg "github.com/clubo-app/protobuf/story"
+	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/profile"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
 )
 

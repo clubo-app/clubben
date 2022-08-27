@@ -5,8 +5,8 @@ import (
 	"net"
 	"strings"
 
+	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/clubo-app/clubben/story-service/service"
-	sg "github.com/clubo-app/protobuf/story"
 	"google.golang.org/grpc"
 )
 

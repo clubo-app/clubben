@@ -7,7 +7,7 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/profile-service/dto"
-	pg "github.com/clubo-app/protobuf/profile"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/segmentio/ksuid"
 )
 

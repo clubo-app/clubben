@@ -6,7 +6,7 @@ import (
 
 	"github.com/clubo-app/clubben/participation-service/datastruct"
 	"github.com/clubo-app/clubben/participation-service/repository"
-	"github.com/clubo-app/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/party"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/party-service/dto"
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 	"github.com/paulmach/orb"
 )
 

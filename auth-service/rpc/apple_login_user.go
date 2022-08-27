@@ -6,7 +6,7 @@ import (
 	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 )
 
 func (s *authServer) AppleLoginUser(ctx context.Context, req *ag.AppleLoginUserRequest) (*ag.LoginUserResponse, error) {

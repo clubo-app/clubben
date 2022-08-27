@@ -2,7 +2,7 @@ package storyhandler
 
 import (
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/protobuf/story"
+	"github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
 )
 

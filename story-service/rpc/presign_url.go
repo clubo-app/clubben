@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	sg "github.com/clubo-app/protobuf/story"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 )
 
 func (s storyServer) PresignURL(c context.Context, req *sg.PresignURLRequest) (*sg.PresignURLResponse, error) {

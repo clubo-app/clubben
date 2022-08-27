@@ -3,9 +3,9 @@ package partyhandler
 import (
 	"strconv"
 
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/protobuf/party"
+	pg "github.com/clubo-app/clubben/protobuf/party"
 	"github.com/gofiber/fiber/v2"
 )
 

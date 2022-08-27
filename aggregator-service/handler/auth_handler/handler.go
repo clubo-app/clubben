@@ -1,8 +1,8 @@
 package authhandler
 
 import (
-	ag "github.com/clubo-app/protobuf/auth"
-	pg "github.com/clubo-app/protobuf/profile"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
 

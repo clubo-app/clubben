@@ -3,9 +3,9 @@ package datastruct
 import (
 	"time"
 
-	pg "github.com/clubo-app/protobuf/party"
-	"github.com/clubo-app/protobuf/profile"
-	sg "github.com/clubo-app/protobuf/story"
+	pg "github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/profile"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 )
 
 type AggregatedParty struct {

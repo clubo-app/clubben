@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/clubo-app/clubben/libs/stream"
-	"github.com/clubo-app/protobuf/events"
+	"github.com/clubo-app/clubben/protobuf/events"
 	scyllacdc "github.com/scylladb/scylla-cdc-go"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

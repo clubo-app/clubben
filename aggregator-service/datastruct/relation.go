@@ -3,7 +3,7 @@ package datastruct
 import (
 	"time"
 
-	"github.com/clubo-app/protobuf/relation"
+	"github.com/clubo-app/clubben/protobuf/relation"
 )
 
 type FriendshipStatus struct {

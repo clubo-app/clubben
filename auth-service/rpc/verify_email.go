@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 )
 
 func (s *authServer) VerifyEmail(ctx context.Context, req *ag.VerifyEmailRequest) (*ag.Account, error) {

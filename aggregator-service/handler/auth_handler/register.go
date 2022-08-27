@@ -1,10 +1,10 @@
 package authhandler
 
 import (
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/protobuf/auth"
-	"github.com/clubo-app/protobuf/profile"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
+	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
 

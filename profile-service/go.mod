@@ -6,7 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.17.7
 	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/protobuf v0.0.0-20220607173733-6b7df7306b95
+	github.com/clubo-app/clubben/protobuf v0.0.0-20220827221553-6f49daa8d722
 	github.com/digitalocean/godo v1.80.0
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/jackc/pgconn v1.12.1

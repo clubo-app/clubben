@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 )

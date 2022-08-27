@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/clubo-app/clubben/libs/stream"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/clubo-app/clubben/relation-service/service"
-	rg "github.com/clubo-app/protobuf/relation"
 	"google.golang.org/grpc"
 )
 

@@ -1,11 +1,11 @@
 package profilehandler
 
 import (
-	"github.com/clubo-app/aggregator-service/datastruct"
+	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	pg "github.com/clubo-app/protobuf/profile"
-	rg "github.com/clubo-app/protobuf/relation"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 

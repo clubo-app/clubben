@@ -1,10 +1,10 @@
 package partyhandler
 
 import (
-	pg "github.com/clubo-app/protobuf/party"
-	prfg "github.com/clubo-app/protobuf/profile"
-	rg "github.com/clubo-app/protobuf/relation"
-	sg "github.com/clubo-app/protobuf/story"
+	pg "github.com/clubo-app/clubben/protobuf/party"
+	prfg "github.com/clubo-app/clubben/protobuf/profile"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
+	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
 )
 

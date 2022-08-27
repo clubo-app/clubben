@@ -5,8 +5,8 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/participation-service/repository"
-	cg "github.com/clubo-app/protobuf/common"
-	"github.com/clubo-app/protobuf/participation"
+	cg "github.com/clubo-app/clubben/protobuf/common"
+	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

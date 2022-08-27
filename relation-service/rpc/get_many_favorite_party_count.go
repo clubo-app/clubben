@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	rg "github.com/clubo-app/protobuf/relation"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 )
 
 func (s relationServer) GetManyFavoritePartyCount(ctx context.Context, req *rg.GetManyFavoritePartyCountRequest) (*rg.GetManyFavoritePartyCountResponse, error) {

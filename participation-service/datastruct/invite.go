@@ -3,7 +3,7 @@ package datastruct
 import (
 	"time"
 
-	"github.com/clubo-app/protobuf/participation"
+	"github.com/clubo-app/clubben/protobuf/participation"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

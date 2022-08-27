@@ -206,8 +206,8 @@ github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b h1:M
 github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b/go.mod h1:5BwfbGVmEo/oC23fjBzXn2eSTr+CzugbpLqV46TVSeE=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b h1:3vb7ADYUEpG9NL/SIFqJ0sAGE+KEezfSy6kzIXR5IHM=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b/go.mod h1:W+b3iIsqN0szEhuAoninnnRY+Jd04xjJ5m92JLd+gQU=
-github.com/clubo-app/protobuf v0.0.0-20220805193901-fce1762ae301 h1:bhdRPmz6N/RDP+BuLe4NPcFEWa0RziAbIAVgDrPf0ms=
-github.com/clubo-app/protobuf v0.0.0-20220805193901-fce1762ae301/go.mod h1:HjqyM6gBb0BF7Vvj+zFYOrZDBaWDEougmcuMmYg9KKU=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220827221553-6f49daa8d722 h1:7WCxmf3RWH2QWLhw1IL/UCgEFi34dHxw2ZN0WIxo2BE=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220827221553-6f49daa8d722/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=

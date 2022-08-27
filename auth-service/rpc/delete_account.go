@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/protobuf/auth"
-	cg "github.com/clubo-app/protobuf/common"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
+	cg "github.com/clubo-app/clubben/protobuf/common"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -1,9 +1,9 @@
 package profilehandler
 
 import (
-	ag "github.com/clubo-app/protobuf/auth"
-	pg "github.com/clubo-app/protobuf/profile"
-	rg "github.com/clubo-app/protobuf/relation"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
+	pg "github.com/clubo-app/clubben/protobuf/profile"
+	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 

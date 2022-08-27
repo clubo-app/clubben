@@ -7,7 +7,7 @@ import (
 	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

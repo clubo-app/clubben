@@ -1,7 +1,7 @@
 package datastruct
 
 import (
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 )
 
 type AggregatedAccount struct {

@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 
-	ag "github.com/clubo-app/protobuf/auth"
+	ag "github.com/clubo-app/clubben/protobuf/auth"
 )
 
 func (s *authServer) EmailTaken(ctx context.Context, req *ag.EmailTakenRequest) (*ag.EmailTakenResponse, error) {
