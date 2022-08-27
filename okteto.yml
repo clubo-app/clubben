@@ -29,6 +29,10 @@ build:
     image: okteto.dev/scylla-sync
     context: scylla-sync
     target: dev
+  search-service:
+    image: okteto.dev/search-service
+    context: search-service
+    target: dev
 
 # The deploy section defines how to deploy your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
@@ -70,3 +74,7 @@ dev:
     image: ${OKTETO_BUILD_SCYLLA_SYNC_IMAGE}
     sync:
       - scylla-sync:/go/src/app
+  search-service:
+    image: ${OKTETO_BUILD_SEARCH_SERVICE_IMAGE}
+    sync:
+      - search-service:/go/src/app

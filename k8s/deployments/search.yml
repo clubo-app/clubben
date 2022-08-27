@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search 
+spec:
+  selector:
+    matchLabels:
+      app: search 
+  template:
+    metadata:
+      labels:
+        app: search 
+    spec:
+      containers:
+        - name: search 
+          image: okteto.dev/search-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8081
