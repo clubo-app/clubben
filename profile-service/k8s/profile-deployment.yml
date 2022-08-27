@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile
+spec:
+  selector:
+    matchLabels:
+      app: profile
+  template:
+    metadata:
+      labels:
+        app: profile
+    spec:
+      containers:
+        - name: profile
+          image: okteto.dev/profile-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          command:
+            - air
+          ports:
+            - containerPort: 8081
