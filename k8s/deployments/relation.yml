@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relation
+spec:
+  selector:
+    matchLabels:
+      app: relation
+  template:
+    metadata:
+      labels:
+        app: relation
+    spec:
+      containers:
+        - name: relation
+          image: okteto.dev/relation-service
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          command:
+            - air
+          ports:
+            - containerPort: 8081

@@ -21,6 +21,10 @@ build:
     image: okteto.dev/participation-service
     context: participation-service 
     target: dev
+  relation-service:
+    image: okteto.dev/relation-service
+    context: relation-service 
+    target: dev
 
 
 # The deploy section defines how to deploy your development environment
@@ -55,3 +59,7 @@ dev:
     image: ${OKTETO_BUILD_PARTICIPATION_SERVICE_IMAGE}
     sync:
       - participation-service:/go/src/app
+  relation-service:
+    image: ${OKTETO_BUILD_RELATION_SERVICE_IMAGE}
+    sync:
+      - relation-service:/go/src/app
