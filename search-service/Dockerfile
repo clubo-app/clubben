@@ -1,4 +1,5 @@
 FROM golang:1.19.0-alpine as base
+RUN apk add git
 
 ENV APP_HOME /go/src/app
 

@@ -17,7 +17,7 @@ func NewDB(keyspace, hosts string) (*gocqlx.Session, error) {
 
 	manager := cqlx.NewManager(keyspace, h)
 
-	if err := manager.CreateKeyspace(keyspace); err != nil {
+	if err := manager.CreateKeyspace(keyspace, 1, "SimpleStrategy"); err != nil {
 		return nil, err
 	}
 

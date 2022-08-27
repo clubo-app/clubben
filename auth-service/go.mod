@@ -3,9 +3,9 @@ module github.com/clubo-app/clubben/auth-service
 go 1.18
 
 require (
-	github.com/clubo-app/clubben/libs/types v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/clubben/protobuf v0.0.0-20220827221553-6f49daa8d722
+	github.com/clubo-app/clubben/libs/types v0.0.0-20220827225406-7e5422d87875
+	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827225406-7e5422d87875
+	github.com/clubo-app/clubben/protobuf v0.0.0-20220827225406-7e5422d87875
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/golang-migrate/migrate/v4 v4.15.2
@@ -20,7 +20,6 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

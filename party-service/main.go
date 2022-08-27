@@ -18,12 +18,11 @@ func main() {
 	}
 
 	opts := []nats.Option{nats.Name("Party Service")}
-	nc, err := stream.Connect(c.NATS_CLUSTER, opts)
+	stream, err := stream.Connect(c.NATS_CLUSTER, opts)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer nc.Close()
-	stream := stream.New(nc)
+	defer stream.Close()
 
 	d, err := repository.NewPartyRepository(c.DB_USER, c.DB_PW, c.DB_NAME, c.DB_HOST, c.DB_PORT)
 	if err != nil {
