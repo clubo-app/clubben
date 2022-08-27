@@ -33,6 +33,10 @@ build:
     image: okteto.dev/search-service
     context: search-service
     target: dev
+  story-service:
+    image: okteto.dev/story-service
+    context: story-service
+    target: dev
 
 # The deploy section defines how to deploy your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
@@ -78,3 +82,7 @@ dev:
     image: ${OKTETO_BUILD_SEARCH_SERVICE_IMAGE}
     sync:
       - search-service:/go/src/app
+  story-service:
+    image: ${OKTETO_BUILD_STORY_SERVICE_IMAGE}
+    sync:
+      - story-service:/go/src/app
