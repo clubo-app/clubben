@@ -3,7 +3,7 @@ module github.com/clubo-app/clubben/libs/utils
 go 1.19
 
 require (
-	github.com/clubo-app/clubben/libs/types v0.0.0-20220827221553-6f49daa8d722
+	github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/gofiber/fiber/v2 v2.36.0
 	github.com/gofiber/jwt/v3 v3.2.14
