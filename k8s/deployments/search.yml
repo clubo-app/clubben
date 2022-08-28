@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: search 
+  name: search-service
 spec:
   selector:
     matchLabels:
-      app: search 
+      app: search-service
   template:
     metadata:
       labels:
-        app: search 
+        app: search-service
     spec:
       containers:
-        - name: search 
+        - name: search-service
           image: okteto.dev/search-service
           resources:
             limits:

@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: story
+  name: story-service
 spec:
   selector:
     matchLabels:
-      app: story
+      app: story-service
   template:
     metadata:
       labels:
-        app: story
+        app: story-service
     spec:
       containers:
-        - name: story
+        - name: story-service
           image: okteto.dev/story-service
           resources:
             limits:

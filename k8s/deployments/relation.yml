@@ -5,14 +5,14 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: relation
+      app: relation-service
   template:
     metadata:
       labels:
-        app: relation
+        app: relation-service
     spec:
       containers:
-        - name: relation
+        - name: relation-service
           image: okteto.dev/relation-service
           resources:
             limits:

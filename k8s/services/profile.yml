@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: profile
+  name: profile-service
 spec:
   selector:
-    app: profile
+    app: profile-service
   ports:
     - port: 8081
       targetPort: 8081

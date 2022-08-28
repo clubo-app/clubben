@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aggregator
+  name: aggregator-service
 spec:
   selector:
     matchLabels:
-      app: aggregator
+      app: aggregator-service
   template:
     metadata:
       labels:
-        app: aggregator
+        app: aggregator-service
     spec:
       containers:
-        - name: aggregator
+        - name: aggregator-service
           image: okteto.dev/aggregator-service
           resources:
             limits:

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: participation 
+  name: participation-service
 spec:
   selector:
-    app: participation 
+    app: participation-service
   ports:
     - port: 8081
       targetPort: 8081

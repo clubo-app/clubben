@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: profile
+  name: profile-service
 spec:
   selector:
     matchLabels:
-      app: profile
+      app: profile-service
   template:
     metadata:
       labels:
-        app: profile
+        app: profile-service
     spec:
       containers:
-        - name: profile
+        - name: profile-service
           image: okteto.dev/profile-service
           resources:
             limits:

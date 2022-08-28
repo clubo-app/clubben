@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: party
+  name: party-service
 spec:
   selector:
     matchLabels:
-      app: party
+      app: party-service
   template:
     metadata:
       labels:
-        app: party
+        app: party-service
     spec:
       containers:
-        - name: party
+        - name: party-service
           image: okteto.dev/party-service
           resources:
             limits:

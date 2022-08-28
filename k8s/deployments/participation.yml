@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: participation 
+  name: participation-service
 spec:
   selector:
     matchLabels:
-      app: participation 
+      app: participation-service
   template:
     metadata:
       labels:
-        app: participation 
+        app: participation-service
     spec:
       containers:
-        - name: participation 
+        - name: participation-service
           image: okteto.dev/participation-service
           resources:
             limits:
