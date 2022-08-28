@@ -64,6 +64,8 @@ dev:
       - auth-service:/go/src/app
   aggregator-service:
     image: ${OKTETO_BUILD_AGGREGATOR_SERVICE_IMAGE}
+    forward:
+      - 8081:8081
     sync:
       - aggregator-service:/go/src/app
   participation-service:
