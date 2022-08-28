@@ -15,7 +15,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	r, err := repository.NewAccountRepository(c.DB_USER, c.DB_PW, c.DB_NAME, c.DB_HOST, c.DB_PORT)
+	r, err := repository.NewAccountRepository(c.POSTGRES_URL_AUTH_SERVICE)
 	if err != nil {
 		log.Fatal(err)
 	}
