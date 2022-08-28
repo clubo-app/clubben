@@ -24,7 +24,7 @@ func main() {
 	}
 	defer stream.Close()
 
-	d, err := repository.NewPartyRepository(c.DB_USER, c.DB_PW, c.DB_NAME, c.DB_HOST, c.DB_PORT)
+	d, err := repository.NewPartyRepository(c.POSTGRES_URL_PARTY_SERVICE)
 	if err != nil {
 		log.Fatal(err)
 	}

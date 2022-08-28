@@ -24,8 +24,8 @@ type PartyRepository struct {
 	querier Querier
 }
 
-func NewPartyRepository(dbUser, dbPW, dbName, dbHost string, dbPort uint16) (*PartyRepository, error) {
-	urlStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPW, dbHost, fmt.Sprint(dbPort), dbName)
+func NewPartyRepository(urlStr string) (*PartyRepository, error) {
+	log.Println("Conntected to ", urlStr)
 	pgURL, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err
