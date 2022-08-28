@@ -19,8 +19,8 @@ type ProfileRepository struct {
 	querier Querier
 }
 
-func NewProfileRepository(dbUser, dbPW, dbName, dbHost string, dbPort uint16) (*ProfileRepository, error) {
-	urlStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPW, dbHost, fmt.Sprint(dbPort), dbName)
+func NewProfileRepository(urlStr string) (*ProfileRepository, error) {
+	log.Println("Connecting to DB: ", urlStr)
 	pgURL, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err

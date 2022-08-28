@@ -24,7 +24,7 @@ func main() {
 	}
 	defer stream.Close()
 
-	r, err := repository.NewProfileRepository(c.DB_USER, c.DB_PW, c.DB_NAME, c.DB_HOST, c.DB_PORT)
+	r, err := repository.NewProfileRepository(c.POSTGRES_URL_PROFILE_SERVICE)
 	if err != nil {
 		log.Fatal(err)
 	}
