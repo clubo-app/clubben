@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-config
+data:
+  nats-server.conf: |
+    server_name=nats-server
+
+    listen: "0.0.0.0:4222"
+
+    jetstream {
+      store_dir=/var/lib/nats/storage
+      max_mem: 1Gb
+      max_file: 3Gb
+    }

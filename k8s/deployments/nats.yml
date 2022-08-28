@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats
+spec:
+  selector:
+    matchLabels:
+      app: nats
+  template:
+    metadata:
+      labels:
+        app: nats
+    spec:
+      containers:
+        - name: nats
+          image: nats:alpine
+          resources:
+            limits:
+              memory: "250Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4222
+          volumeMounts:
+          - name: nats-config 
+            mountPath: /etc/nats/
+      volumes:
+        - name: nats-config 
+          configMap:
+            # Provide the name of the ConfigMap containing the files you want
+            # to add to the container
+            name: nats-config
