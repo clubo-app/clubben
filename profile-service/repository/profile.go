@@ -20,7 +20,6 @@ type ProfileRepository struct {
 }
 
 func NewProfileRepository(urlStr string) (*ProfileRepository, error) {
-	log.Println("Connecting to DB: ", urlStr)
 	pgURL, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err

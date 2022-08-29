@@ -2,8 +2,10 @@
 credentials.txt
 prod.env
 
+# generated data
 data/
-
+tmp/
 bindata.go
 
+# mac
 .DS_Store
