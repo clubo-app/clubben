@@ -12,10 +12,7 @@ import (
 )
 
 func main() {
-	c, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	c := config.LoadConfig()
 
 	opts := []nats.Option{nats.Name("User Service")}
 	stream, err := stream.Connect(c.NATS_CLUSTER, opts)

@@ -12,7 +12,6 @@ processes = []
   handlers = []
   port = 5432
 
-
 [checks]
   [checks.pg]
     grace_period = "30s"

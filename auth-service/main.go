@@ -10,10 +10,7 @@ import (
 )
 
 func main() {
-	c, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	c := config.LoadConfig()
 
 	r, err := repository.NewAccountRepository(c.POSTGRES_URL_AUTH_SERVICE)
 	if err != nil {

@@ -10,18 +10,17 @@ type Config struct {
 	POSTGRES_URL_PROFILE_SERVICE string `mapstructure:"POSTGRES_URL_PROFILE_SERVICE"`
 }
 
-func LoadConfig() (config Config, err error) {
+func LoadConfig() (config Config) {
 	viper.AddConfigPath("./config/envs")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("env")
+	viper.ReadInConfig()
+
+	viper.SetConfigName("prod")
+	viper.MergeInConfig()
 
 	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
-	if err != nil {
-		return
-	}
-
-	err = viper.Unmarshal(&config)
+	viper.Unmarshal(&config)
 	return
 }

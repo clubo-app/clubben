@@ -1,6 +1,9 @@
+# private files
+credentials.txt
+prod.env
+
 data/
 
 bindata.go
-credentials.txt
 
 .DS_Store

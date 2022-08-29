@@ -1,6 +1,8 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	PORT                      string `mapstructure:"PORT"`
@@ -12,18 +14,17 @@ type Config struct {
 	POSTGRES_URL_AUTH_SERVICE string `mapstructure:"POSTGRES_URL_AUTH_SERVICE"`
 }
 
-func LoadConfig() (config Config, err error) {
+func LoadConfig() (config Config) {
 	viper.AddConfigPath("./config/envs")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("env")
+	viper.ReadInConfig()
+
+	viper.SetConfigName("prod")
+	viper.MergeInConfig()
 
 	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
-	if err != nil {
-		return
-	}
-
-	err = viper.Unmarshal(&config)
+	viper.Unmarshal(&config)
 	return
 }
