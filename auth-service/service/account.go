@@ -52,38 +52,24 @@ func (s *accountService) Create(ctx context.Context, d dto.Account) (repository.
 }
 
 func (s *accountService) Delete(ctx context.Context, id string) error {
-	err := s.r.DeleteAccount(ctx, id)
-	if err != nil {
-		return err
-	}
-	return nil
+	return s.r.DeleteAccount(ctx, id)
 }
 
 func (s *accountService) Update(ctx context.Context, d dto.Account) (repository.Account, error) {
-	a, err := s.r.UpdateAccount(ctx, repository.UpdateAccountParams{
+	return s.r.UpdateAccount(ctx, repository.UpdateAccountParams{
 		ID:           d.ID,
 		Email:        d.Email,
 		EmailCode:    d.EmailCode,
 		PasswordHash: d.PasswordHash,
 	})
-	if err != nil {
-		return repository.Account{}, err
-	}
-
-	return a, err
 }
 
 func (s *accountService) UpdateVerified(ctx context.Context, id, code string, emailVerified bool) (repository.Account, error) {
-	a, err := s.r.UpdateVerified(ctx, repository.UpdateVerifiedParams{
+	return s.r.UpdateVerified(ctx, repository.UpdateVerifiedParams{
 		ID:       id,
 		Verified: emailVerified,
 		Code:     sql.NullString{String: code, Valid: true},
 	})
-	if err != nil {
-		return repository.Account{}, err
-	}
-
-	return a, err
 }
 
 func (s *accountService) RotateEmailCode(ctx context.Context, email string) (repository.Account, error) {
@@ -92,15 +78,10 @@ func (s *accountService) RotateEmailCode(ctx context.Context, email string) (rep
 		return repository.Account{}, status.Error(codes.Internal, "Failed to generate Email Code")
 	}
 
-	a, err := s.r.UpdateEmailCode(ctx, repository.UpdateEmailCodeParams{
+	return s.r.UpdateEmailCode(ctx, repository.UpdateEmailCodeParams{
 		EmailCode: sql.NullString{String: code, Valid: true},
 		Email:     email,
 	})
-	if err != nil {
-		return repository.Account{}, err
-	}
-
-	return a, err
 }
 
 func (s *accountService) EmailTaken(ctx context.Context, email string) bool {
@@ -112,19 +93,9 @@ func (s *accountService) EmailTaken(ctx context.Context, email string) bool {
 }
 
 func (s *accountService) GetById(ctx context.Context, id string) (repository.Account, error) {
-	a, err := s.r.GetAccount(ctx, id)
-	if err != nil {
-		return repository.Account{}, err
-	}
-
-	return a, err
+	return s.r.GetAccount(ctx, id)
 }
 
 func (s *accountService) GetByEmail(ctx context.Context, email string) (repository.Account, error) {
-	a, err := s.r.GetAccountByEmail(ctx, email)
-	if err != nil {
-		return repository.Account{}, err
-	}
-
-	return a, err
+	return s.r.GetAccountByEmail(ctx, email)
 }

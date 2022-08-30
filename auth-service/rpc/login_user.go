@@ -16,6 +16,9 @@ func (s *authServer) LoginUser(ctx context.Context, req *ag.LoginUserRequest) (*
 		return nil, status.Error(codes.InvalidArgument, "Invalid Email")
 	}
 	a, err := s.ac.GetByEmail(ctx, req.Email)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
 
 	pwEqual := s.pw.CheckPasswordHash(req.Password, a.PasswordHash)
 	if !pwEqual {
