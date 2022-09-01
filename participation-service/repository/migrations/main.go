@@ -3,30 +3,23 @@ package main
 import (
 	"context"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/clubo-app/clubben/libs/cqlx"
+	"github.com/clubo-app/clubben/participation-service/config"
 	"github.com/clubo-app/clubben/participation-service/repository/migrations/cql"
 	"github.com/scylladb/gocqlx/v2/migrate"
 )
 
 func main() {
+	c := config.LoadConfig()
 	ctx := context.Background()
 
-	keyspace, exists := os.LookupEnv("SCYLLA_KEYSPACE")
-	if !exists {
-		log.Fatalln("scylla keyspace not defined")
-	}
-	hosts, exists := os.LookupEnv("SCYLLA_HOSTS")
-	if !exists {
-		log.Fatalln("scylla hosts not defined")
-	}
-	h := strings.Split(hosts, ",")
+	h := strings.Split(c.CQL_HOSTS, ",")
 
-	manager := cqlx.NewManager(keyspace, h)
+	manager := cqlx.NewManager(c.CQL_KEYSPACE, h)
 
-	if err := manager.CreateKeyspace(keyspace, 1, "SimpleStrategy"); err != nil {
+	if err := manager.CreateKeyspace(c.CQL_KEYSPACE, 1, "SimpleStrategy"); err != nil {
 		log.Fatalln(err)
 	}
 
