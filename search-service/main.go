@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/search-service/config"
@@ -12,10 +13,7 @@ import (
 )
 
 func main() {
-	c, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	c := config.LoadConfig()
 
 	opts := []nats.Option{nats.Name("Search Service")}
 	stream, err := stream.Connect(c.NATS_CLUSTER, opts)
@@ -25,7 +23,8 @@ func main() {
 	defer stream.Close()
 
 	vespa := govespa.NewClient(govespa.NewClientParams{
-		BaseUrl: c.VESPA_URL,
+		BaseUrl:    c.VESPA_URL,
+		HttpClient: newHttp(),
 	})
 
 	pRepo := repository.NewProfileRepository(vespa)
@@ -34,4 +33,8 @@ func main() {
 	con := consumer.NewConsumer(&stream, profileCon)
 
 	con.Start()
+}
+
+func newHttp() *http.Client {
+	return http.DefaultClient
 }

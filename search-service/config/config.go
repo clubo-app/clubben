@@ -8,18 +8,17 @@ type Config struct {
 	NATS_CLUSTER string `mapstructure:"NATS_CLUSTER"`
 }
 
-func LoadConfig() (config Config, err error) {
+func LoadConfig() (config Config) {
 	viper.AddConfigPath("./config/envs")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("env")
+	viper.ReadInConfig()
+
+	viper.SetConfigName("prod")
+	viper.MergeInConfig()
 
 	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
-	if err != nil {
-		return
-	}
-
-	err = viper.Unmarshal(&config)
+	viper.Unmarshal(&config)
 	return
 }
