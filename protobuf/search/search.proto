@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package search;
+option go_package = "github.com/clubo-app/clubben/protobuf/search";
+
+service SearchService {
+  rpc SearchUsers (SearchUsersRequest) returns (PagedIndexedUsers) {};
+}
+
+// Requests
+message SearchUsersRequest {
+  string query = 1;
+}
+
+// Response
+message IndexedUser {
+  string id = 1;
+  string username = 2;
+  string firstname = 3;
+  string lastname = 4;
+}
+
+message PagedIndexedUsers {
+  repeated IndexedUser users = 1;
+  string continuation = 2;
+}
