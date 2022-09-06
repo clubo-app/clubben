@@ -10,12 +10,12 @@ import (
 )
 
 type profileConsumer struct {
-	userRepo *repository.ProfileRepository
+	repo *repository.ProfileRepository
 }
 
 func NewProfileConsumer(repo *repository.ProfileRepository) profileConsumer {
 	return profileConsumer{
-		userRepo: repo,
+		repo: repo,
 	}
 }
 
@@ -23,7 +23,7 @@ func (c profileConsumer) ProfileCreated(p *events.ProfileCreated) {
 	if p == nil {
 		return
 	}
-	err := c.userRepo.PutProfile(context.Background(), datastruct.Profile{
+	err := c.repo.PutProfile(context.Background(), datastruct.Profile{
 		Id:        p.Profile.Id,
 		Username:  p.Profile.Username,
 		Firstname: p.Profile.Firstname,
@@ -32,13 +32,14 @@ func (c profileConsumer) ProfileCreated(p *events.ProfileCreated) {
 	if err != nil {
 		log.Println("Error inserting Profile: ", err)
 	}
+	log.Printf("Profile Created %+v", p)
 }
 
 func (c profileConsumer) ProfileUpdate(p *events.ProfileUpdated) {
 	if p == nil {
 		return
 	}
-	err := c.userRepo.UpdateProfile(context.Background(), datastruct.Profile{
+	err := c.repo.UpdateProfile(context.Background(), datastruct.Profile{
 		Id:        p.Profile.Id,
 		Username:  p.Profile.Username,
 		Firstname: p.Profile.Firstname,
@@ -53,7 +54,7 @@ func (c profileConsumer) ProfileDeleted(p *events.UserDeleted) {
 	if p == nil {
 		return
 	}
-	err := c.userRepo.RemoveProfile(context.Background(), p.Id)
+	err := c.repo.RemoveProfile(context.Background(), p.Id)
 	if err != nil {
 		log.Println("Error removing Profile: ", err)
 	}

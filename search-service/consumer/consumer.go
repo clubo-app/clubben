@@ -21,7 +21,7 @@ func NewConsumer(stream *stream.Stream, profile profileConsumer) consumer {
 
 func (c consumer) Start() {
 	wg := sync.WaitGroup{}
-	wg.Add(2)
+	wg.Add(3)
 
 	go c.stream.SubscribeToEvent("search.profile.created", events.ProfileCreated{}, c.profile.ProfileCreated)
 	go c.stream.SubscribeToEvent("search.profile.updated", events.ProfileUpdated{}, c.profile.ProfileUpdate)
