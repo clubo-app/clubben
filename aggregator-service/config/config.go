@@ -12,6 +12,7 @@ type Config struct {
 	RELATION_SERVICE_ADDRESS      string `mapstructure:"RELATION_SERVICE_ADDRESS"`
 	COMMENT_SERVICE_ADDRESS       string `mapstructure:"COMMENT_SERVICE_ADDRESS"`
 	PARTICIPATION_SERVICE_ADDRESS string `mapstructure:"PARTICIPATION_SERVICE_ADDRESS"`
+	SEARCH_SERVICE_ADDRESS        string `mapstructure:"SEARCH_SERVICE_ADDRESS"`
 	TOKEN_SECRET                  string `mapstructure:"TOKEN_SECRET"`
 }
 

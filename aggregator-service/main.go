@@ -11,6 +11,7 @@ import (
 	partyhandler "github.com/clubo-app/clubben/aggregator-service/handler/party_handler"
 	profilehandler "github.com/clubo-app/clubben/aggregator-service/handler/profile_handler"
 	relationhandler "github.com/clubo-app/clubben/aggregator-service/handler/relation_handler"
+	searchhandler "github.com/clubo-app/clubben/aggregator-service/handler/search_handler"
 	storyhandler "github.com/clubo-app/clubben/aggregator-service/handler/story_handler"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
 	ag "github.com/clubo-app/clubben/protobuf/auth"
@@ -19,6 +20,7 @@ import (
 	pg "github.com/clubo-app/clubben/protobuf/party"
 	prf "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
+	"github.com/clubo-app/clubben/protobuf/search"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -59,6 +61,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("did not connect to participation service: %v", err)
 	}
+	searchC, err := search.NewClient(c.SEARCH_SERVICE_ADDRESS)
+	if err != nil {
+		log.Fatalf("did not connect to search service: %v", err)
+	}
 
 	authHandler := authhandler.NewAuthGatewayHandler(ac, prf)
 	profileHandler := profilehandler.NewUserGatewayHandler(prf, rc, ac)
@@ -67,6 +73,7 @@ func main() {
 	relationHandler := relationhandler.NewRelationGatewayHandler(rc, prf)
 	commentHandler := commenthandler.NewCommentGatewayHandler(cc, prf)
 	participationHandler := participationhandler.NewParticipationHandler(participationC, pc, prf)
+	searchHandler := searchhandler.NewSearchGatewayHandler(searchC)
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
@@ -96,6 +103,7 @@ func main() {
 	profile.Get("/me", middleware.AuthRequired(c.TOKEN_SECRET), profileHandler.GetMe)
 	profile.Get("/:id", middleware.AuthOptional(c.TOKEN_SECRET), profileHandler.GetProfile)
 	profile.Get("/username-taken/:username", profileHandler.UsernameTaken)
+	profile.Get("/search/:query", searchHandler.SearchUsers)
 
 	party := app.Group("/party")
 	party.Post("/", middleware.AuthRequired(c.TOKEN_SECRET), partyHandler.CreateParty)
