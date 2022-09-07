@@ -4,7 +4,7 @@ package search;
 option go_package = "github.com/clubo-app/clubben/protobuf/search";
 
 service SearchService {
-  rpc SearchUsers (SearchUsersRequest) returns (PagedIndexedUsers) {};
+  rpc SearchUsers (SearchUsersRequest) returns (SearchUsersResponse) {};
 }
 
 // Requests
@@ -20,7 +20,6 @@ message IndexedUser {
   string lastname = 4;
 }
 
-message PagedIndexedUsers {
+message SearchUsersResponse {
   repeated IndexedUser users = 1;
-  string continuation = 2;
 }

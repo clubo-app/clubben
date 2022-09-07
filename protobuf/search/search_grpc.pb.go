@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SearchServiceClient interface {
-	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*PagedIndexedUsers, error)
+	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*SearchUsersResponse, error)
 }
 
 type searchServiceClient struct {
@@ -33,8 +33,8 @@ func NewSearchServiceClient(cc grpc.ClientConnInterface) SearchServiceClient {
 	return &searchServiceClient{cc}
 }
 
-func (c *searchServiceClient) SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*PagedIndexedUsers, error) {
-	out := new(PagedIndexedUsers)
+func (c *searchServiceClient) SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*SearchUsersResponse, error) {
+	out := new(SearchUsersResponse)
 	err := c.cc.Invoke(ctx, "/search.SearchService/SearchUsers", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func (c *searchServiceClient) SearchUsers(ctx context.Context, in *SearchUsersRe
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
 type SearchServiceServer interface {
-	SearchUsers(context.Context, *SearchUsersRequest) (*PagedIndexedUsers, error)
+	SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -54,7 +54,7 @@ type SearchServiceServer interface {
 type UnimplementedSearchServiceServer struct {
 }
 
-func (UnimplementedSearchServiceServer) SearchUsers(context.Context, *SearchUsersRequest) (*PagedIndexedUsers, error) {
+func (UnimplementedSearchServiceServer) SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchUsers not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
