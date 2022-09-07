@@ -28,7 +28,7 @@ func main() {
 	defer r.Close()
 
 	up := service.NewUploadService(c.SPACES_ENDPOINT, c.SPACES_TOKEN)
-	ps := service.NewProfileService(r)
+	ps := service.NewProfileService(r, stream)
 
 	p := rpc.NewProfileServer(ps, up, stream)
 

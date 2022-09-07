@@ -18,7 +18,7 @@ func (s *profileServer) CreateProfile(ctx context.Context, req *pg.CreateProfile
 
 	p, err := s.ps.Create(ctx, dto.Profile{
 		ID:        req.Id,
-		Username:  req.Username,
+		Username:  strings.ToLower(req.Username),
 		Firstname: req.Firstname,
 		Lastname:  req.Lastname,
 		Avatar:    req.Avatar,

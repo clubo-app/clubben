@@ -4,8 +4,11 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/profile-service/dto"
 	"github.com/clubo-app/clubben/profile-service/repository"
+	"github.com/clubo-app/clubben/protobuf/events"
+	"github.com/clubo-app/clubben/protobuf/profile"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -20,11 +23,12 @@ type ProfileService interface {
 }
 
 type profileService struct {
-	r *repository.ProfileRepository
+	r      *repository.ProfileRepository
+	stream stream.Stream
 }
 
-func NewProfileService(r *repository.ProfileRepository) ProfileService {
-	return &profileService{r: r}
+func NewProfileService(r *repository.ProfileRepository, stream stream.Stream) ProfileService {
+	return &profileService{r: r, stream: stream}
 }
 
 func (s *profileService) Create(ctx context.Context, dp dto.Profile) (repository.Profile, error) {
@@ -38,6 +42,8 @@ func (s *profileService) Create(ctx context.Context, dp dto.Profile) (repository
 	if err != nil {
 		return repository.Profile{}, err
 	}
+
+	s.stream.PublishEvent(&events.ProfileCreated{Profile: p.ToGRPCProfile()})
 
 	return p, nil
 }
@@ -53,6 +59,21 @@ func (s *profileService) Update(ctx context.Context, dp dto.Profile) (repository
 	if err != nil {
 		return repository.Profile{}, err
 	}
+
+	updatedValues := profile.Profile{
+		Id: dp.ID,
+	}
+	if dp.Firstname != "" {
+		updatedValues.Firstname = dp.Firstname
+	}
+	if dp.Lastname != "" {
+		updatedValues.Lastname = dp.Lastname
+	}
+	if dp.Username != "" {
+		updatedValues.Username = dp.Username
+	}
+
+	s.stream.PublishEvent(&events.ProfileUpdated{Profile: &updatedValues})
 
 	return p, nil
 }
