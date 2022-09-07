@@ -4,9 +4,9 @@ go 1.19
 
 require (
 	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/clubben/protobuf v0.0.0-20220905212236-c83458c4d142
+	github.com/clubo-app/clubben/protobuf v0.0.0-20220907101638-9b815f549695
 	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb
-	github.com/jonashiltl/govespa v0.0.0-20220906142956-52f8afa6db45
+	github.com/jonashiltl/govespa v0.0.0-20220907094327-43472ab47b09
 	github.com/nats-io/nats.go v1.16.0
 	github.com/spf13/viper v1.12.0
 	google.golang.org/grpc v1.46.2
@@ -46,7 +46,7 @@ require (
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
-	golang.org/x/exp v0.0.0-20220827204233-334a2380cb91 // indirect
+	golang.org/x/exp v0.0.0-20220907003533-145caa8ea1d0 // indirect
 	golang.org/x/net v0.0.0-20220812174116-3211cb980234 // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect

@@ -51,6 +51,8 @@ github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b h1:M
 github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b/go.mod h1:5BwfbGVmEo/oC23fjBzXn2eSTr+CzugbpLqV46TVSeE=
 github.com/clubo-app/clubben/protobuf v0.0.0-20220905212236-c83458c4d142 h1:8DWbIvrh4WuRNDZAkJRQCm+5OPkgDUAETyC7RPY3SzU=
 github.com/clubo-app/clubben/protobuf v0.0.0-20220905212236-c83458c4d142/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220907101638-9b815f549695 h1:CWJHKXaN0p/NhwvwxDbCQKEr5mp+ouCFaa/fUkm/PWk=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220907101638-9b815f549695/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
 github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb h1:j6wZwpRyTfAg9vfP0bv8aMMJnyNZRzOnI/RB79mm9WI=
 github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb/go.mod h1:T7g3z7h4UO2iObzjQNJUWwoZa/7GaPnAzuSCcFRj8NQ=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
@@ -166,6 +168,12 @@ github.com/jonashiltl/govespa v0.0.0-20220906141654-f890a5ec5577 h1:p+6lX6jkX7O0
 github.com/jonashiltl/govespa v0.0.0-20220906141654-f890a5ec5577/go.mod h1:+LMtNK6SlF8P4KRhqqSPNyVYTkWqI8S4UnJxCCM2vgQ=
 github.com/jonashiltl/govespa v0.0.0-20220906142956-52f8afa6db45 h1:fMFzE2GZzXYodFPqpc2LmM3HYUx1tLBSDC4altjduh0=
 github.com/jonashiltl/govespa v0.0.0-20220906142956-52f8afa6db45/go.mod h1:+LMtNK6SlF8P4KRhqqSPNyVYTkWqI8S4UnJxCCM2vgQ=
+github.com/jonashiltl/govespa v0.0.0-20220906200232-7e29b09722e1 h1:fiH0+BGmdgKcJuMlv5V8axJb03uVzD/sSJxxoT9G2l4=
+github.com/jonashiltl/govespa v0.0.0-20220906200232-7e29b09722e1/go.mod h1:+LMtNK6SlF8P4KRhqqSPNyVYTkWqI8S4UnJxCCM2vgQ=
+github.com/jonashiltl/govespa v0.0.0-20220906205912-39f91dda557c h1:gJwSmwhWrk3NjRRHnwrgBuKIKRZjq5adoiLO94omlno=
+github.com/jonashiltl/govespa v0.0.0-20220906205912-39f91dda557c/go.mod h1:+LMtNK6SlF8P4KRhqqSPNyVYTkWqI8S4UnJxCCM2vgQ=
+github.com/jonashiltl/govespa v0.0.0-20220907094327-43472ab47b09 h1:d/Xi67ypEq0a1snZey0JB9ojzSCMJsFAQS39V/SWjFQ=
+github.com/jonashiltl/govespa v0.0.0-20220907094327-43472ab47b09/go.mod h1:+LMtNK6SlF8P4KRhqqSPNyVYTkWqI8S4UnJxCCM2vgQ=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/jstemmer/go-junit-report v0.9.1/go.mod h1:Brl9GWCQeLvo8nXZwPNNblvFj/XSXhF0NWZEnDohbsk=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
@@ -287,6 +295,10 @@ golang.org/x/exp v0.0.0-20200207192155-f17229e696bd/go.mod h1:J/WKrq2StrnmMY6+EH
 golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6/go.mod h1:3jZMyOhIsHpP37uCMkUooju7aAi5cS1Q23tOzKc+0MU=
 golang.org/x/exp v0.0.0-20220827204233-334a2380cb91 h1:tnebWN09GYg9OLPss1KXj8txwZc6X6uMr6VFdcGNbHw=
 golang.org/x/exp v0.0.0-20220827204233-334a2380cb91/go.mod h1:cyybsKvd6eL0RnXn6p/Grxp8F5bW7iYuBgsNCOHpMYE=
+golang.org/x/exp v0.0.0-20220906200021-fcb1a314c389 h1:bCIWVlNKY/35kVE0iPeoZ9i/ar1ba/5vyfxUtcXN4iM=
+golang.org/x/exp v0.0.0-20220906200021-fcb1a314c389/go.mod h1:cyybsKvd6eL0RnXn6p/Grxp8F5bW7iYuBgsNCOHpMYE=
+golang.org/x/exp v0.0.0-20220907003533-145caa8ea1d0 h1:17k44ji3KFYG94XS5QEFC8pyuOlMh3IoR+vkmTZmJJs=
+golang.org/x/exp v0.0.0-20220907003533-145caa8ea1d0/go.mod h1:cyybsKvd6eL0RnXn6p/Grxp8F5bW7iYuBgsNCOHpMYE=
 golang.org/x/image v0.0.0-20190227222117-0694c2d4d067/go.mod h1:kZ7UVZpmo3dzQBMxlp+ypCbDeSB+sBbTgSJuh5dn5js=
 golang.org/x/image v0.0.0-20190802002840-cff245a6509b/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=

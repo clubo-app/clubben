@@ -23,8 +23,6 @@ func main() {
 	}
 	defer stream.Close()
 
-	log.Println(c.VESPA_URL)
-
 	vespa := govespa.NewClient(govespa.NewClientParams{
 		BaseUrl:    c.VESPA_URL,
 		HttpClient: newHttp(),

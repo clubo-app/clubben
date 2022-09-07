@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"log"
 
 	"github.com/clubo-app/clubben/search-service/datastruct"
 	"github.com/jonashiltl/govespa"
@@ -18,22 +17,23 @@ func NewProfileRepository(v *govespa.VespaClient) ProfileRepository {
 	}
 }
 
-func (r *ProfileRepository) QueryProfile(c context.Context, query, continuation string) ([]datastruct.Profile, string, error) {
-	profiles := new(datastruct.Profile)
+func (r *ProfileRepository) QueryProfile(c context.Context, query string) ([]datastruct.Profile, error) {
+	profiles := make([]datastruct.Profile, 0, 20)
 
-	res, err := r.v.
+	_, err := r.v.
 		Query().
 		WithContext(c).
 		AddYQL("select * from user where userInput(@q)").
 		AddVariable("q", query).
-		AddParameter(govespa.QueryParameter{}).
-		Get(&profiles)
-	log.Printf("QUERY RESULT: %+v", res)
+		AddParameter(govespa.QueryParameter{
+			Hits: 20,
+		}).
+		Select(&profiles)
 	if err != nil {
-		return []datastruct.Profile{}, "", err
+		return []datastruct.Profile{}, err
 	}
 
-	return []datastruct.Profile{*profiles}, "", nil
+	return profiles, nil
 }
 
 func (r *ProfileRepository) PutProfile(c context.Context, u datastruct.Profile) error {
