@@ -23,8 +23,7 @@ type CreatePartyReq struct {
 	PostalCode      string    `json:"postal_code"`
 	State           string    `json:"state"`
 	Country         string    `json:"country"`
-	StartDate       time.Time `json:"start_date"`
-	EndDate         time.Time `json:"end_date"`
+	EntryDate       time.Time `json:"entry_date"`
 }
 
 func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
@@ -47,8 +46,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 		PostalCode:      req.PostalCode,
 		State:           req.State,
 		Country:         req.Country,
-		StartDate:       timestamppb.New(req.StartDate),
-		EndDate:         timestamppb.New(req.EndDate),
+		EntryDate:       timestamppb.New(req.EntryDate),
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)

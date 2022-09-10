@@ -51,14 +51,8 @@ github.com/clubo-app/clubben/libs/types v0.0.0-20220827221553-6f49daa8d722 h1:CG
 github.com/clubo-app/clubben/libs/types v0.0.0-20220827221553-6f49daa8d722/go.mod h1:/+pMuVUtVcWp5LHGG9tNX91grQ7/LWQyV+IkuTLk828=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827221553-6f49daa8d722 h1:+wTM15vg9f8z+wG0acLVEf2MIeeOXpEClI0WRQL1xOQ=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827221553-6f49daa8d722/go.mod h1:W+b3iIsqN0szEhuAoninnnRY+Jd04xjJ5m92JLd+gQU=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220905212236-c83458c4d142 h1:8DWbIvrh4WuRNDZAkJRQCm+5OPkgDUAETyC7RPY3SzU=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220905212236-c83458c4d142/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220907101638-9b815f549695 h1:CWJHKXaN0p/NhwvwxDbCQKEr5mp+ouCFaa/fUkm/PWk=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220907101638-9b815f549695/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220910101500-88c6c707b7ad h1:ZrS4qm4DjMd6O61HZFwmWVgLA2JN2Daj7aHcGTV4vbo=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220910101500-88c6c707b7ad/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220910104526-5cf6a71d2734 h1:pvY//TD5cgWLFujAhKNVB+IjOPurNjSw6zC7EGYIbq8=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220910104526-5cf6a71d2734/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220910165522-1fc14639e158 h1:3/l/Eqp/iLtoV/IapBh+dAOTQ3i5CCGF0QJIHVeq2wc=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220910165522-1fc14639e158/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=

@@ -14,7 +14,7 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	nextPage := c.Query("nextPage")
 	limitStr := c.Query("limit")
-	limit, _ := strconv.ParseUint(limitStr, 10, 32)
+	limit, _ := strconv.ParseInt(limitStr, 10, 32)
 	if limit > 40 {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 40")
 	}
@@ -28,13 +28,13 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 		pps, err = h.participationC.GetPartyRequests(c.Context(), &participation.GetPartyParticipantsRequest{
 			PartyId:  pId,
 			NextPage: nextPage,
-			Limit:    uint32(limit),
+			Limit:    int32(limit),
 		})
 	} else {
 		pps, err = h.participationC.GetPartyParticipants(c.Context(), &participation.GetPartyParticipantsRequest{
 			PartyId:  pId,
 			NextPage: nextPage,
-			Limit:    uint32(limit),
+			Limit:    int32(limit),
 		})
 	}
 	if err != nil {

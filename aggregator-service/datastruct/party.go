@@ -21,7 +21,7 @@ type AggregatedParty struct {
 	State           string             `json:"state,omitempty"`
 	Country         string             `json:"country,omitempty"`
 	Stories         []*sg.Story        `json:"stories,omitempty"`
-	StartDate       string             `json:"start_date,omitempty"`
+	EntryDate       string             `json:"entry_date,omitempty"`
 	CreatedAt       string             `json:"created_at,omitempty"`
 	FavoriteCount   uint32             `json:"favorite_count"`
 }
@@ -42,7 +42,7 @@ func PartyToAgg(p *pg.Party) AggregatedParty {
 		PostalCode:      p.PostalCode,
 		State:           p.State,
 		Country:         p.Country,
-		StartDate:       p.StartDate.AsTime().UTC().Format(time.RFC3339),
+		EntryDate:       p.EntryDate.AsTime().UTC().Format(time.RFC3339),
 		CreatedAt:       p.CreatedAt.AsTime().UTC().Format(time.RFC3339),
 	}
 }
