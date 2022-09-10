@@ -6,7 +6,8 @@ require (
 	github.com/clubo-app/clubben/libs/cqlx v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/clubben/protobuf v0.0.0-20220827221553-6f49daa8d722
+	github.com/clubo-app/clubben/protobuf v0.0.0-20220910165522-1fc14639e158
+	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/nats-io/nats.go v1.16.0
 	github.com/scylladb/gocqlx v1.5.0
@@ -57,7 +58,6 @@ require (
 	golang.org/x/net v0.0.0-20220520000938-2e3eb7b945c2 // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect
-	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
 	google.golang.org/genproto v0.0.0-20220519153652-3a47de7e79bd // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect

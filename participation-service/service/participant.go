@@ -2,11 +2,11 @@ package service
 
 import (
 	"context"
-	"log"
 
 	"github.com/clubo-app/clubben/participation-service/datastruct"
 	"github.com/clubo-app/clubben/participation-service/repository"
 	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/packages/utils"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -50,8 +50,12 @@ func (p participant) Join(ctx context.Context, params JoinParams) (datastruct.Pa
 	}
 
 	count, err := p.r.GetParticipationCount(ctx, params.PartyId)
-	if count >= int64(party.MaxParticipants) {
-		log.Println(err)
+	if err != nil {
+		return datastruct.Participant{}, utils.HandleError(err)
+	}
+
+	// MaxParticipants of 0 mean there is no restriction for Participants
+	if party.MaxParticipants != 0 && count >= int64(party.MaxParticipants) {
 		return datastruct.Participant{}, status.Error(codes.PermissionDenied, "Party is already full")
 	}
 
