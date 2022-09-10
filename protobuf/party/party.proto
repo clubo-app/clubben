@@ -27,7 +27,7 @@ message CreatePartyRequest {
     float lat = 4;
     float long = 5;
     bool is_public = 6;
-    uint32 max_participants = 7;
+    int32 max_participants = 7;
     string street_address = 8;
     string postal_code = 9;
     string state = 10;
@@ -87,7 +87,7 @@ message Party {
     string title = 3;
     string description = 4;
     bool is_public = 5;
-    uint32 max_participants = 6;
+    int32 max_participants = 6;
     float lat = 7;
     float long = 8;
     string street_address = 9;
