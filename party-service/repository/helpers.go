@@ -25,7 +25,7 @@ func (p Party) ToGRPCParty() *pg.Party {
 		Title:           p.Title,
 		Description:     p.Description.String,
 		IsPublic:        p.IsPublic,
-		MaxParticipants: uint32(p.MaxParticipants.Int32),
+		MaxParticipants: uint32(p.MaxParticipants),
 		Lat:             float32(p.Location.Lat()),
 		Long:            float32(p.Location.Lon()),
 		StreetAddress:   p.StreetAddress.String,

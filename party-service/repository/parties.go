@@ -67,7 +67,7 @@ type CreatePartyParams struct {
 	Title           string
 	Description     sql.NullString
 	IsPublic        bool
-	MaxParticipants sql.NullInt32
+	MaxParticipants uint32
 	Location        orb.Point
 	StreetAddress   string
 	PostalCode      string

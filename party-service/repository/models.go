@@ -16,7 +16,7 @@ type Party struct {
 	Title           string
 	Description     sql.NullString
 	IsPublic        bool
-	MaxParticipants sql.NullInt32
+	MaxParticipants int32
 	Location        orb.Point
 	StreetAddress   sql.NullString
 	PostalCode      sql.NullString

@@ -39,7 +39,7 @@ func (s partyService) Create(ctx context.Context, p dto.Party) (res repository.P
 		Title:           p.Title,
 		Description:     sql.NullString{Valid: p.Description != "", String: p.Description},
 		IsPublic:        p.IsPublic,
-		MaxParticipants: sql.NullInt32{Valid: p.MaxParticipants != 0, Int32: int32(p.MaxParticipants)},
+		MaxParticipants: p.MaxParticipants,
 		Location:        p.Location,
 		StreetAddress:   p.StreetAddress,
 		PostalCode:      p.PostalCode,
