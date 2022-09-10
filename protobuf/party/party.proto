@@ -23,16 +23,17 @@ service PartyService {
 message CreatePartyRequest {
     string requester_id = 1;
     string title = 2;
-    float lat = 3;
-    float long = 4;
-    bool is_public = 5;
-    uint32 max_participants = 6;
-    string street_address = 7;
-    string postal_code = 8;
-    string state = 9;
-    string country = 10;
-    google.protobuf.Timestamp start_date = 11;
-    google.protobuf.Timestamp end_date = 12;
+    string description = 3;
+    float lat = 4;
+    float long = 5;
+    bool is_public = 6;
+    uint32 max_participants = 7;
+    string street_address = 8;
+    string postal_code = 9;
+    string state = 10;
+    string country = 11;
+    google.protobuf.Timestamp start_date = 12;
+    google.protobuf.Timestamp end_date = 13;
 }
 
 message GetPartyRequest {
@@ -43,14 +44,15 @@ message UpdatePartyRequest {
     string requester_id = 1;
     string party_id = 2;
     string title = 3;
-    float lat = 4;
-    float long = 5;
-    string street_address = 6;
-    string postal_code = 7;
-    string state = 8;
-    string country = 9;
-    google.protobuf.Timestamp start_date = 10;
-    google.protobuf.Timestamp end_date = 11;
+    string description = 4;
+    float lat = 5;
+    float long = 6;
+    string street_address = 7;
+    string postal_code = 8;
+    string state = 9;
+    string country = 10;
+    google.protobuf.Timestamp start_date = 11;
+    google.protobuf.Timestamp end_date = 12;
 }
 
 message DeletePartyRequest {
@@ -83,17 +85,18 @@ message Party {
     string id = 1;
     string user_id = 2;
     string title = 3;
-    bool is_public = 4;
-    uint32 max_participants = 5;
-    float lat = 6;
-    float long = 7;
-    string street_address = 8;
-    string postal_code = 9;
-    string state = 10;
-    string country = 11;
-    google.protobuf.Timestamp start_date = 12;
-    google.protobuf.Timestamp end_date = 13;
-    google.protobuf.Timestamp created_at = 14;
+    string description = 4;
+    bool is_public = 5;
+    uint32 max_participants = 6;
+    float lat = 7;
+    float long = 8;
+    string street_address = 9;
+    string postal_code = 10;
+    string state = 11;
+    string country = 12;
+    google.protobuf.Timestamp start_date = 13;
+    google.protobuf.Timestamp end_date = 14;
+    google.protobuf.Timestamp created_at = 15;
 }
 
 message PagedParties {
