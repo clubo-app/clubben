@@ -13,7 +13,7 @@ type AggregatedParty struct {
 	Creator         *AggregatedProfile `json:"creator,omitempty"`
 	Title           string             `json:"title,omitempty"`
 	IsPublic        bool               `json:"is_public"`
-	MaxParticipants uint32             `json:"max_participants"`
+	MaxParticipants int32              `json:"max_participants"`
 	Lat             float32            `json:"lat,omitempty"`
 	Long            float32            `json:"long,omitempty"`
 	StreetAddress   string             `json:"street_address,omitempty"`

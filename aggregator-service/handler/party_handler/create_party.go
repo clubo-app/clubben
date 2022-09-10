@@ -18,7 +18,7 @@ type CreatePartyReq struct {
 	Lat             float32   `json:"lat"`
 	Long            float32   `json:"long"`
 	IsPublic        bool      `json:"is_public"`
-	MaxParticipants uint32    `json:"max_participants"`
+	MaxParticipants int32     `json:"max_participants"`
 	StreetAddress   string    `json:"street_address"`
 	PostalCode      string    `json:"postal_code"`
 	State           string    `json:"state"`
