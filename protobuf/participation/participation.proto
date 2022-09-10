@@ -41,13 +41,13 @@ message UserPartyRequest {
 message GetUserInvitesRequest {
   string user_id = 1;
   string next_page = 2;
-  uint32 limit = 3;
+  int32 limit = 3;
 }
 
 message GetPartyParticipantsRequest {
   string party_id = 1;
   string next_page = 2;
-  uint32 limit = 3;
+  int32 limit = 3;
 }
 
 // Responses
