@@ -12,8 +12,8 @@ func (s partyServer) GetByUser(c context.Context, req *pg.GetByUserRequest) (*pg
 	ps, err := s.ps.GetByUser(c, repository.GetPartiesByUserParams{
 		UserID:   req.UserId,
 		IsPublic: req.IsPublic,
-		Limit:    uint64(req.Limit),
-		Offset:   uint64(req.Offset),
+		Limit:    int32(req.Limit),
+		Offset:   int32(req.Offset),
 	})
 	if err != nil {
 		return nil, utils.HandleError(err)

@@ -99,7 +99,7 @@ func (s partyService) Get(ctx context.Context, pId string) (res repository.Party
 func (s partyService) GetMany(ctx context.Context, ids []string) (res []repository.Party, err error) {
 	res, err = s.r.GetManyParties(ctx, repository.GetManyPartiesParams{
 		Ids:   ids,
-		Limit: uint64(len(ids)),
+		Limit: int32(len(ids)),
 	})
 	if err != nil {
 		return res, err

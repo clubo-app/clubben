@@ -12,7 +12,7 @@ type Party struct {
 	Title           string
 	Description     string
 	IsPublic        bool
-	MaxParticipants uint32
+	MaxParticipants int32
 	Location        orb.Point
 	StreetAddress   string
 	PostalCode      string

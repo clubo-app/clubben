@@ -67,7 +67,7 @@ type CreatePartyParams struct {
 	Title           string
 	Description     sql.NullString
 	IsPublic        bool
-	MaxParticipants uint32
+	MaxParticipants int32
 	Location        orb.Point
 	StreetAddress   string
 	PostalCode      string
@@ -219,7 +219,7 @@ func (r PartyRepository) GetParty(ctx context.Context, id string) (Party, error)
 
 type GetManyPartiesParams struct {
 	Ids   []string
-	Limit uint64
+	Limit int32
 }
 
 func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesParams) ([]Party, error) {
@@ -266,8 +266,8 @@ func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesP
 type GetPartiesByUserParams struct {
 	UserID   string
 	IsPublic bool
-	Limit    uint64
-	Offset   uint64
+	Limit    int32
+	Offset   int32
 }
 
 func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByUserParams) ([]Party, error) {
