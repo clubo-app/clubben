@@ -16,6 +16,7 @@ func (s partyServer) CreateParty(c context.Context, req *pg.CreatePartyRequest) 
 		UserId:          req.RequesterId,
 		Location:        orb.Point{float64(req.Long), float64(req.Lat)},
 		IsPublic:        req.IsPublic,
+		MusicGenre:      req.MusicGenre,
 		MaxParticipants: req.MaxParticipants,
 		StreetAddress:   req.StreetAddress,
 		PostalCode:      req.PostalCode,

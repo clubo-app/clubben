@@ -17,6 +17,7 @@ type Party struct {
 	Title           string
 	Description     sql.NullString
 	IsPublic        bool
+	MusicGenre      sql.NullString
 	MaxParticipants int32
 	Location        orb.Point
 	StreetAddress   sql.NullString

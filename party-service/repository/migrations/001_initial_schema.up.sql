@@ -4,6 +4,7 @@ CREATE TABLE parties (
     title TEXT NOT NULL,
     description VARCHAR(150),
     is_public BOOLEAN NOT NULL DEFAULT false,
+    music_genre TEXT,
     max_participants INTEGER NOT NULL DEFAULT 0,
     location geometry(POINT, 4326) NOT NULL,
     street_address TEXT,

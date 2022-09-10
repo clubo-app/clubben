@@ -12,6 +12,7 @@ type Party struct {
 	Title           string
 	Description     string
 	IsPublic        bool
+	MusicGenre      string
 	MaxParticipants int32
 	Location        orb.Point
 	StreetAddress   string
