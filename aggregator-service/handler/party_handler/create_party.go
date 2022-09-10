@@ -14,6 +14,7 @@ import (
 
 type CreatePartyReq struct {
 	Title           string    `json:"title"`
+	Description     string    `json:"description,omitempty"`
 	Lat             float32   `json:"lat"`
 	Long            float32   `json:"long"`
 	IsPublic        bool      `json:"is_public"`
@@ -37,6 +38,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 	p, err := h.pc.CreateParty(c.Context(), &party.CreatePartyRequest{
 		RequesterId:     user.Sub,
 		Title:           req.Title,
+		Description:     req.Description,
 		Lat:             req.Lat,
 		Long:            req.Long,
 		IsPublic:        req.IsPublic,
