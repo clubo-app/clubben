@@ -10,6 +10,7 @@ type Party struct {
 	ID              string
 	UserId          string
 	Title           string
+	Description     string
 	IsPublic        bool
 	MaxParticipants uint32
 	Location        orb.Point

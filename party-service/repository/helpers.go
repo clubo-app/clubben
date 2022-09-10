@@ -23,6 +23,7 @@ func (p Party) ToGRPCParty() *pg.Party {
 		Id:              p.ID,
 		UserId:          p.UserID,
 		Title:           p.Title,
+		Description:     p.Description.String,
 		IsPublic:        p.IsPublic,
 		MaxParticipants: uint32(p.MaxParticipants.Int32),
 		Lat:             float32(p.Location.Lat()),

@@ -25,6 +25,7 @@ func (s partyServer) UpdateParty(c context.Context, req *pg.UpdatePartyRequest) 
 		ID:            id.String(),
 		UserId:        req.RequesterId,
 		Title:         req.Title,
+		Description:   req.Description,
 		Location:      orb.Point{float64(req.Long), float64(req.Lat)},
 		StreetAddress: req.StreetAddress,
 		PostalCode:    req.PostalCode,

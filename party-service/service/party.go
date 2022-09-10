@@ -37,6 +37,7 @@ func (s partyService) Create(ctx context.Context, p dto.Party) (res repository.P
 		ID:              ksuid.New().String(),
 		UserID:          p.UserId,
 		Title:           p.Title,
+		Description:     sql.NullString{Valid: p.Description != "", String: p.Description},
 		IsPublic:        p.IsPublic,
 		MaxParticipants: sql.NullInt32{Valid: p.MaxParticipants != 0, Int32: int32(p.MaxParticipants)},
 		Location:        p.Location,
@@ -58,6 +59,7 @@ func (s partyService) Update(ctx context.Context, p dto.Party) (res repository.P
 	res, err = s.r.UpdateParty(ctx, repository.UpdatePartyParams{
 		ID:            p.ID,
 		Title:         p.Title,
+		Description:   p.Description,
 		Location:      p.Location,
 		StreetAddress: p.StreetAddress,
 		PostalCode:    p.PostalCode,

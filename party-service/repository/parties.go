@@ -65,6 +65,7 @@ type CreatePartyParams struct {
 	ID              string
 	UserID          string
 	Title           string
+	Description     sql.NullString
 	IsPublic        bool
 	MaxParticipants sql.NullInt32
 	Location        orb.Point
@@ -76,7 +77,7 @@ type CreatePartyParams struct {
 	EndDate         time.Time
 }
 
-const selectStmt = "id, user_id, title, is_public, max_participants, ST_AsBinary(location) AS location, street_address, postal_code, state, country, start_date, end_date"
+const selectStmt = "id, user_id, title, description, is_public, max_participants, ST_AsBinary(location) AS location, street_address, postal_code, state, country, start_date, end_date"
 
 func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams) (Party, error) {
 	sqlf.SetDialect(sqlf.PostgreSQL)
@@ -85,6 +86,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		Set("id", arg.ID).
 		Set("user_id", arg.UserID).
 		Set("title", arg.Title).
+		Set("description", arg.Description).
 		Set("is_public", arg.IsPublic).
 		Set("max_participants", arg.MaxParticipants).
 		SetExpr("location", "ST_GeomFromEWKB(?)", ewkb.Value(arg.Location, 4326)).
@@ -102,6 +104,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		&i.ID,
 		&i.UserID,
 		&i.Title,
+		&i.Description,
 		&i.IsPublic,
 		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
@@ -118,6 +121,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 type UpdatePartyParams struct {
 	ID            string
 	Title         string
+	Description   string
 	Location      orb.Point
 	StreetAddress string
 	PostalCode    string
@@ -133,6 +137,9 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 
 	if arg.Title != "" {
 		b = b.Set("title", arg.Title)
+	}
+	if arg.Description != "" {
+		b = b.Set("description", arg.Description)
 	}
 	if arg.Location.Lat() != 0 && arg.Location.Lon() != 0 {
 		b = b.SetExpr("location", "ST_GeomFromEWKB(?)", ewkb.Value(arg.Location, 4326))
@@ -160,7 +167,7 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 
 	b.
 		Where("id = ?", arg.ID).
-		Returning("id, user_id, title, is_public, ST_AsBinary(location) AS location, street_address, postal_code, state, country, start_date, end_date")
+		Returning(selectStmt)
 
 	row := r.pool.QueryRow(ctx, b.String(), b.Args()...)
 	var i Party
@@ -168,6 +175,7 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 		&i.ID,
 		&i.UserID,
 		&i.Title,
+		&i.Description,
 		&i.IsPublic,
 		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
@@ -195,6 +203,7 @@ func (r PartyRepository) GetParty(ctx context.Context, id string) (Party, error)
 		&i.ID,
 		&i.UserID,
 		&i.Title,
+		&i.Description,
 		&i.IsPublic,
 		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
@@ -233,6 +242,7 @@ func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesP
 			&i.ID,
 			&i.UserID,
 			&i.Title,
+			&i.Description,
 			&i.IsPublic,
 			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),
@@ -287,6 +297,7 @@ func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByU
 			&i.ID,
 			&i.UserID,
 			&i.Title,
+			&i.Description,
 			&i.IsPublic,
 			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),
@@ -343,6 +354,7 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 			&i.ID,
 			&i.UserID,
 			&i.Title,
+			&i.Description,
 			&i.IsPublic,
 			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),

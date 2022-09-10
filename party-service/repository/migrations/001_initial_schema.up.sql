@@ -2,6 +2,7 @@ CREATE TABLE parties (
     id varchar(27) PRIMARY KEY,
     user_id TEXT NOT NULL,
     title TEXT NOT NULL,
+    description TEXT,
     is_public BOOLEAN NOT NULL DEFAULT false,
     max_participants INTEGER,
     location geometry(POINT, 4326) NOT NULL,
