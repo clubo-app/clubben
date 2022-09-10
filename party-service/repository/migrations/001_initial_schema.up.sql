@@ -10,8 +10,7 @@ CREATE TABLE parties (
     postal_code TEXT,
     state TEXT,
     country TEXT,
-    start_date TIMESTAMP,
-    end_date TIMESTAMP
+    entry_date TIMESTAMP NOT NULL
 );
 
 CREATE INDEX parties_by_user_id_idx ON parties (user_id, is_public, id);

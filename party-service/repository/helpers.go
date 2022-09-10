@@ -32,8 +32,7 @@ func (p Party) ToGRPCParty() *pg.Party {
 		PostalCode:      p.PostalCode.String,
 		State:           p.State.String,
 		Country:         p.Country.String,
-		StartDate:       timestamppb.New(p.StartDate.Time),
-		EndDate:         timestamppb.New(p.EndDate.Time),
+		EntryDate:       timestamppb.New(p.EntryDate),
 		CreatedAt:       timestamppb.New(id.Time()),
 	}
 }

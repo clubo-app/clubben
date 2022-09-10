@@ -10,9 +10,6 @@ import (
 )
 
 func (s partyServer) CreateParty(c context.Context, req *pg.CreatePartyRequest) (*pg.Party, error) {
-	start := req.StartDate.AsTime()
-	end := req.EndDate.AsTime()
-
 	d := dto.Party{
 		Title:           req.Title,
 		Description:     req.Description,
@@ -24,8 +21,7 @@ func (s partyServer) CreateParty(c context.Context, req *pg.CreatePartyRequest) 
 		PostalCode:      req.PostalCode,
 		State:           req.State,
 		Country:         req.Country,
-		StartDate:       start,
-		EndDate:         end,
+		EntryDate:       req.EntryDate.AsTime(),
 	}
 
 	p, err := s.ps.Create(c, d)

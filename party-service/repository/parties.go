@@ -73,11 +73,10 @@ type CreatePartyParams struct {
 	PostalCode      string
 	State           string
 	Country         string
-	StartDate       time.Time
-	EndDate         time.Time
+	EntryDate       time.Time
 }
 
-const selectStmt = "id, user_id, title, description, is_public, max_participants, ST_AsBinary(location) AS location, street_address, postal_code, state, country, start_date, end_date"
+const selectStmt = "id, user_id, title, description, is_public, max_participants, ST_AsBinary(location) AS location, street_address, postal_code, state, country, entry_date"
 
 func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams) (Party, error) {
 	sqlf.SetDialect(sqlf.PostgreSQL)
@@ -94,8 +93,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		Set("postal_code", arg.PostalCode).
 		Set("state", arg.State).
 		Set("country", arg.Country).
-		Set("start_date", arg.StartDate).
-		Set("end_date", arg.EndDate).
+		Set("entry_date", arg.EntryDate).
 		Returning(selectStmt)
 
 	row := r.pool.QueryRow(ctx, b.String(), b.Args()...)
@@ -112,8 +110,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
-		&i.StartDate,
-		&i.EndDate,
+		&i.EntryDate,
 	)
 	return i, err
 }
@@ -127,8 +124,7 @@ type UpdatePartyParams struct {
 	PostalCode    string
 	State         string
 	Country       string
-	StartDate     time.Time
-	EndDate       time.Time
+	EntryDate     time.Time
 }
 
 func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams) (Party, error) {
@@ -156,13 +152,9 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 	if arg.Country != "" {
 		b = b.Set("country", arg.Country)
 	}
-	startYear := arg.StartDate.Year()
+	startYear := arg.EntryDate.Year()
 	if !(startYear == 1970) {
-		b = b.Set("start_date", arg.StartDate)
-	}
-	endYear := arg.StartDate.Year()
-	if !(endYear == 1970) {
-		b = b.Set("end_date", arg.EndDate)
+		b = b.Set("entry_date", arg.EntryDate)
 	}
 
 	b.
@@ -183,8 +175,7 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
-		&i.StartDate,
-		&i.EndDate,
+		&i.EntryDate,
 	)
 
 	return i, err
@@ -211,8 +202,7 @@ func (r PartyRepository) GetParty(ctx context.Context, id string) (Party, error)
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
-		&i.StartDate,
-		&i.EndDate,
+		&i.EntryDate,
 	)
 	return i, err
 }
@@ -250,8 +240,7 @@ func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesP
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
-			&i.StartDate,
-			&i.EndDate,
+			&i.EntryDate,
 		); err != nil {
 			return nil, err
 		}
@@ -305,8 +294,7 @@ func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByU
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
-			&i.StartDate,
-			&i.EndDate,
+			&i.EntryDate,
 		); err != nil {
 			return nil, err
 		}
@@ -362,8 +350,7 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
-			&i.StartDate,
-			&i.EndDate,
+			&i.EntryDate,
 		); err != nil {
 			return nil, err
 		}

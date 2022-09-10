@@ -13,9 +13,6 @@ import (
 )
 
 func (s partyServer) UpdateParty(c context.Context, req *pg.UpdatePartyRequest) (*pg.Party, error) {
-	start := req.StartDate.AsTime()
-	end := req.EndDate.AsTime()
-
 	id, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
@@ -31,8 +28,7 @@ func (s partyServer) UpdateParty(c context.Context, req *pg.UpdatePartyRequest) 
 		PostalCode:    req.PostalCode,
 		State:         req.State,
 		Country:       req.Country,
-		StartDate:     start,
-		EndDate:       end,
+		EntryDate:     req.EntryDate.AsTime(),
 	}
 
 	d, err := s.ps.Update(c, p)

@@ -6,6 +6,7 @@ package repository
 
 import (
 	"database/sql"
+	"time"
 
 	"github.com/paulmach/orb"
 )
@@ -22,6 +23,5 @@ type Party struct {
 	PostalCode      sql.NullString
 	State           sql.NullString
 	Country         sql.NullString
-	StartDate       sql.NullTime
-	EndDate         sql.NullTime
+	EntryDate       time.Time
 }

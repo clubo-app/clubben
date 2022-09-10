@@ -18,6 +18,5 @@ type Party struct {
 	PostalCode      string
 	State           string
 	Country         string
-	StartDate       time.Time
-	EndDate         time.Time
+	EntryDate       time.Time
 }

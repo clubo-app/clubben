@@ -45,8 +45,7 @@ func (s partyService) Create(ctx context.Context, p dto.Party) (res repository.P
 		PostalCode:      p.PostalCode,
 		State:           p.State,
 		Country:         p.Country,
-		StartDate:       p.StartDate,
-		EndDate:         p.EndDate,
+		EntryDate:       p.EntryDate,
 	})
 	if err != nil {
 		return res, err
@@ -65,8 +64,7 @@ func (s partyService) Update(ctx context.Context, p dto.Party) (res repository.P
 		PostalCode:    p.PostalCode,
 		State:         p.State,
 		Country:       p.Country,
-		StartDate:     p.StartDate,
-		EndDate:       p.EndDate,
+		EntryDate:     p.EntryDate,
 	})
 	if err != nil {
 		return res, err

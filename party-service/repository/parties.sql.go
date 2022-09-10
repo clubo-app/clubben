@@ -12,7 +12,7 @@ import (
 const deleteParty = `-- name: DeleteParty :exec
 DELETE FROM parties
 WHERE id = $1 AND user_id = $2
-RETURNING id, user_id, title, description, is_public, max_participants, location, street_address, postal_code, state, country, start_date, end_date
+RETURNING id, user_id, title, description, is_public, max_participants, location, street_address, postal_code, state, country, entry_date
 `
 
 type DeletePartyParams struct {
