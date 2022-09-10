@@ -24,10 +24,11 @@ func (c profileConsumer) ProfileCreated(p *events.ProfileCreated) {
 		return
 	}
 	err := c.repo.PutProfile(context.Background(), datastruct.Profile{
-		Id:        p.Profile.Id,
-		Username:  p.Profile.Username,
-		Firstname: p.Profile.Firstname,
-		Lastname:  p.Profile.Lastname,
+		Id:          p.Profile.Id,
+		Username:    p.Profile.Username,
+		Firstname:   p.Profile.Firstname,
+		Lastname:    p.Profile.Lastname,
+		FriendCount: 0,
 	})
 	if err != nil {
 		log.Println("Error inserting Profile: ", err)
@@ -57,5 +58,27 @@ func (c profileConsumer) ProfileDeleted(p *events.UserDeleted) {
 	err := c.repo.RemoveProfile(context.Background(), p.Id)
 	if err != nil {
 		log.Println("Error removing Profile: ", err)
+	}
+}
+
+func (c profileConsumer) FriendCreated(e *events.FriendCreated) {
+	if e == nil {
+		return
+	}
+	log.Printf("%+v", e)
+	err := c.repo.IncrementFriendCount(context.Background(), e.UserId)
+	if err != nil {
+		log.Println("Error incrementing FriendCount: ", err)
+	}
+}
+
+func (c profileConsumer) FriendRemoved(e *events.FriendRemoved) {
+	if e == nil {
+		return
+	}
+	log.Printf("%+v", e)
+	err := c.repo.DecrementFriendCount(context.Background(), e.UserId)
+	if err != nil {
+		log.Println("Error decrementing FriendCount: ", err)
 	}
 }

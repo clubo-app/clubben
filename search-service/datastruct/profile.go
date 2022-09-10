@@ -7,11 +7,12 @@ import (
 )
 
 type Profile struct {
-	Id        string `vespa:"-"`
-	DocId     string `vespa:"documentid"`
-	Username  string `vespa:"username"`
-	Firstname string `vespa:"firstname"`
-	Lastname  string `vespa:"lastname"`
+	Id          string `vespa:"-"`
+	DocId       string `vespa:"documentid"`
+	Username    string `vespa:"username"`
+	Firstname   string `vespa:"firstname"`
+	Lastname    string `vespa:"lastname"`
+	FriendCount int32  `vespa:"friend_count"`
 }
 
 func (p Profile) ToGRPCProfile() *search.IndexedUser {

@@ -26,6 +26,8 @@ func (c consumer) Start() {
 	go c.stream.SubscribeToEvent("search.profile.created", events.ProfileCreated{}, c.profile.ProfileCreated)
 	go c.stream.SubscribeToEvent("search.profile.updated", events.ProfileUpdated{}, c.profile.ProfileUpdate)
 	go c.stream.SubscribeToEvent("search.user.deleted", events.UserDeleted{}, c.profile.ProfileDeleted)
+	go c.stream.SubscribeToEvent("search.friend.created", events.FriendCreated{}, c.profile.FriendCreated)
+	go c.stream.SubscribeToEvent("search.friend.removed", events.FriendRemoved{}, c.profile.FriendRemoved)
 
 	wg.Wait()
 }
