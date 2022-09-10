@@ -33,6 +33,7 @@ message CreatePartyRequest {
     string state = 10;
     string country = 11;
     google.protobuf.Timestamp entry_date = 12;
+    string music_genre = 13;
 }
 
 message GetPartyRequest {
@@ -51,6 +52,7 @@ message UpdatePartyRequest {
     string state = 9;
     string country = 10;
     google.protobuf.Timestamp entry_date = 11;
+    string music_genre = 12;
 }
 
 message DeletePartyRequest {
@@ -94,6 +96,7 @@ message Party {
     string country = 12;
     google.protobuf.Timestamp entry_date = 13;
     google.protobuf.Timestamp created_at = 14;
+    string music_genre = 15;
 }
 
 message PagedParties {
