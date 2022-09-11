@@ -7,7 +7,10 @@ import (
 	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/party-service/dto"
 	"github.com/clubo-app/clubben/party-service/repository"
+	"github.com/clubo-app/clubben/protobuf/events"
+	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/segmentio/ksuid"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type PartyService interface {
@@ -52,6 +55,8 @@ func (s partyService) Create(ctx context.Context, p dto.Party) (res repository.P
 		return res, err
 	}
 
+	s.stream.PublishEvent(&events.PartyCreated{Party: res.ToGRPCParty()})
+
 	return res, nil
 }
 
@@ -71,6 +76,30 @@ func (s partyService) Update(ctx context.Context, p dto.Party) (res repository.P
 	if err != nil {
 		return res, err
 	}
+
+	updatedValues := party.Party{
+		Id:              p.ID,
+		UserId:          p.UserId,
+		Title:           p.Title,
+		Description:     p.Description,
+		MusicGenre:      p.MusicGenre,
+		MaxParticipants: p.MaxParticipants,
+		StreetAddress:   p.StreetAddress,
+		PostalCode:      p.PostalCode,
+		State:           p.State,
+		Country:         p.Country,
+	}
+
+	if p.Location.Lat() != 0 && p.Location.Lon() != 0 {
+		updatedValues.Lat = float32(p.Location.Lat())
+		updatedValues.Long = float32(p.Location.Lon())
+	}
+	entryYear := p.EntryDate.Year()
+	if !(entryYear == 1970) {
+		updatedValues.EntryDate = timestamppb.New(p.EntryDate)
+	}
+
+	s.stream.PublishEvent(&events.PartyUpdated{Party: &updatedValues})
 
 	return res, nil
 }
