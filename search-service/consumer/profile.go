@@ -65,20 +65,20 @@ func (c profileConsumer) FriendCreated(e *events.FriendCreated) {
 	if e == nil {
 		return
 	}
-	log.Printf("%+v", e)
 	err := c.repo.IncrementFriendCount(context.Background(), e.UserId)
 	if err != nil {
 		log.Println("Error incrementing FriendCount: ", err)
 	}
+	log.Println("FriendCount incremented for User ", e.UserId)
 }
 
 func (c profileConsumer) FriendRemoved(e *events.FriendRemoved) {
 	if e == nil {
 		return
 	}
-	log.Printf("%+v", e)
 	err := c.repo.DecrementFriendCount(context.Background(), e.UserId)
 	if err != nil {
 		log.Println("Error decrementing FriendCount: ", err)
 	}
+	log.Println("FriendCount decremented for User ", e.UserId)
 }
