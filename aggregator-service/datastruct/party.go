@@ -12,7 +12,9 @@ type AggregatedParty struct {
 	Id              string             `json:"id,omitempty"`
 	Creator         *AggregatedProfile `json:"creator,omitempty"`
 	Title           string             `json:"title,omitempty"`
+	Description     string             `json:"description,omitempty"`
 	IsPublic        bool               `json:"is_public"`
+	MusicGenre      string             `json:"music_genre,omitempty"`
 	MaxParticipants int32              `json:"max_participants"`
 	Lat             float32            `json:"lat,omitempty"`
 	Long            float32            `json:"long,omitempty"`
@@ -33,7 +35,9 @@ func PartyToAgg(p *pg.Party) AggregatedParty {
 	return AggregatedParty{
 		Id:              p.Id,
 		Title:           p.Title,
+		Description:     p.Description,
 		IsPublic:        p.IsPublic,
+		MusicGenre:      p.MusicGenre,
 		MaxParticipants: p.MaxParticipants,
 		Lat:             p.Lat,
 		Long:            p.Long,
