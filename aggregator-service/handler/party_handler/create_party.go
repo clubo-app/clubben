@@ -1,8 +1,6 @@
 package partyhandler
 
 import (
-	"time"
-
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
@@ -13,18 +11,18 @@ import (
 )
 
 type CreatePartyReq struct {
-	Title           string    `json:"title"`
-	Description     string    `json:"description,omitempty"`
-	Lat             float32   `json:"lat"`
-	Long            float32   `json:"long"`
-	IsPublic        bool      `json:"is_public"`
-	MusicGenre      string    `json:"music_genre"`
-	MaxParticipants int32     `json:"max_participants"`
-	StreetAddress   string    `json:"street_address"`
-	PostalCode      string    `json:"postal_code"`
-	State           string    `json:"state"`
-	Country         string    `json:"country"`
-	EntryDate       time.Time `json:"entry_date"`
+	Title           string                `json:"title"`
+	Description     string                `json:"description,omitempty"`
+	Lat             float32               `json:"lat"`
+	Long            float32               `json:"long"`
+	IsPublic        bool                  `json:"is_public"`
+	MusicGenre      string                `json:"music_genre"`
+	MaxParticipants int32                 `json:"max_participants"`
+	StreetAddress   string                `json:"street_address"`
+	PostalCode      string                `json:"postal_code"`
+	State           string                `json:"state"`
+	Country         string                `json:"country"`
+	EntryDate       timestamppb.Timestamp `json:"entry_date"`
 }
 
 func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
@@ -48,7 +46,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 		PostalCode:      req.PostalCode,
 		State:           req.State,
 		Country:         req.Country,
-		EntryDate:       timestamppb.New(req.EntryDate),
+		EntryDate:       &req.EntryDate,
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)
