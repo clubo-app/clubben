@@ -4,6 +4,7 @@ package events;
 option go_package = "github.com/clubo-app/clubben/protobuf/events";
 
 import "profile/profile.proto";
+import "party/party.proto";
 import "google/protobuf/timestamp.proto";
 
 message ProfileCreated {
@@ -18,33 +19,11 @@ message UserDeleted {
 }
 
 message PartyCreated {
-    string id = 1;
-    string user_id = 2;
-    string title = 3;
-    bool is_public = 4;
-    float lat = 5;
-    float long = 6;
-    string street_address = 7;
-    string postal_code = 8;
-    string state = 9;
-    string country = 10;
-    string start_date = 11;
-    string end_date = 12;
+    party.Party party = 1;
 }
 
 message PartyUpdated { 
-    string id = 1;
-    string user_id = 2;
-    string title = 3;
-    bool is_public = 4;
-    float lat = 5;
-    float long = 6;
-    string street_address = 7;
-    string postal_code = 8;
-    string state = 9;
-    string country = 10;
-    string start_date = 11;
-    string end_date = 12;
+    party.Party party = 1;
 }
 
 message FriendRemoved {
