@@ -17,8 +17,8 @@ type searchServer struct {
 	search.UnimplementedSearchServiceServer
 }
 
-func NewSearchServer(profile repository.ProfileRepository) search.SearchServiceServer {
-	return &searchServer{profile: profile}
+func NewSearchServer(profile repository.ProfileRepository, party repository.PartyRepository) search.SearchServiceServer {
+	return &searchServer{profile: profile, party: party}
 }
 
 func Start(s search.SearchServiceServer, port string) {

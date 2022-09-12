@@ -36,7 +36,7 @@ func main() {
 	con := consumer.NewConsumer(&stream, profileCon, partyCon)
 
 	go con.Start()
-	s := rpc.NewSearchServer(profileRepo)
+	s := rpc.NewSearchServer(profileRepo, partyRepo)
 
 	rpc.Start(s, c.PORT)
 }
