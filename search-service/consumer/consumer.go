@@ -13,10 +13,11 @@ type consumer struct {
 	party   partyConsumer
 }
 
-func NewConsumer(stream *stream.Stream, profile profileConsumer) consumer {
+func NewConsumer(stream *stream.Stream, profile profileConsumer, party partyConsumer) consumer {
 	return consumer{
 		stream:  stream,
 		profile: profile,
+		party:   party,
 	}
 }
 

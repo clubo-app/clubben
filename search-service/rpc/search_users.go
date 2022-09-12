@@ -15,7 +15,7 @@ func (s *searchServer) SearchUsers(ctx context.Context, req *search.SearchUsersR
 
 	res := make([]*search.IndexedUser, len(profiles))
 	for i, p := range profiles {
-		res[i] = p.ToGRPCProfile()
+		res[i] = p.ToGRPCUser()
 	}
 
 	return &search.SearchUsersResponse{

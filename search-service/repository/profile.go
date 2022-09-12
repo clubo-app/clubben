@@ -23,7 +23,7 @@ func NewProfileRepository(v *govespa.VespaClient) ProfileRepository {
 }
 
 func (r *ProfileRepository) QueryProfile(c context.Context, query string) ([]datastruct.Profile, error) {
-	profiles := make([]datastruct.Profile, 0, 20)
+	profiles := make([]datastruct.Profile, 0, 15)
 
 	_, err := r.v.
 		Query().
@@ -31,7 +31,7 @@ func (r *ProfileRepository) QueryProfile(c context.Context, query string) ([]dat
 		AddYQL("select * from user where userInput(@q)").
 		AddVariable("q", query).
 		AddParameter(govespa.QueryParameter{
-			Hits: 20,
+			Hits: 15,
 		}).
 		Select(&profiles)
 	if err != nil {

@@ -28,13 +28,15 @@ func main() {
 		HttpClient: newHttp(),
 	})
 
-	pRepo := repository.NewProfileRepository(vespa)
+	profileRepo := repository.NewProfileRepository(vespa)
+	partyRepo := repository.NewPartyRepository(vespa)
 
-	profileCon := consumer.NewProfileConsumer(&pRepo)
-	con := consumer.NewConsumer(&stream, profileCon)
+	profileCon := consumer.NewProfileConsumer(&profileRepo)
+	partyCon := consumer.NewPartyConsumer(&partyRepo)
+	con := consumer.NewConsumer(&stream, profileCon, partyCon)
 
 	go con.Start()
-	s := rpc.NewSearchServer(pRepo)
+	s := rpc.NewSearchServer(profileRepo)
 
 	rpc.Start(s, c.PORT)
 }

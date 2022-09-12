@@ -12,6 +12,7 @@ import (
 
 type searchServer struct {
 	profile repository.ProfileRepository
+	party   repository.PartyRepository
 
 	search.UnimplementedSearchServiceServer
 }

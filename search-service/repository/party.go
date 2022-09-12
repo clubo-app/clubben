@@ -22,6 +22,26 @@ func NewPartyRepository(v *govespa.VespaClient) PartyRepository {
 	}
 }
 
+func (r *PartyRepository) QueryParty(c context.Context, query string, loc datastruct.Location) ([]datastruct.Party, error) {
+	parties := make([]datastruct.Party, 0, 15)
+
+	_, err := r.v.
+		Query().
+		WithContext(c).
+		AddYQL("select * from party where userInput(@q)").
+		AddVariable("q", query).
+		AddParameter(govespa.QueryParameter{
+			Hits: 15,
+		}).
+		Select(&parties)
+	if err != nil {
+		return []datastruct.Party{}, err
+	}
+
+	return parties, nil
+
+}
+
 func (r *PartyRepository) PutParty(c context.Context, p datastruct.Party) error {
 	return r.v.
 		Put(govespa.DocumentId{Namespace: NAMESPACE, DocType: PARTY_DOC_TYPE, UserSpecific: p.Id}).

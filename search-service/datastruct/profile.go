@@ -15,7 +15,7 @@ type Profile struct {
 	FriendCount int32  `vespa:"friend_count"`
 }
 
-func (p Profile) ToGRPCProfile() *search.IndexedUser {
+func (p Profile) ToGRPCUser() *search.IndexedUser {
 	pos := strings.LastIndex(p.DocId, ":")
 	if pos == -1 {
 		return &search.IndexedUser{}
