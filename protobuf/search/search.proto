@@ -3,6 +3,8 @@ syntax = "proto3";
 package search;
 option go_package = "github.com/clubo-app/clubben/protobuf/search";
 
+import "google/protobuf/timestamp.proto";
+
 service SearchService {
   rpc SearchUsers (SearchUsersRequest) returns (SearchUsersResponse) {};
 }
@@ -10,6 +12,12 @@ service SearchService {
 // Requests
 message SearchUsersRequest {
   string query = 1;
+}
+
+message SearchPartiesRequest {
+  string query = 1;
+  float lat = 2;
+  float long = 3;
 }
 
 // Response
@@ -20,6 +28,22 @@ message IndexedUser {
   string lastname = 4;
 }
 
+message IndexedParty {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string music_genre = 4;
+  float lat = 5;
+  float long = 6;
+  google.protobuf.Timestamp entry_date = 7;
+  bool is_public = 8;
+  int32 favorite_count = 9;
+}
+
 message SearchUsersResponse {
   repeated IndexedUser users = 1;
+}
+
+message SearchPartiesResponse {
+  repeated IndexedParty parties = 1;
 }
