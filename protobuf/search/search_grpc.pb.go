@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SearchServiceClient interface {
 	SearchUsers(ctx context.Context, in *SearchUsersRequest, opts ...grpc.CallOption) (*SearchUsersResponse, error)
+	SearchParties(ctx context.Context, in *SearchPartiesRequest, opts ...grpc.CallOption) (*SearchPartiesResponse, error)
 }
 
 type searchServiceClient struct {
@@ -42,11 +43,21 @@ func (c *searchServiceClient) SearchUsers(ctx context.Context, in *SearchUsersRe
 	return out, nil
 }
 
+func (c *searchServiceClient) SearchParties(ctx context.Context, in *SearchPartiesRequest, opts ...grpc.CallOption) (*SearchPartiesResponse, error) {
+	out := new(SearchPartiesResponse)
+	err := c.cc.Invoke(ctx, "/search.SearchService/SearchParties", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
 type SearchServiceServer interface {
 	SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error)
+	SearchParties(context.Context, *SearchPartiesRequest) (*SearchPartiesResponse, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedSearchServiceServer struct {
 
 func (UnimplementedSearchServiceServer) SearchUsers(context.Context, *SearchUsersRequest) (*SearchUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchUsers not implemented")
+}
+func (UnimplementedSearchServiceServer) SearchParties(context.Context, *SearchPartiesRequest) (*SearchPartiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchParties not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -88,6 +102,24 @@ func _SearchService_SearchUsers_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_SearchParties_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchPartiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).SearchParties(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/search.SearchService/SearchParties",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).SearchParties(ctx, req.(*SearchPartiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchUsers",
 			Handler:    _SearchService_SearchUsers_Handler,
+		},
+		{
+			MethodName: "SearchParties",
+			Handler:    _SearchService_SearchParties_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

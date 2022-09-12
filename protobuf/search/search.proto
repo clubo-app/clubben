@@ -7,6 +7,7 @@ import "google/protobuf/timestamp.proto";
 
 service SearchService {
   rpc SearchUsers (SearchUsersRequest) returns (SearchUsersResponse) {};
+  rpc SearchParties (SearchPartiesRequest) returns (SearchPartiesResponse) {};
 }
 
 // Requests
