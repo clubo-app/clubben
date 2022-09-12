@@ -1,6 +1,8 @@
 package partyhandler
 
 import (
+	"log"
+
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/party"
@@ -11,6 +13,7 @@ import (
 )
 
 func (h partyGatewayHandler) GetParty(c *fiber.Ctx) error {
+	log.Println("Running GetParty")
 	id := c.Params("id")
 
 	p, err := h.pc.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})

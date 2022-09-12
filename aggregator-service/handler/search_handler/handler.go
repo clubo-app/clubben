@@ -11,6 +11,7 @@ type searchGatewayHandler struct {
 
 type SearchGatewayHandler interface {
 	SearchUsers(c *fiber.Ctx) error
+	SearchParties(c *fiber.Ctx) error
 }
 
 func NewSearchGatewayHandler(sc search.SearchServiceClient) SearchGatewayHandler {

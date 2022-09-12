@@ -112,7 +112,8 @@ func main() {
 	party.Get("/user/:id", partyHandler.GetPartyByUser)
 	party.Patch("/:id", middleware.AuthRequired(c.TOKEN_SECRET), partyHandler.UpdateParty)
 	party.Get("/:id/favorite/user", partyHandler.GetFavorisingUsersByParty)
-	party.Get("/search/:lat/:long", partyHandler.GeoSearch)
+	party.Get("/search/:query", searchHandler.SearchParties)
+	party.Get("/geo-search/:lat/:lon", partyHandler.GeoSearch)
 
 	party.Delete("/:pid/invite/:uid", middleware.AuthRequired(c.TOKEN_SECRET), participationHandler.DeclinePartyInvite)
 	party.Post("/:pid/invite/:uid", middleware.AuthRequired(c.TOKEN_SECRET), participationHandler.InviteToParty)

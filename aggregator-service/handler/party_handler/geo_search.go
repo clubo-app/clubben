@@ -20,9 +20,16 @@ func (h partyGatewayHandler) GeoSearch(c *fiber.Ctx) error {
 	offset, _ := strconv.ParseInt(offsetStr, 10, 32)
 
 	latStr := c.Params("lat")
-	lat, _ := strconv.ParseFloat(latStr, 32)
-	longStr := c.Params("long")
-	long, _ := strconv.ParseFloat(longStr, 32)
+	lat, err := strconv.ParseFloat(latStr, 32)
+	if err != nil {
+		return utils.ToHTTPError(err)
+	}
+
+	lonStr := c.Params("lon")
+	lon, err := strconv.ParseFloat(lonStr, 32)
+	if err != nil {
+		return utils.ToHTTPError(err)
+	}
 
 	radiusStr := c.Query("radius")
 	radius, _ := strconv.ParseInt(radiusStr, 10, 32)
@@ -32,7 +39,7 @@ func (h partyGatewayHandler) GeoSearch(c *fiber.Ctx) error {
 
 	parties, err := h.pc.GeoSearch(c.Context(), &pg.GeoSearchRequest{
 		Lat:      float32(lat),
-		Long:     float32(long),
+		Long:     float32(lon),
 		Limit:    int32(limit),
 		Offset:   int32(offset),
 		Radius:   int32(radius),
