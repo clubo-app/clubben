@@ -216,7 +216,7 @@ func (r participantRepository) GetPartyParticipant(ctx context.Context, params U
 		ContextQuery(ctx, stmt, names).BindMap(qb.M{
 		"party_id": params.PartyId,
 		"user_id":  params.UserId,
-	}).GetRelease(p)
+	}).GetRelease(&p)
 
 	return
 }

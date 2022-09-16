@@ -52,8 +52,12 @@ func (p participant) Join(ctx context.Context, params JoinParams) (datastruct.Pa
 		return datastruct.Participant{}, status.Error(codes.InvalidArgument, "You can't join your own Party")
 	}
 
-	count, err := p.r.GetParticipationCount(ctx, params.PartyId)
+	log.Println("Join Got Party: ", party)
+
+	count, _ := p.r.GetParticipationCount(ctx, params.PartyId)
 	if err != nil {
+		log.Println("ParticipationCount: ", count)
+		log.Println("Join Error ParticipationCount: ", err)
 		return datastruct.Participant{}, utils.HandleError(err)
 	}
 
