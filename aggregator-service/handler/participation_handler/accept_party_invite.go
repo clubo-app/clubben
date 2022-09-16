@@ -12,6 +12,7 @@ func (h participationHandler) AcceptPartyInvite(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	uId := c.Params("uid")
 	user := middleware.ParseUser(c)
+
 	pp, err := h.participationC.AcceptPartyInvite(c.Context(), &participation.DeclinePartyInviteRequest{
 		UserId:    user.Sub,
 		PartyId:   pId,
@@ -23,7 +24,7 @@ func (h participationHandler) AcceptPartyInvite(c *fiber.Ctx) error {
 
 	res := datastruct.
 		PartyParticipantToAgg(pp).
-		AddUser(datastruct.AggregatedProfile{Id: pp.UserId}).
+		AddProfile(datastruct.AggregatedProfile{Id: pp.UserId}).
 		AddParty(datastruct.AggregatedParty{Id: pp.PartyId})
 
 	return c.Status(fiber.StatusCreated).JSON(res)

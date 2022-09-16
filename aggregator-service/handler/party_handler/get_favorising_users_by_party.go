@@ -13,7 +13,7 @@ import (
 )
 
 func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
-	pId := c.Params("id")
+	pId := c.Params("pId")
 	nextPage := c.Query("nextPage")
 
 	limitStr := c.Query("limit")
@@ -34,25 +34,25 @@ func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 
 	pRes, _ := h.prf.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: ids})
 	if pRes == nil {
-		res := datastruct.PagedAggregatedFavorisingUsers{
-			FavoriteParties: []datastruct.AggregatedFavorisingUsers{},
-			NextPage:        fpRes.NextPage,
+		res := datastruct.PagedAggregatedFavorisingProfiles{
+			FavorisingProfiles: []datastruct.AggregatedFavorisingProfiles{},
+			NextPage:           fpRes.NextPage,
 		}
 		return c.Status(fiber.StatusOK).JSON(res)
 	}
 
-	aggFP := make([]datastruct.AggregatedFavorisingUsers, len(fpRes.FavoriteParties))
+	aggFP := make([]datastruct.AggregatedFavorisingProfiles, len(fpRes.FavoriteParties))
 	for i, fp := range fpRes.FavoriteParties {
-		aggFP[i] = datastruct.AggregatedFavorisingUsers{
-			User:        pRes.Profiles[fp.UserId],
+		aggFP[i] = datastruct.AggregatedFavorisingProfiles{
+			Profile:     pRes.Profiles[fp.UserId],
 			PartyId:     fp.PartyId,
 			FavoritedAt: fp.FavoritedAt.AsTime().UTC().Format(time.RFC3339),
 		}
 	}
 
-	res := datastruct.PagedAggregatedFavorisingUsers{
-		FavoriteParties: aggFP,
-		NextPage:        fpRes.NextPage,
+	res := datastruct.PagedAggregatedFavorisingProfiles{
+		FavorisingProfiles: aggFP,
+		NextPage:           fpRes.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

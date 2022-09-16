@@ -14,7 +14,7 @@ import (
 func (h relationGatewayHandler) FavorParty(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
-	pId := c.Params("id")
+	pId := c.Params("pId")
 
 	f, err := h.rc.FavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
 	if err != nil {

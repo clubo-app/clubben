@@ -9,7 +9,7 @@ import (
 )
 
 type AggregatedParty struct {
-	Id              string             `json:"id,omitempty"`
+	Id              string             `json:"id"`
 	Creator         *AggregatedProfile `json:"creator,omitempty"`
 	Title           string             `json:"title,omitempty"`
 	Description     string             `json:"description,omitempty"`
@@ -80,18 +80,18 @@ type AggregatedFavoriteParty struct {
 	FavoritedAt string          `json:"favorited_at"`
 }
 
-type AggregatedFavorisingUsers struct {
-	User        *profile.Profile `json:"user"`
+type AggregatedFavorisingProfiles struct {
+	Profile     *profile.Profile `json:"profile"`
 	PartyId     string           `json:"party_id"`
 	FavoritedAt string           `json:"favorited_at"`
 }
 
 type PagedAggregatedFavoriteParty struct {
 	FavoriteParties []AggregatedFavoriteParty `json:"favorite_parties"`
-	NextPage        string                    `json:"nextPage"`
+	NextPage        string                    `json:"next_page"`
 }
 
-type PagedAggregatedFavorisingUsers struct {
-	FavoriteParties []AggregatedFavorisingUsers `json:"favorite_parties"`
-	NextPage        string                      `json:"nextPage"`
+type PagedAggregatedFavorisingProfiles struct {
+	FavorisingProfiles []AggregatedFavorisingProfiles `json:"favorising_profiles"`
+	NextPage           string                         `json:"next_page"`
 }

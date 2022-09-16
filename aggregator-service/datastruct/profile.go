@@ -37,6 +37,6 @@ func (p AggregatedProfile) AddFCount(c uint32) AggregatedProfile {
 }
 
 type PagedAggregatedProfile struct {
-	AggregatedProfile []AggregatedProfile `json:"profiles"`
-	NextPage          string              `json:"nextPage"`
+	Profiles []AggregatedProfile `json:"profiles"`
+	NextPage string              `json:"next_page"`
 }

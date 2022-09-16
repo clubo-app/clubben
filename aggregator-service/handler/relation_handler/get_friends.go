@@ -64,8 +64,8 @@ func (h relationGatewayHandler) GetFriends(c *fiber.Ctx) error {
 	}
 
 	res := datastruct.PagedAggregatedProfile{
-		AggregatedProfile: aggP,
-		NextPage:          fr.NextPage,
+		Profiles: aggP,
+		NextPage: fr.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

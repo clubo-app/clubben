@@ -11,21 +11,13 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 )
 
-type InviteRequest struct {
-	ValidFor string `json:"valid_for"`
-}
-
 func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
-	req := new(InviteRequest)
-	if err := c.BodyParser(req); err != nil {
-		return err
-	}
-
 	pId := c.Params("pid")
 	uId := c.Params("uid")
+	validFor := c.Query("validFor")
 	user := middleware.ParseUser(c)
 
-	duration, err := time.ParseDuration(req.ValidFor)
+	duration, err := time.ParseDuration(validFor)
 	if err != nil {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Invalid valid_for parameter")
 	}
@@ -43,7 +35,7 @@ func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
 	res := datastruct.
 		PartyInviteToAgg(i).
 		AddInviter(datastruct.AggregatedProfile{Id: i.InviterId}).
-		AddUser(datastruct.AggregatedProfile{Id: i.UserId})
+		AddProfile(datastruct.AggregatedProfile{Id: i.UserId})
 
 	return c.Status(fiber.StatusCreated).JSON(res)
 }

@@ -49,5 +49,5 @@ func (s AggregatedStory) AddFriends(fs []AggregatedProfile) AggregatedStory {
 
 type PagedAggregatedStory struct {
 	Stories  []AggregatedStory `json:"stories,omitempty"`
-	NextPage string            `json:"nextPage"`
+	NextPage string            `json:"next_page"`
 }

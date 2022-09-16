@@ -8,19 +8,49 @@ import (
 	"github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
+type UpdatePartyReq struct {
+	Title           string                `json:"title"`
+	Description     string                `json:"description,omitempty"`
+	Lat             float32               `json:"lat"`
+	Lon             float32               `json:"lon"`
+	MusicGenre      string                `json:"music_genre"`
+	MaxParticipants int32                 `json:"max_participants"`
+	StreetAddress   string                `json:"street_address"`
+	PostalCode      string                `json:"postal_code"`
+	State           string                `json:"state"`
+	Country         string                `json:"country"`
+	EntryDate       timestamppb.Timestamp `json:"entry_date"`
+}
+
 func (h partyGatewayHandler) UpdateParty(c *fiber.Ctx) error {
-	req := new(party.UpdatePartyRequest)
+	req := new(UpdatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
 
 	user := middleware.ParseUser(c)
-	req.RequesterId = user.Sub
-	req.PartyId = c.Params("id")
+	pId := c.Params("id")
+	if pId == "" {
+		return fiber.NewError(fiber.ErrBadRequest.Code, "Party Id is required")
+	}
 
-	p, err := h.pc.UpdateParty(c.Context(), req)
+	p, err := h.pc.UpdateParty(c.Context(), &party.UpdatePartyRequest{
+		PartyId:       pId,
+		RequesterId:   user.Sub,
+		Title:         req.Title,
+		Description:   req.Description,
+		Lat:           req.Lat,
+		Long:          req.Lon,
+		MusicGenre:    req.MusicGenre,
+		StreetAddress: req.StreetAddress,
+		PostalCode:    req.PostalCode,
+		State:         req.State,
+		Country:       req.Country,
+		EntryDate:     &req.EntryDate,
+	})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

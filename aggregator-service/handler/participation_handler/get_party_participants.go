@@ -54,7 +54,7 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 			AddParty(datastruct.AggregatedParty{Id: pp.PartyId})
 
 		if profiles.Profiles[pp.UserId] != nil {
-			p = p.AddUser(datastruct.ProfileToAgg(profiles.Profiles[pp.UserId]))
+			p = p.AddProfile(datastruct.ProfileToAgg(profiles.Profiles[pp.UserId]))
 		}
 
 		aggP[i] = p

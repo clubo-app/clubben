@@ -7,14 +7,14 @@ import (
 )
 
 type AggregatedPartyInvite struct {
-	User       *AggregatedProfile `json:"profile,omitempty"`
+	Profile    *AggregatedProfile `json:"profile,omitempty"`
 	Inviter    AggregatedProfile  `json:"inviter,omitempty"`
 	Party      *AggregatedParty   `json:"party,omitempty"`
 	ValidUntil string             `json:"valid_until"`
 }
 type PagedAggregatedPartyInvite struct {
 	Invites  []AggregatedPartyInvite `json:"invites"`
-	NextPage string                  `json:"nextPage"`
+	NextPage string                  `json:"next_page"`
 }
 
 func PartyInviteToAgg(i *participation.PartyInvite) AggregatedPartyInvite {
@@ -26,9 +26,9 @@ func PartyInviteToAgg(i *participation.PartyInvite) AggregatedPartyInvite {
 	}
 }
 
-func (i AggregatedPartyInvite) AddUser(u AggregatedProfile) AggregatedPartyInvite {
+func (i AggregatedPartyInvite) AddProfile(u AggregatedProfile) AggregatedPartyInvite {
 	if u.Id != "" {
-		i.User = &u
+		i.Profile = &u
 	}
 	return i
 }
@@ -46,7 +46,7 @@ func (i AggregatedPartyInvite) AddParty(p AggregatedParty) AggregatedPartyInvite
 }
 
 type AggregatedPartyParticipant struct {
-	User        AggregatedProfile `json:"user"`
+	Profile     AggregatedProfile `json:"profile"`
 	Party       AggregatedParty   `json:"party"`
 	Requested   bool              `json:"requested"`
 	JoinedAt    string            `json:"joined_at"`
@@ -55,7 +55,7 @@ type AggregatedPartyParticipant struct {
 
 type PagedAggregatedPartyParticipant struct {
 	Participants []AggregatedPartyParticipant `json:"participants"`
-	NextPage     string                       `json:"nextPage"`
+	NextPage     string                       `json:"next_page"`
 }
 
 func PartyParticipantToAgg(p *participation.PartyParticipant) AggregatedPartyParticipant {
@@ -68,9 +68,9 @@ func PartyParticipantToAgg(p *participation.PartyParticipant) AggregatedPartyPar
 		Requested:   p.Requested,
 	}
 }
-func (p AggregatedPartyParticipant) AddUser(u AggregatedProfile) AggregatedPartyParticipant {
+func (p AggregatedPartyParticipant) AddProfile(u AggregatedProfile) AggregatedPartyParticipant {
 	if u.Id != "" {
-		p.User = u
+		p.Profile = u
 	}
 	return p
 }
