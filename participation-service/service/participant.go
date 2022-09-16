@@ -16,6 +16,7 @@ type Participant interface {
 	Request(context.Context, repository.UserPartyParams) (datastruct.Participant, error)
 	Accept(context.Context, AcceptRequestParams) error
 	Leave(context.Context, repository.UserPartyParams) error
+	GetPartyParticipant(context.Context, repository.UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 }
@@ -101,6 +102,10 @@ func (p participant) Accept(ctx context.Context, params AcceptRequestParams) err
 
 func (p participant) Leave(ctx context.Context, params repository.UserPartyParams) error {
 	return p.r.Leave(ctx, params)
+}
+
+func (p participant) GetPartyParticipant(ctx context.Context, params repository.UserPartyParams) (datastruct.Participant, error) {
+	return p.r.GetPartyParticipant(ctx, params)
 }
 
 func (p participant) GetPartyParticipants(ctx context.Context, params repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error) {

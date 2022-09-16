@@ -4,9 +4,10 @@ CREATE TABLE IF NOT EXISTS party_participants (
     requested boolean,
     joined_at timestamp,
     requested_at timestamp,
-    PRIMARY KEY ((party_id, requested), user_id)
+    PRIMARY KEY (party_id, user_id)
 ) WITH cdc = {'enabled':true};
 
+CREATE INDEX ON party_participants((party_id), requested);
 CREATE INDEX ON party_participants(user_id);
 
 CREATE TABLE IF NOT EXISTS party_invites (

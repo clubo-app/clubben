@@ -38,6 +38,7 @@ type ParticipantRepository interface {
 	Request(context.Context, UserPartyParams) (datastruct.Participant, error)
 	Accept(context.Context, UserPartyParams) error
 	Leave(context.Context, UserPartyParams) error
+	GetPartyParticipant(context.Context, UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	IncreaseParticipationCount(context.Context, string) error
@@ -202,6 +203,22 @@ func (r participantRepository) Leave(ctx context.Context, params UserPartyParams
 		return err
 	}
 	return nil
+}
+
+func (r participantRepository) GetPartyParticipant(ctx context.Context, params UserPartyParams) (p datastruct.Participant, err error) {
+	stmt, names := qb.
+		Select(PARTY_PARTICIPANTS).
+		Where(qb.Eq("party_id")).
+		Where(qb.Eq("user_id")).
+		ToCql()
+
+	err = r.sess.
+		ContextQuery(ctx, stmt, names).BindMap(qb.M{
+		"party_id": params.PartyId,
+		"user_id":  params.UserId,
+	}).GetRelease(p)
+
+	return
 }
 
 type GetPartyParticipantsParams struct {
