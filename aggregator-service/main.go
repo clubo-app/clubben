@@ -68,7 +68,7 @@ func main() {
 
 	authHandler := authhandler.NewAuthGatewayHandler(ac, prf)
 	profileHandler := profilehandler.NewUserGatewayHandler(prf, rc, ac)
-	partyHandler := partyhandler.NewPartyGatewayHandler(pc, prf, sc, rc)
+	partyHandler := partyhandler.NewPartyGatewayHandler(pc, prf, sc, rc, participationC)
 	storyHandler := storyhandler.NewStoryGatewayHandler(sc, prf, pc)
 	relationHandler := relationhandler.NewRelationGatewayHandler(rc, prf)
 	commentHandler := commenthandler.NewCommentGatewayHandler(cc, prf)
@@ -108,7 +108,7 @@ func main() {
 	party := app.Group("/parties")
 	party.Post("/", middleware.AuthRequired(c.TOKEN_SECRET), partyHandler.CreateParty)
 	party.Delete("/:id", middleware.AuthRequired(c.TOKEN_SECRET), partyHandler.DeleteParty)
-	party.Get("/:id", partyHandler.GetParty)
+	party.Get("/:id", middleware.AuthOptional(c.TOKEN_SECRET), partyHandler.GetParty)
 	party.Get("/user/:id", partyHandler.GetPartyByUser)
 	party.Patch("/:id", middleware.AuthRequired(c.TOKEN_SECRET), partyHandler.UpdateParty)
 	party.Get("/search/:query", searchHandler.SearchParties)

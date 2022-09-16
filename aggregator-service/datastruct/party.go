@@ -9,23 +9,24 @@ import (
 )
 
 type AggregatedParty struct {
-	Id              string             `json:"id"`
-	Creator         *AggregatedProfile `json:"creator,omitempty"`
-	Title           string             `json:"title,omitempty"`
-	Description     string             `json:"description,omitempty"`
-	IsPublic        bool               `json:"is_public"`
-	MusicGenre      string             `json:"music_genre,omitempty"`
-	MaxParticipants int32              `json:"max_participants"`
-	Lat             float32            `json:"lat,omitempty"`
-	Lon             float32            `json:"lon,omitempty"`
-	StreetAddress   string             `json:"street_address,omitempty"`
-	PostalCode      string             `json:"postal_code,omitempty"`
-	State           string             `json:"state,omitempty"`
-	Country         string             `json:"country,omitempty"`
-	Stories         []*sg.Story        `json:"stories,omitempty"`
-	EntryDate       string             `json:"entry_date,omitempty"`
-	CreatedAt       string             `json:"created_at,omitempty"`
-	FavoriteCount   uint32             `json:"favorite_count"`
+	Id                  string              `json:"id"`
+	Creator             *AggregatedProfile  `json:"creator,omitempty"`
+	Title               string              `json:"title,omitempty"`
+	Description         string              `json:"description,omitempty"`
+	IsPublic            bool                `json:"is_public"`
+	MusicGenre          string              `json:"music_genre,omitempty"`
+	MaxParticipants     int32               `json:"max_participants"`
+	ParticipationStatus ParticipationStatus `json:"particpation_status"`
+	Lat                 float32             `json:"lat,omitempty"`
+	Lon                 float32             `json:"lon,omitempty"`
+	StreetAddress       string              `json:"street_address,omitempty"`
+	PostalCode          string              `json:"postal_code,omitempty"`
+	State               string              `json:"state,omitempty"`
+	Country             string              `json:"country,omitempty"`
+	Stories             []*sg.Story         `json:"stories,omitempty"`
+	EntryDate           string              `json:"entry_date,omitempty"`
+	CreatedAt           string              `json:"created_at,omitempty"`
+	FavoriteCount       uint32              `json:"favorite_count"`
 }
 
 func PartyToAgg(p *pg.Party) AggregatedParty {
@@ -67,6 +68,11 @@ func (p AggregatedParty) AddStory(s []*sg.Story) AggregatedParty {
 
 func (p AggregatedParty) AddFCount(c uint32) AggregatedParty {
 	p.FavoriteCount = c
+	return p
+}
+
+func (p AggregatedParty) AddParticipationStatus(s ParticipationStatus) AggregatedParty {
+	p.ParticipationStatus = s
 	return p
 }
 

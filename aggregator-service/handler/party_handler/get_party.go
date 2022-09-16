@@ -1,10 +1,10 @@
 package partyhandler
 
 import (
-	"log"
-
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
+	"github.com/clubo-app/clubben/libs/utils/middleware"
+	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/clubo-app/clubben/protobuf/relation"
@@ -13,8 +13,8 @@ import (
 )
 
 func (h partyGatewayHandler) GetParty(c *fiber.Ctx) error {
-	log.Println("Running GetParty")
 	id := c.Params("id")
+	user := middleware.ParseUser(c)
 
 	p, err := h.pc.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
 	if err != nil {
@@ -33,6 +33,9 @@ func (h partyGatewayHandler) GetParty(c *fiber.Ctx) error {
 	if favoriteCount != nil {
 		res.AddFCount(favoriteCount.FavoriteCount)
 	}
-
+	if user.Sub != "" {
+		participation, _ := h.participationClient.GetPartyParticipant(c.Context(), &participation.UserPartyRequest{UserId: user.Sub, PartyId: p.Id})
+		res.AddParticipationStatus(datastruct.ParseParticipationStatus(participation))
+	}
 	return c.Status(fiber.StatusOK).JSON(res)
 }

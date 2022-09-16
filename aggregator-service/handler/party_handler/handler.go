@@ -1,6 +1,7 @@
 package partyhandler
 
 import (
+	"github.com/clubo-app/clubben/protobuf/participation"
 	pg "github.com/clubo-app/clubben/protobuf/party"
 	prfg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
@@ -9,10 +10,11 @@ import (
 )
 
 type partyGatewayHandler struct {
-	pc  pg.PartyServiceClient
-	prf prfg.ProfileServiceClient
-	sc  sg.StoryServiceClient
-	rc  rg.RelationServiceClient
+	pc                  pg.PartyServiceClient
+	prf                 prfg.ProfileServiceClient
+	sc                  sg.StoryServiceClient
+	rc                  rg.RelationServiceClient
+	participationClient participation.ParticipationServiceClient
 }
 
 type PartyGatewayHandler interface {
@@ -27,11 +29,12 @@ type PartyGatewayHandler interface {
 	GeoSearch(c *fiber.Ctx) error
 }
 
-func NewPartyGatewayHandler(pc pg.PartyServiceClient, prf prfg.ProfileServiceClient, sc sg.StoryServiceClient, rc rg.RelationServiceClient) PartyGatewayHandler {
+func NewPartyGatewayHandler(pc pg.PartyServiceClient, prf prfg.ProfileServiceClient, sc sg.StoryServiceClient, rc rg.RelationServiceClient, participationClient participation.ParticipationServiceClient) PartyGatewayHandler {
 	return &partyGatewayHandler{
-		pc:  pc,
-		prf: prf,
-		sc:  sc,
-		rc:  rc,
+		pc:                  pc,
+		prf:                 prf,
+		sc:                  sc,
+		rc:                  rc,
+		participationClient: participationClient,
 	}
 }
