@@ -15,6 +15,7 @@ service ParticipationService {
 
     rpc JoinParty (UserPartyRequest) returns (PartyParticipant) {};
     rpc LeaveParty (UserPartyRequest) returns (common.SuccessIndicator) {};
+    rpc GetPartyParticipant (UserPartyRequest) returns (PartyParticipant) {};
     rpc GetPartyParticipants (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
     rpc GetPartyRequests (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
 }

@@ -29,6 +29,7 @@ type ParticipationServiceClient interface {
 	GetUserInvites(ctx context.Context, in *GetUserInvitesRequest, opts ...grpc.CallOption) (*PagedPartyInvites, error)
 	JoinParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
 	LeaveParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	GetPartyParticipant(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
 	GetPartyParticipants(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetPartyRequests(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 }
@@ -95,6 +96,15 @@ func (c *participationServiceClient) LeaveParty(ctx context.Context, in *UserPar
 	return out, nil
 }
 
+func (c *participationServiceClient) GetPartyParticipant(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error) {
+	out := new(PartyParticipant)
+	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipant", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *participationServiceClient) GetPartyParticipants(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
 	out := new(PagedPartyParticipants)
 	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipants", in, out, opts...)
@@ -123,6 +133,7 @@ type ParticipationServiceServer interface {
 	GetUserInvites(context.Context, *GetUserInvitesRequest) (*PagedPartyInvites, error)
 	JoinParty(context.Context, *UserPartyRequest) (*PartyParticipant, error)
 	LeaveParty(context.Context, *UserPartyRequest) (*common.SuccessIndicator, error)
+	GetPartyParticipant(context.Context, *UserPartyRequest) (*PartyParticipant, error)
 	GetPartyParticipants(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
 	GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
 	mustEmbedUnimplementedParticipationServiceServer()
@@ -149,6 +160,9 @@ func (UnimplementedParticipationServiceServer) JoinParty(context.Context, *UserP
 }
 func (UnimplementedParticipationServiceServer) LeaveParty(context.Context, *UserPartyRequest) (*common.SuccessIndicator, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveParty not implemented")
+}
+func (UnimplementedParticipationServiceServer) GetPartyParticipant(context.Context, *UserPartyRequest) (*PartyParticipant, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipant not implemented")
 }
 func (UnimplementedParticipationServiceServer) GetPartyParticipants(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipants not implemented")
@@ -277,6 +291,24 @@ func _ParticipationService_LeaveParty_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ParticipationService_GetPartyParticipant_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserPartyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ParticipationServiceServer).GetPartyParticipant(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/participation.ParticipationService/GetPartyParticipant",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ParticipationServiceServer).GetPartyParticipant(ctx, req.(*UserPartyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ParticipationService_GetPartyParticipants_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPartyParticipantsRequest)
 	if err := dec(in); err != nil {
@@ -343,6 +375,10 @@ var ParticipationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LeaveParty",
 			Handler:    _ParticipationService_LeaveParty_Handler,
+		},
+		{
+			MethodName: "GetPartyParticipant",
+			Handler:    _ParticipationService_GetPartyParticipant_Handler,
 		},
 		{
 			MethodName: "GetPartyParticipants",
