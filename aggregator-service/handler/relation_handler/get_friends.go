@@ -53,7 +53,7 @@ func (h relationGatewayHandler) GetFriends(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	aggP := make([]datastruct.AggregatedProfile, len(profiles.Profiles))
+	aggP := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
 	for i, f := range fr.Relations {
 		p := profiles.Profiles[f.FriendId]
 

@@ -13,11 +13,11 @@ type AggregatedProfile struct {
 	FriendshipStatus *FriendshipStatus `json:"friendship_status,omitempty"`
 }
 
-func ProfileToAgg(p *profile.Profile) AggregatedProfile {
+func ProfileToAgg(p *profile.Profile) *AggregatedProfile {
 	if p == nil {
-		return AggregatedProfile{}
+		return &AggregatedProfile{}
 	}
-	return AggregatedProfile{
+	return &AggregatedProfile{
 		Id:        p.Id,
 		Username:  p.Username,
 		Firstname: p.Lastname,
@@ -26,17 +26,17 @@ func ProfileToAgg(p *profile.Profile) AggregatedProfile {
 	}
 }
 
-func (p AggregatedProfile) AddFs(fs FriendshipStatus) AggregatedProfile {
+func (p *AggregatedProfile) AddFs(fs FriendshipStatus) *AggregatedProfile {
 	p.FriendshipStatus = &fs
 	return p
 }
 
-func (p AggregatedProfile) AddFCount(c uint32) AggregatedProfile {
+func (p *AggregatedProfile) AddFCount(c uint32) *AggregatedProfile {
 	p.FriendCount = c
 	return p
 }
 
 type PagedAggregatedProfile struct {
-	Profiles []AggregatedProfile `json:"profiles"`
-	NextPage string              `json:"next_page"`
+	Profiles []*AggregatedProfile `json:"profiles"`
+	NextPage string               `json:"next_page"`
 }

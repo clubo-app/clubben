@@ -4,7 +4,6 @@ import (
 	"time"
 
 	pg "github.com/clubo-app/clubben/protobuf/party"
-	"github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 )
 
@@ -29,11 +28,11 @@ type AggregatedParty struct {
 	FavoriteCount       uint32               `json:"favorite_count"`
 }
 
-func PartyToAgg(p *pg.Party) AggregatedParty {
+func PartyToAgg(p *pg.Party) *AggregatedParty {
 	if p == nil {
-		return AggregatedParty{}
+		return &AggregatedParty{}
 	}
-	return AggregatedParty{
+	return &AggregatedParty{
 		Id:              p.Id,
 		Title:           p.Title,
 		Description:     p.Description,
@@ -52,52 +51,41 @@ func PartyToAgg(p *pg.Party) AggregatedParty {
 	}
 }
 
-func (p AggregatedParty) AddCreator(prof AggregatedProfile) AggregatedParty {
+func (p *AggregatedParty) AddCreator(prof *AggregatedProfile) *AggregatedParty {
 	if prof.Id != "" {
-		p.Creator = &prof
+		p.Creator = prof
 	}
 	return p
 }
 
-func (p AggregatedParty) AddStory(s []*sg.Story) AggregatedParty {
+func (p *AggregatedParty) AddStory(s []*sg.Story) *AggregatedParty {
 	if s != nil {
 		p.Stories = s
 	}
 	return p
 }
 
-func (p AggregatedParty) AddFCount(c uint32) AggregatedParty {
+func (p *AggregatedParty) AddFCount(c uint32) *AggregatedParty {
 	p.FavoriteCount = c
 	return p
 }
 
-func (p AggregatedParty) AddParticipationStatus(s ParticipationStatus) AggregatedParty {
+func (p *AggregatedParty) AddParticipationStatus(s ParticipationStatus) *AggregatedParty {
 	p.ParticipationStatus = &s
 	return p
 }
 
 type PagedAggregatedParty struct {
-	Parties []AggregatedParty `json:"parties"`
+	Parties []*AggregatedParty `json:"parties"`
 }
 
 type AggregatedFavoriteParty struct {
-	UserId      string          `json:"user_id"`
-	Party       AggregatedParty `json:"party"`
-	FavoritedAt string          `json:"favorited_at"`
-}
-
-type AggregatedFavorisingProfiles struct {
-	Profile     *profile.Profile `json:"profile"`
-	PartyId     string           `json:"party_id"`
+	UserId      string           `json:"user_id"`
+	Party       *AggregatedParty `json:"party"`
 	FavoritedAt string           `json:"favorited_at"`
 }
 
 type PagedAggregatedFavoriteParty struct {
 	FavoriteParties []AggregatedFavoriteParty `json:"favorite_parties"`
 	NextPage        string                    `json:"next_page"`
-}
-
-type PagedAggregatedFavorisingProfiles struct {
-	FavorisingProfiles []AggregatedFavorisingProfiles `json:"favorising_profiles"`
-	NextPage           string                         `json:"next_page"`
 }

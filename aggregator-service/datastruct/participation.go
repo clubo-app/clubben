@@ -33,11 +33,11 @@ func ParseParticipationStatus(p *participation.PartyParticipant) (s Participatio
 }
 
 type AggregatedPartyParticipant struct {
-	Profile     AggregatedProfile `json:"profile"`
-	Party       AggregatedParty   `json:"party"`
-	Requested   bool              `json:"requested"`
-	JoinedAt    string            `json:"joined_at"`
-	RequestedAt string            `json:"requested_at"`
+	Profile     *AggregatedProfile `json:"profile"`
+	Party       *AggregatedParty   `json:"party"`
+	Requested   bool               `json:"requested"`
+	JoinedAt    string             `json:"joined_at"`
+	RequestedAt string             `json:"requested_at"`
 }
 
 type PagedAggregatedPartyParticipant struct {
@@ -45,23 +45,23 @@ type PagedAggregatedPartyParticipant struct {
 	NextPage     string                       `json:"next_page"`
 }
 
-func PartyParticipantToAgg(p *participation.PartyParticipant) AggregatedPartyParticipant {
+func PartyParticipantToAgg(p *participation.PartyParticipant) *AggregatedPartyParticipant {
 	if p == nil {
-		return AggregatedPartyParticipant{}
+		return &AggregatedPartyParticipant{}
 	}
-	return AggregatedPartyParticipant{
+	return &AggregatedPartyParticipant{
 		JoinedAt:    p.JoinedAt.AsTime().UTC().Format(time.RFC3339),
 		RequestedAt: p.RequestedAt.AsTime().UTC().Format(time.RFC3339),
 		Requested:   p.Requested,
 	}
 }
-func (p AggregatedPartyParticipant) AddProfile(u AggregatedProfile) AggregatedPartyParticipant {
+func (p *AggregatedPartyParticipant) AddProfile(u *AggregatedProfile) *AggregatedPartyParticipant {
 	if u.Id != "" {
 		p.Profile = u
 	}
 	return p
 }
-func (pp AggregatedPartyParticipant) AddParty(p AggregatedParty) AggregatedPartyParticipant {
+func (pp *AggregatedPartyParticipant) AddParty(p *AggregatedParty) *AggregatedPartyParticipant {
 	if p.Id != "" {
 		pp.Party = p
 	}

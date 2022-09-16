@@ -42,8 +42,8 @@ func (h storyGatewayHandler) CreateStory(c *fiber.Ctx) error {
 
 	// Remove the creator of the story from the returned array and create a filtered list with only the profiles of the tagged people.
 	// Separately store the profile of the creator of the story
-	var profile datastruct.AggregatedProfile
-	taggedFriends := make([]datastruct.AggregatedProfile, len(profilesRes.Profiles))
+	var profile *datastruct.AggregatedProfile
+	taggedFriends := make([]*datastruct.AggregatedProfile, len(profilesRes.Profiles))
 	for i, p := range profilesRes.Profiles {
 		if p.Id != s.UserId {
 			taggedFriends[i] = datastruct.ProfileToAgg(p)

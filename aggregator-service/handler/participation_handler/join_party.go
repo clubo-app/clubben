@@ -22,8 +22,8 @@ func (h participationHandler) JoinParty(c *fiber.Ctx) error {
 
 	res := datastruct.
 		PartyParticipantToAgg(pp).
-		AddProfile(datastruct.AggregatedProfile{Id: pp.UserId}).
-		AddParty(datastruct.AggregatedParty{Id: pp.PartyId})
+		AddProfile(&datastruct.AggregatedProfile{Id: pp.UserId}).
+		AddParty(&datastruct.AggregatedParty{Id: pp.PartyId})
 
 	return c.Status(fiber.StatusCreated).JSON(res)
 }

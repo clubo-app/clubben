@@ -1,6 +1,8 @@
 package partyhandler
 
 import (
+	"log"
+
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
@@ -16,26 +18,33 @@ func (h partyGatewayHandler) GetParty(c *fiber.Ctx) error {
 	id := c.Params("id")
 	user := middleware.ParseUser(c)
 
-	p, err := h.pc.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
+	party, err := h.pc.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 
-	profile, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
+	profile, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: party.UserId})
+	res := datastruct.
+		PartyToAgg(party).
+		AddCreator(datastruct.ProfileToAgg(profile))
 
-	stories, _ := h.sc.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: p.Id})
-	favoriteCount, _ := h.rc.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: p.Id})
-
-	res := datastruct.PartyToAgg(p).AddCreator(datastruct.ProfileToAgg(profile))
+	stories, _ := h.sc.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: party.Id})
 	if stories != nil {
 		res.AddStory(stories.Stories)
 	}
+
+	favoriteCount, _ := h.rc.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
 	if favoriteCount != nil {
 		res.AddFCount(favoriteCount.FavoriteCount)
 	}
+
 	if user.Sub != "" {
-		participation, _ := h.participationClient.GetPartyParticipant(c.Context(), &participation.UserPartyRequest{UserId: user.Sub, PartyId: p.Id})
+		participation, err := h.participationClient.GetPartyParticipant(c.Context(), &participation.UserPartyRequest{UserId: user.Sub, PartyId: party.Id})
+		if err != nil {
+			log.Println("Error getting ParticipationStatus: ", err)
+		}
 		res.AddParticipationStatus(datastruct.ParseParticipationStatus(participation))
 	}
+
 	return c.Status(fiber.StatusOK).JSON(res)
 }

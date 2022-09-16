@@ -49,7 +49,7 @@ func (h partyGatewayHandler) GeoSearch(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	aggP := make([]datastruct.AggregatedParty, len(parties.Parties))
+	aggP := make([]*datastruct.AggregatedParty, len(parties.Parties))
 	for i, p := range parties.Parties {
 		aggP[i] = datastruct.PartyToAgg(p)
 	}

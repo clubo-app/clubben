@@ -45,24 +45,16 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 	for i, pp := range pps.Participants {
 		userIds[i] = pp.UserId
 	}
-	profiles, _ := h.profileC.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(userIds)})
+	profiles, _ := h.profileC.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(userIds)})
 
-	aggP := make([]datastruct.AggregatedPartyParticipant, len(pps.Participants))
-	for i, pp := range pps.Participants {
-		p := datastruct.
-			PartyParticipantToAgg(pp).
-			AddParty(datastruct.AggregatedParty{Id: pp.PartyId})
-
-		if profiles.Profiles[pp.UserId] != nil {
-			p = p.AddProfile(datastruct.ProfileToAgg(profiles.Profiles[pp.UserId]))
-		}
-
-		aggP[i] = p
+	aggP := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
+	for i, profile := range profiles.Profiles {
+		aggP[i] = datastruct.ProfileToAgg(profile)
 	}
 
-	res := datastruct.PagedAggregatedPartyParticipant{
-		Participants: aggP,
-		NextPage:     pps.NextPage,
+	res := datastruct.PagedAggregatedProfile{
+		Profiles: aggP,
+		NextPage: pps.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

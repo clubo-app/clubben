@@ -42,17 +42,17 @@ func (h participationHandler) GetUserInvites(c *fiber.Ctx) error {
 	parties, _ := h.partyC.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
 	inviters, _ := h.profileC.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(inviterIds)})
 
-	aggI := make([]datastruct.AggregatedPartyInvite, len(pi.Invites))
+	aggI := make([]*datastruct.AggregatedPartyInvite, len(pi.Invites))
 	for i, pi := range pi.Invites {
 		in := datastruct.
 			PartyInviteToAgg(pi)
 
 		if inviters.Profiles[pi.UserId] != nil {
-			in = in.AddInviter(datastruct.ProfileToAgg(inviters.Profiles[pi.InviterId]))
+			in.AddInviter(datastruct.ProfileToAgg(inviters.Profiles[pi.InviterId]))
 		}
 
 		if parties.Parties[pi.PartyId] != nil {
-			in = in.AddParty(datastruct.PartyToAgg(parties.Parties[pi.PartyId]))
+			in.AddParty(datastruct.PartyToAgg(parties.Parties[pi.PartyId]))
 		}
 		aggI[i] = in
 	}

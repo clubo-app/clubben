@@ -2,7 +2,6 @@ package partyhandler
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
@@ -32,27 +31,23 @@ func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 		ids[i] = fp.UserId
 	}
 
-	pRes, _ := h.prf.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: ids})
-	if pRes == nil {
-		res := datastruct.PagedAggregatedFavorisingProfiles{
-			FavorisingProfiles: []datastruct.AggregatedFavorisingProfiles{},
-			NextPage:           fpRes.NextPage,
+	profiles, _ := h.prf.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: ids})
+	if profiles == nil {
+		res := datastruct.PagedAggregatedProfile{
+			Profiles: []*datastruct.AggregatedProfile{},
+			NextPage: fpRes.NextPage,
 		}
 		return c.Status(fiber.StatusOK).JSON(res)
 	}
 
-	aggFP := make([]datastruct.AggregatedFavorisingProfiles, len(fpRes.FavoriteParties))
-	for i, fp := range fpRes.FavoriteParties {
-		aggFP[i] = datastruct.AggregatedFavorisingProfiles{
-			Profile:     pRes.Profiles[fp.UserId],
-			PartyId:     fp.PartyId,
-			FavoritedAt: fp.FavoritedAt.AsTime().UTC().Format(time.RFC3339),
-		}
+	aggP := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
+	for i, profile := range profiles.Profiles {
+		aggP[i] = datastruct.ProfileToAgg(profile)
 	}
 
-	res := datastruct.PagedAggregatedFavorisingProfiles{
-		FavorisingProfiles: aggFP,
-		NextPage:           fpRes.NextPage,
+	res := datastruct.PagedAggregatedProfile{
+		Profiles: aggP,
+		NextPage: fpRes.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

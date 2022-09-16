@@ -54,12 +54,12 @@ func (h storyGatewayHandler) GetStoryByUser(c *fiber.Ctx) error {
 	// here we aggregated all the profiles if the story creators
 	parties, _ := h.pc.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(ids)})
 
-	aggS := make([]datastruct.AggregatedStory, len(stories.Stories))
+	aggS := make([]*datastruct.AggregatedStory, len(stories.Stories))
 	for i, s := range stories.Stories {
 		s := datastruct.
 			StoryToAgg(s).
 			AddCreator(datastruct.ProfileToAgg(profile)).
-			AddParty(datastruct.AggregatedParty{Id: s.PartyId})
+			AddParty(&datastruct.AggregatedParty{Id: s.PartyId})
 
 		if parties != nil {
 			s = s.AddParty(datastruct.PartyToAgg(parties.Parties[s.Party.Id]))
