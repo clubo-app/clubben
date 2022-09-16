@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"log"
 
 	"github.com/clubo-app/clubben/participation-service/datastruct"
 	"github.com/clubo-app/clubben/participation-service/repository"
@@ -44,6 +45,7 @@ func (p participant) Join(ctx context.Context, params JoinParams) (datastruct.Pa
 		PartyId: params.PartyId,
 	})
 	if err != nil || party == nil {
+		log.Println("Join Error: ", err)
 		return datastruct.Participant{}, status.Error(codes.InvalidArgument, "Party not found")
 	}
 	if params.UserId == party.UserId {
@@ -83,6 +85,7 @@ func (p participant) Accept(ctx context.Context, params AcceptRequestParams) err
 		PartyId: params.PartyId,
 	})
 	if err != nil || party == nil {
+		log.Println("Accept Error: ", err)
 		return status.Error(codes.InvalidArgument, "Party not found")
 	}
 	if params.AccepterId != party.UserId {
