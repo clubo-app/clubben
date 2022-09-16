@@ -17,7 +17,7 @@ type AggregatedParty struct {
 	MusicGenre      string             `json:"music_genre,omitempty"`
 	MaxParticipants int32              `json:"max_participants"`
 	Lat             float32            `json:"lat,omitempty"`
-	Long            float32            `json:"long,omitempty"`
+	Lon             float32            `json:"lon,omitempty"`
 	StreetAddress   string             `json:"street_address,omitempty"`
 	PostalCode      string             `json:"postal_code,omitempty"`
 	State           string             `json:"state,omitempty"`
@@ -40,7 +40,7 @@ func PartyToAgg(p *pg.Party) AggregatedParty {
 		MusicGenre:      p.MusicGenre,
 		MaxParticipants: p.MaxParticipants,
 		Lat:             p.Lat,
-		Long:            p.Long,
+		Lon:             p.Long,
 		StreetAddress:   p.StreetAddress,
 		Stories:         []*sg.Story{},
 		PostalCode:      p.PostalCode,

@@ -11,6 +11,6 @@ type AggregatedAccount struct {
 }
 
 type LoginResponse struct {
-	Tokens  ag.TokenResponse
-	Account AggregatedAccount
+	Tokens  ag.TokenResponse  `json:"tokens"`
+	Account AggregatedAccount `json:"account"`
 }

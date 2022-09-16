@@ -14,7 +14,7 @@ type CreatePartyReq struct {
 	Title           string                `json:"title"`
 	Description     string                `json:"description,omitempty"`
 	Lat             float32               `json:"lat"`
-	Long            float32               `json:"long"`
+	Lon             float32               `json:"lon"`
 	IsPublic        bool                  `json:"is_public"`
 	MusicGenre      string                `json:"music_genre"`
 	MaxParticipants int32                 `json:"max_participants"`
@@ -38,7 +38,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 		Title:           req.Title,
 		Description:     req.Description,
 		Lat:             req.Lat,
-		Long:            req.Long,
+		Long:            req.Lon,
 		IsPublic:        req.IsPublic,
 		MusicGenre:      req.MusicGenre,
 		MaxParticipants: req.MaxParticipants,
