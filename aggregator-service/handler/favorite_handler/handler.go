@@ -12,6 +12,7 @@ type FavoriteHandler interface {
 	DefavorParty(c *fiber.Ctx) error
 	GetFavoritePartiesByUser(c *fiber.Ctx) error
 	GetFavorisingUsersByParty(c *fiber.Ctx) error
+	GetFavoriteCountByParty(c *fiber.Ctx) error
 }
 
 type favoriteHandler struct {
