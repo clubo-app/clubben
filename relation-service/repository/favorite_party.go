@@ -152,6 +152,9 @@ func (r *favoritePartyRepository) GetfavoritePartyCount(ctx context.Context, pId
 		BindMap((qb.M{"party_id": pId})).
 		GetRelease(&res)
 	if err != nil {
+		if err.Error() == "not found" {
+			return datastruct.FavoritePartyCount{PartyId: pId, FavoritePartyCount: 0}, nil
+		}
 		return res, err
 	}
 
