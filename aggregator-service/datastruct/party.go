@@ -1,8 +1,10 @@
 package datastruct
 
 import (
+	"log"
 	"time"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	pg "github.com/clubo-app/clubben/protobuf/party"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 )
@@ -32,7 +34,7 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 	if p == nil {
 		return &AggregatedParty{}
 	}
-	return &AggregatedParty{
+	agg := &AggregatedParty{
 		Id:              p.Id,
 		Title:           p.Title,
 		Description:     p.Description,
@@ -46,9 +48,17 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 		PostalCode:      p.PostalCode,
 		State:           p.State,
 		Country:         p.Country,
-		EntryDate:       p.EntryDate.AsTime().UTC().Format(time.RFC3339),
-		CreatedAt:       p.CreatedAt.AsTime().UTC().Format(time.RFC3339),
 	}
+	if !utils.TimestamppIsZero(p.EntryDate) {
+		log.Println("Adding EntryDate")
+		agg.EntryDate = p.EntryDate.AsTime().UTC().Format(time.RFC3339)
+	}
+	if !utils.TimestamppIsZero(p.CreatedAt) {
+		log.Println("Adding CreatedAt Date")
+		agg.CreatedAt = p.CreatedAt.AsTime().UTC().Format(time.RFC3339)
+	}
+
+	return agg
 }
 
 func (p *AggregatedParty) AddCreator(prof *AggregatedProfile) *AggregatedParty {

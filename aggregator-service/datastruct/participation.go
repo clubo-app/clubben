@@ -3,6 +3,7 @@ package datastruct
 import (
 	"time"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/participation"
 )
 
@@ -23,10 +24,10 @@ func ParseParticipationStatus(p *participation.PartyParticipant) (s Participatio
 		s.Participating = true
 	}
 
-	if !p.JoinedAt.AsTime().IsZero() {
+	if !utils.TimestamppIsZero(p.JoinedAt) {
 		s.JoinedAt = p.JoinedAt.AsTime().UTC().Format(time.RFC3339)
 	}
-	if !p.RequestedAt.AsTime().IsZero() {
+	if !utils.TimestamppIsZero(p.RequestedAt) {
 		s.RequestedAt = p.RequestedAt.AsTime().UTC().Format(time.RFC3339)
 	}
 	return
@@ -49,11 +50,16 @@ func PartyParticipantToAgg(p *participation.PartyParticipant) *AggregatedPartyPa
 	if p == nil {
 		return &AggregatedPartyParticipant{}
 	}
-	return &AggregatedPartyParticipant{
-		JoinedAt:    p.JoinedAt.AsTime().UTC().Format(time.RFC3339),
-		RequestedAt: p.RequestedAt.AsTime().UTC().Format(time.RFC3339),
-		Requested:   p.Requested,
+	agg := AggregatedPartyParticipant{
+		Requested: p.Requested,
 	}
+	if !utils.TimestamppIsZero(p.JoinedAt) {
+		agg.JoinedAt = p.JoinedAt.AsTime().UTC().Format(time.RFC3339)
+	}
+	if !utils.TimestamppIsZero(p.RequestedAt) {
+		agg.RequestedAt = p.RequestedAt.AsTime().UTC().Format(time.RFC3339)
+	}
+	return &agg
 }
 func (p *AggregatedPartyParticipant) AddProfile(u *AggregatedProfile) *AggregatedPartyParticipant {
 	if u.Id != "" {
