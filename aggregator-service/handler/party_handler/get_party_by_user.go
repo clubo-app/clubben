@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyGatewayHandler) GetPartyByUser(c *fiber.Ctx) error {
+func (h partyHandler) GetPartyByUser(c *fiber.Ctx) error {
 	uId := c.Params("id")
 
 	limitStr := c.Query("limit")
@@ -25,7 +25,7 @@ func (h partyGatewayHandler) GetPartyByUser(c *fiber.Ctx) error {
 	offsetStr := c.Query("offset")
 	offset, _ := strconv.ParseInt(offsetStr, 10, 32)
 
-	parties, err := h.pc.GetByUser(c.Context(), &party.GetByUserRequest{
+	parties, err := h.partyClient.GetByUser(c.Context(), &party.GetByUserRequest{
 		UserId:   uId,
 		Offset:   int32(offset),
 		Limit:    int32(limit),
@@ -35,7 +35,7 @@ func (h partyGatewayHandler) GetPartyByUser(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	profile, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: uId})
+	profile, _ := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: uId})
 
 	aggP := make([]*datastruct.AggregatedParty, len(parties.Parties))
 	for i, p := range parties.Parties {

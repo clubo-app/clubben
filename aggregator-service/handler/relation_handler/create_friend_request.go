@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationGatewayHandler) CreateFriendRequest(c *fiber.Ctx) error {
+func (h relationHandler) CreateFriendRequest(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	fId := c.Params("id")
@@ -16,7 +16,7 @@ func (h relationGatewayHandler) CreateFriendRequest(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "You can't add yourself")
 	}
 
-	ok, err := h.rc.CreateFriendRequest(c.Context(), &relation.CreateFriendRequestRequest{UserId: user.Sub, FriendId: fId})
+	ok, err := h.relationClient.CreateFriendRequest(c.Context(), &relation.CreateFriendRequestRequest{UserId: user.Sub, FriendId: fId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

@@ -8,9 +8,9 @@ import (
 )
 
 type participationHandler struct {
-	profileC       profile.ProfileServiceClient
-	partyC         party.PartyServiceClient
-	participationC participation.ParticipationServiceClient
+	profileClient       profile.ProfileServiceClient
+	partyClient         party.PartyServiceClient
+	participationClient participation.ParticipationServiceClient
 }
 
 type ParticipationHandler interface {
@@ -23,10 +23,14 @@ type ParticipationHandler interface {
 	GetPartyParticipants(c *fiber.Ctx) error
 }
 
-func NewParticipationHandler(pc participation.ParticipationServiceClient, partyC party.PartyServiceClient, profileC profile.ProfileServiceClient) ParticipationHandler {
+func NewParticipationHandler(
+	participationClient participation.ParticipationServiceClient,
+	partyClient party.PartyServiceClient,
+	profileClient profile.ProfileServiceClient,
+) ParticipationHandler {
 	return &participationHandler{
-		participationC: pc,
-		partyC:         partyC,
-		profileC:       profileC,
+		participationClient: participationClient,
+		partyClient:         partyClient,
+		profileClient:       profileClient,
 	}
 }

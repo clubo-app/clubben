@@ -6,13 +6,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h authGatewayHandler) VerifyEmail(c *fiber.Ctx) error {
+func (h authHandler) VerifyEmail(c *fiber.Ctx) error {
 	req := new(ag.VerifyEmailRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
 
-	res, err := h.ac.VerifyEmail(c.Context(), req)
+	res, err := h.authClient.VerifyEmail(c.Context(), req)
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

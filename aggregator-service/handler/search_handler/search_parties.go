@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h searchGatewayHandler) SearchParties(c *fiber.Ctx) error {
+func (h searchHandler) SearchParties(c *fiber.Ctx) error {
 	q := c.Params("query")
 
 	latStr := c.Query("lat")
@@ -17,7 +17,7 @@ func (h searchGatewayHandler) SearchParties(c *fiber.Ctx) error {
 	lonStr := c.Query("lon")
 	lon, _ := strconv.ParseFloat(lonStr, 32)
 
-	res, err := h.sc.SearchParties(c.Context(), &search.SearchPartiesRequest{
+	res, err := h.searchClient.SearchParties(c.Context(), &search.SearchPartiesRequest{
 		Query: q,
 		Lat:   float32(lat),
 		Long:  float32(lon),

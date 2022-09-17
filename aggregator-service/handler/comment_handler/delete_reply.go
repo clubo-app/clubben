@@ -7,13 +7,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h *commentGatewayHandler) DeleteReply(c *fiber.Ctx) error {
+func (h *commentHandler) DeleteReply(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	cId := c.Params("id")
 	rId := c.Params("rId")
 
-	res, err := h.cc.DeleteReply(c.Context(), &comment.DeleteReplyRequest{AuthorId: user.Sub, CommentId: cId, ReplyId: rId})
+	res, err := h.commentClient.DeleteReply(c.Context(), &comment.DeleteReplyRequest{AuthorId: user.Sub, CommentId: cId, ReplyId: rId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

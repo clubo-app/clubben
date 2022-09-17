@@ -6,12 +6,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type commentGatewayHandler struct {
-	cc  cg.CommentServiceClient
-	prf profile.ProfileServiceClient
+type commentHandler struct {
+	commentClient cg.CommentServiceClient
+	profileClient profile.ProfileServiceClient
 }
 
-type CommentGatewayHandler interface {
+type CommentHandler interface {
 	CreateComment(c *fiber.Ctx) error
 	DeleteComment(c *fiber.Ctx) error
 	GetCommentByParty(c *fiber.Ctx) error
@@ -20,9 +20,9 @@ type CommentGatewayHandler interface {
 	GetReplyByComment(c *fiber.Ctx) error
 }
 
-func NewCommentGatewayHandler(cc cg.CommentServiceClient, prf profile.ProfileServiceClient) CommentGatewayHandler {
-	return &commentGatewayHandler{
-		cc:  cc,
-		prf: prf,
+func NewCommentHandler(commentClient cg.CommentServiceClient, profileClient profile.ProfileServiceClient) CommentHandler {
+	return &commentHandler{
+		commentClient: commentClient,
+		profileClient: profileClient,
 	}
 }

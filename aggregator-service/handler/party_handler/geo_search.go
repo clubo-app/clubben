@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyGatewayHandler) GeoSearch(c *fiber.Ctx) error {
+func (h partyHandler) GeoSearch(c *fiber.Ctx) error {
 	limitStr := c.Query("limit")
 	limit, _ := strconv.ParseInt(limitStr, 10, 32)
 	if limit > 20 {
@@ -37,7 +37,7 @@ func (h partyGatewayHandler) GeoSearch(c *fiber.Ctx) error {
 	isPublicStr := c.Query("is_public")
 	isPublic, _ := strconv.ParseBool(isPublicStr)
 
-	parties, err := h.pc.GeoSearch(c.Context(), &pg.GeoSearchRequest{
+	parties, err := h.partyClient.GeoSearch(c.Context(), &pg.GeoSearchRequest{
 		Lat:      float32(lat),
 		Long:     float32(lon),
 		Limit:    int32(limit),

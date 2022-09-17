@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentGatewayHandler) CreateComment(c *fiber.Ctx) error {
+func (h commentHandler) CreateComment(c *fiber.Ctx) error {
 	req := new(cg.CreateCommentRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -21,12 +21,12 @@ func (h commentGatewayHandler) CreateComment(c *fiber.Ctx) error {
 	req.AuthorId = user.Sub
 	req.PartyId = pId
 
-	co, err := h.cc.CreateComment(c.Context(), req)
+	co, err := h.commentClient.CreateComment(c.Context(), req)
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 
-	profileRes, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: co.AuthorId})
+	profileRes, _ := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: co.AuthorId})
 
 	ac := datastruct.AggregatedComment{
 		Id:        co.Id,

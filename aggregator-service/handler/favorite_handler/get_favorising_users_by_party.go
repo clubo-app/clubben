@@ -1,4 +1,4 @@
-package partyhandler
+package favoritehandler
 
 import (
 	"strconv"
@@ -11,7 +11,7 @@ import (
 	"github.com/clubo-app/clubben/libs/utils"
 )
 
-func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
+func (h favoriteHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 	pId := c.Params("pId")
 	nextPage := c.Query("nextPage")
 
@@ -21,7 +21,7 @@ func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 20")
 	}
 
-	fpRes, err := h.rc.GetFavorisingUsersByParty(c.Context(), &rg.GetFavorisingUsersByPartyRequest{PartyId: pId, NextPage: nextPage, Limit: limit})
+	fpRes, err := h.relationClient.GetFavorisingUsersByParty(c.Context(), &rg.GetFavorisingUsersByPartyRequest{PartyId: pId, NextPage: nextPage, Limit: limit})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -31,7 +31,7 @@ func (h partyGatewayHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 		ids[i] = fp.UserId
 	}
 
-	profiles, _ := h.prf.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: ids})
+	profiles, _ := h.profileClient.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: ids})
 	if profiles == nil {
 		res := datastruct.PagedAggregatedProfile{
 			Profiles: []*datastruct.AggregatedProfile{},

@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentGatewayHandler) GetCommentByParty(c *fiber.Ctx) error {
+func (h commentHandler) GetCommentByParty(c *fiber.Ctx) error {
 	pId := c.Params("id")
 	nextPage := c.Query("nextPage")
 
@@ -20,7 +20,7 @@ func (h commentGatewayHandler) GetCommentByParty(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 20")
 	}
 
-	cs, err := h.cc.GetCommentByParty(c.Context(), &cg.GetByPartyRequest{PartyId: pId, NextPage: nextPage, Limit: limit})
+	cs, err := h.commentClient.GetCommentByParty(c.Context(), &cg.GetByPartyRequest{PartyId: pId, NextPage: nextPage, Limit: limit})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -30,7 +30,7 @@ func (h commentGatewayHandler) GetCommentByParty(c *fiber.Ctx) error {
 		commentAuthors[i] = c.AuthorId
 	}
 
-	ps, _ := h.prf.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(commentAuthors)})
+	ps, _ := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(commentAuthors)})
 
 	aggC := make([]datastruct.AggregatedComment, len(cs.Comments))
 	for i, c := range cs.Comments {

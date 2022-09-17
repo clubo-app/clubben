@@ -7,13 +7,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type storyGatewayHandler struct {
-	sc  sg.StoryServiceClient
-	pc  pg.PartyServiceClient
-	prf prfg.ProfileServiceClient
+type storyHandler struct {
+	storyClient   sg.StoryServiceClient
+	partyClient   pg.PartyServiceClient
+	profileClient prfg.ProfileServiceClient
 }
 
-type StoryGatewayHandler interface {
+type StoryHandler interface {
 	CreateStory(c *fiber.Ctx) error
 	GetStoryByParty(c *fiber.Ctx) error
 	GetStoryByUser(c *fiber.Ctx) error
@@ -22,10 +22,10 @@ type StoryGatewayHandler interface {
 	PresignURL(c *fiber.Ctx) error
 }
 
-func NewStoryGatewayHandler(sc sg.StoryServiceClient, prf prfg.ProfileServiceClient, pc pg.PartyServiceClient) StoryGatewayHandler {
-	return &storyGatewayHandler{
-		sc:  sc,
-		prf: prf,
-		pc:  pc,
+func NewStoryHandler(storyClient sg.StoryServiceClient, profileClient prfg.ProfileServiceClient, partyClient pg.PartyServiceClient) StoryHandler {
+	return &storyHandler{
+		storyClient:   storyClient,
+		profileClient: profileClient,
+		partyClient:   partyClient,
 	}
 }

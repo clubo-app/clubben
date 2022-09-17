@@ -17,20 +17,20 @@ type RegisterRequest struct {
 	Avatar    string `json:"avatar,omitempty"`
 }
 
-func (h authGatewayHandler) Register(c *fiber.Ctx) error {
+func (h authHandler) Register(c *fiber.Ctx) error {
 	req := new(RegisterRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
 
-	nameTaken, err := h.pc.UsernameTaken(c.Context(), &profile.UsernameTakenRequest{
+	nameTaken, err := h.profileClient.UsernameTaken(c.Context(), &profile.UsernameTakenRequest{
 		Username: req.Username,
 	})
 	if err != nil || nameTaken.Taken {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Username already taken")
 	}
 
-	a, err := h.ac.RegisterUser(c.Context(), &ag.RegisterUserRequest{
+	a, err := h.authClient.RegisterUser(c.Context(), &ag.RegisterUserRequest{
 		Email:    req.Email,
 		Password: req.Password,
 	})
@@ -38,7 +38,7 @@ func (h authGatewayHandler) Register(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	p, err := h.pc.CreateProfile(c.Context(), &profile.CreateProfileRequest{
+	p, err := h.profileClient.CreateProfile(c.Context(), &profile.CreateProfileRequest{
 		Id:        a.Account.Id,
 		Username:  req.Username,
 		Firstname: req.Firstname,

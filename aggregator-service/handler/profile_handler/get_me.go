@@ -10,10 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h profileGatewayHandler) GetMe(c *fiber.Ctx) error {
+func (h profileHandler) GetMe(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
-	p, err := h.pc.GetProfile(c.Context(), &pg.GetProfileRequest{Id: user.Sub})
+	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{Id: user.Sub})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -21,7 +21,7 @@ func (h profileGatewayHandler) GetMe(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Profile not found")
 	}
 
-	a, err := h.ac.GetAccount(c.Context(), &auth.GetAccountRequest{Id: user.Sub})
+	a, err := h.authClient.GetAccount(c.Context(), &auth.GetAccountRequest{Id: user.Sub})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -35,7 +35,7 @@ func (h profileGatewayHandler) GetMe(c *fiber.Ctx) error {
 		Email:   a.Email,
 	}
 
-	friendCountRes, _ := h.rc.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
+	friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
 	if friendCountRes != nil {
 		res.Profile.FriendCount = friendCountRes.FriendCount
 	}

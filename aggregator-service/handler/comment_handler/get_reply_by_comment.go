@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentGatewayHandler) GetReplyByComment(c *fiber.Ctx) error {
+func (h commentHandler) GetReplyByComment(c *fiber.Ctx) error {
 	cId := c.Params("id")
 	nextPage := c.Query("nextPage")
 
@@ -20,7 +20,7 @@ func (h commentGatewayHandler) GetReplyByComment(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 20")
 	}
 
-	rs, err := h.cc.GetReplyByComment(c.Context(), &cg.GetReplyByCommentRequest{CommentId: cId, NextPage: nextPage, Limit: limit})
+	rs, err := h.commentClient.GetReplyByComment(c.Context(), &cg.GetReplyByCommentRequest{CommentId: cId, NextPage: nextPage, Limit: limit})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -30,7 +30,7 @@ func (h commentGatewayHandler) GetReplyByComment(c *fiber.Ctx) error {
 		replyAuthors[i] = r.AuthorId
 	}
 
-	ps, _ := h.prf.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(replyAuthors)})
+	ps, _ := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(replyAuthors)})
 
 	aggR := make([]datastruct.AggregatedReply, len(rs.Replies))
 	for i, r := range rs.Replies {

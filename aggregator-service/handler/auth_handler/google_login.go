@@ -6,13 +6,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h authGatewayHandler) GoogleLogin(c *fiber.Ctx) error {
+func (h authHandler) GoogleLogin(c *fiber.Ctx) error {
 	req := new(ag.GoogleLoginUserRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
 
-	res, err := h.ac.GoogleLoginUser(c.Context(), req)
+	res, err := h.authClient.GoogleLoginUser(c.Context(), req)
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

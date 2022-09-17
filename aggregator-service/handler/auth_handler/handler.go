@@ -6,12 +6,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type authGatewayHandler struct {
-	ac ag.AuthServiceClient
-	pc pg.ProfileServiceClient
+type authHandler struct {
+	authClient    ag.AuthServiceClient
+	profileClient pg.ProfileServiceClient
 }
 
-type AuthGatewayHandler interface {
+type AuthHandler interface {
 	Login(c *fiber.Ctx) error
 	Register(c *fiber.Ctx) error
 	GoogleLogin(c *fiber.Ctx) error
@@ -19,9 +19,9 @@ type AuthGatewayHandler interface {
 	RefreshAccessToken(c *fiber.Ctx) error
 }
 
-func NewAuthGatewayHandler(ac ag.AuthServiceClient, pc pg.ProfileServiceClient) AuthGatewayHandler {
-	return &authGatewayHandler{
-		ac: ac,
-		pc: pc,
+func NewAuthHandler(authClient ag.AuthServiceClient, profileClient pg.ProfileServiceClient) AuthHandler {
+	return &authHandler{
+		authClient:    authClient,
+		profileClient: profileClient,
 	}
 }

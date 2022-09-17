@@ -22,7 +22,7 @@ func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Invalid valid_for parameter")
 	}
 
-	i, err := h.participationC.InviteToParty(c.Context(), &participation.InviteToPartyRequest{
+	i, err := h.participationClient.InviteToParty(c.Context(), &participation.InviteToPartyRequest{
 		InviterId: user.Sub,
 		UserId:    uId,
 		PartyId:   pId,

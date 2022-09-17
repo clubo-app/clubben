@@ -13,7 +13,7 @@ func (h participationHandler) AcceptPartyInvite(c *fiber.Ctx) error {
 	uId := c.Params("uid")
 	user := middleware.ParseUser(c)
 
-	pp, err := h.participationC.AcceptPartyInvite(c.Context(), &participation.DeclinePartyInviteRequest{
+	pp, err := h.participationClient.AcceptPartyInvite(c.Context(), &participation.DeclinePartyInviteRequest{
 		UserId:    user.Sub,
 		PartyId:   pId,
 		InviterId: uId,

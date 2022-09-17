@@ -11,7 +11,7 @@ func (h participationHandler) LeaveParty(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	user := middleware.ParseUser(c)
 
-	s, err := h.participationC.LeaveParty(c.Context(), &participation.UserPartyRequest{
+	s, err := h.participationClient.LeaveParty(c.Context(), &participation.UserPartyRequest{
 		UserId:  user.Sub,
 		PartyId: pId,
 	})

@@ -1,4 +1,4 @@
-package relationhandler
+package favoritehandler
 
 import (
 	"github.com/clubo-app/clubben/libs/utils"
@@ -7,12 +7,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationGatewayHandler) DefavorParty(c *fiber.Ctx) error {
+func (h favoriteHandler) DefavorParty(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	pId := c.Params("pId")
 
-	ok, err := h.rc.DefavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
+	ok, err := h.relationClient.DefavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

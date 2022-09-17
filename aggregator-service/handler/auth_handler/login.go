@@ -8,18 +8,18 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h authGatewayHandler) Login(c *fiber.Ctx) error {
+func (h authHandler) Login(c *fiber.Ctx) error {
 	req := new(ag.LoginUserRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
 	}
 
-	a, err := h.ac.LoginUser(c.Context(), req)
+	a, err := h.authClient.LoginUser(c.Context(), req)
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 
-	p, err := h.pc.GetProfile(c.Context(), &pg.GetProfileRequest{
+	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{
 		Id: a.Account.Id,
 	})
 	if err != nil {

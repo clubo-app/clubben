@@ -14,26 +14,26 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyGatewayHandler) GetParty(c *fiber.Ctx) error {
+func (h partyHandler) GetParty(c *fiber.Ctx) error {
 	id := c.Params("id")
 	user := middleware.ParseUser(c)
 
-	party, err := h.pc.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
+	party, err := h.partyClient.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 
-	profile, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: party.UserId})
+	profile, _ := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: party.UserId})
 	res := datastruct.
 		PartyToAgg(party).
 		AddCreator(datastruct.ProfileToAgg(profile))
 
-	stories, _ := h.sc.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: party.Id})
+	stories, _ := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: party.Id})
 	if stories != nil {
 		res.AddStory(stories.Stories)
 	}
 
-	favoriteCount, _ := h.rc.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
+	favoriteCount, _ := h.relationClient.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
 	if favoriteCount != nil {
 		res.AddFCount(favoriteCount.FavoriteCount)
 	}

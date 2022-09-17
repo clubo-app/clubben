@@ -19,7 +19,7 @@ type UpdateRequest struct {
 	Avatar    string `json:"avatar,omitempty"`
 }
 
-func (h profileGatewayHandler) UpdateUser(c *fiber.Ctx) error {
+func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 	req := new(UpdateRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -31,7 +31,7 @@ func (h profileGatewayHandler) UpdateUser(c *fiber.Ctx) error {
 	p := new(pg.Profile)
 
 	if req.Email != "" || req.Password != "" {
-		res, err := h.ac.UpdateAccount(c.Context(), &ag.UpdateAccountRequest{
+		res, err := h.authClient.UpdateAccount(c.Context(), &ag.UpdateAccountRequest{
 			Id:       user.Sub,
 			Email:    req.Email,
 			Password: req.Password,
@@ -43,7 +43,7 @@ func (h profileGatewayHandler) UpdateUser(c *fiber.Ctx) error {
 	}
 
 	if req.Username != "" || req.Firstname != "" || req.Lastname != "" || req.Avatar != "" {
-		res, err := h.pc.UpdateProfile(c.Context(), &pg.UpdateProfileRequest{
+		res, err := h.profileClient.UpdateProfile(c.Context(), &pg.UpdateProfileRequest{
 			Id:        user.Sub,
 			Username:  req.Username,
 			Firstname: req.Firstname,
@@ -56,7 +56,7 @@ func (h profileGatewayHandler) UpdateUser(c *fiber.Ctx) error {
 		p = res
 	}
 
-	friendCountRes, _ := h.rc.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
+	friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
 
 	res := datastruct.AggregatedAccount{
 		Id:      p.Id,

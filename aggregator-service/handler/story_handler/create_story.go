@@ -15,7 +15,7 @@ type CreatePartyReq struct {
 	TaggedFriends []string `json:"tagged_friends"`
 }
 
-func (h storyGatewayHandler) CreateStory(c *fiber.Ctx) error {
+func (h storyHandler) CreateStory(c *fiber.Ctx) error {
 	req := new(CreatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -23,7 +23,7 @@ func (h storyGatewayHandler) CreateStory(c *fiber.Ctx) error {
 
 	user := middleware.ParseUser(c)
 
-	s, err := h.sc.CreateStory(c.Context(), &sg.CreateStoryRequest{
+	s, err := h.storyClient.CreateStory(c.Context(), &sg.CreateStoryRequest{
 		RequesterId:   user.Sub,
 		PartyId:       req.PartyId,
 		Url:           req.Url,
@@ -35,7 +35,7 @@ func (h storyGatewayHandler) CreateStory(c *fiber.Ctx) error {
 
 	// Get all profiles of the tagged people and the story creator in one call
 	ids := append(s.TaggedFriends, s.UserId)
-	profilesRes, err := h.prf.GetManyProfiles(c.Context(), &pg.GetManyProfilesRequest{Ids: ids})
+	profilesRes, err := h.profileClient.GetManyProfiles(c.Context(), &pg.GetManyProfilesRequest{Ids: ids})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

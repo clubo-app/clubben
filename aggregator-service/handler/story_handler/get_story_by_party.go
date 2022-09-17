@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h storyGatewayHandler) GetStoryByParty(c *fiber.Ctx) error {
+func (h storyHandler) GetStoryByParty(c *fiber.Ctx) error {
 	pId := c.Params("id")
 
 	limitStr := c.Query("limit")
@@ -22,7 +22,7 @@ func (h storyGatewayHandler) GetStoryByParty(c *fiber.Ctx) error {
 
 	nextPage := c.Query("nextPage")
 
-	stories, err := h.sc.GetByParty(c.Context(), &sg.GetByPartyRequest{
+	stories, err := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{
 		PartyId:  pId,
 		NextPage: nextPage,
 		Limit:    uint32(limit),
@@ -31,7 +31,7 @@ func (h storyGatewayHandler) GetStoryByParty(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	party, _ := h.pc.GetParty(c.Context(), &pg.GetPartyRequest{
+	party, _ := h.partyClient.GetParty(c.Context(), &pg.GetPartyRequest{
 		PartyId: pId,
 	})
 
@@ -42,7 +42,7 @@ func (h storyGatewayHandler) GetStoryByParty(c *fiber.Ctx) error {
 	}
 
 	// here we aggregate all the profiles of the story creators
-	profilesRes, _ := h.prf.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(ids)})
+	profilesRes, _ := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(ids)})
 
 	aggS := make([]*datastruct.AggregatedStory, len(stories.Stories))
 	for i, story := range stories.Stories {

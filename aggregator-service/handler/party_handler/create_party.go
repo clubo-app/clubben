@@ -25,7 +25,7 @@ type CreatePartyReq struct {
 	EntryDate       timestamppb.Timestamp `json:"entry_date"`
 }
 
-func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
+func (h partyHandler) CreateParty(c *fiber.Ctx) error {
 	req := new(CreatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -33,7 +33,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 
 	user := middleware.ParseUser(c)
 
-	p, err := h.pc.CreateParty(c.Context(), &party.CreatePartyRequest{
+	p, err := h.partyClient.CreateParty(c.Context(), &party.CreatePartyRequest{
 		RequesterId:     user.Sub,
 		Title:           req.Title,
 		Description:     req.Description,
@@ -52,7 +52,7 @@ func (h partyGatewayHandler) CreateParty(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	profileRes, _ := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
+	profileRes, _ := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
 
 	res := datastruct.PartyToAgg(p).AddCreator(datastruct.ProfileToAgg(profileRes))
 	return c.Status(fiber.StatusCreated).JSON(res)

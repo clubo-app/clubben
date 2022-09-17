@@ -7,12 +7,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyGatewayHandler) DeleteParty(c *fiber.Ctx) error {
+func (h partyHandler) DeleteParty(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	pId := c.Params("id")
 
-	res, err := h.pc.DeleteParty(c.Context(), &party.DeletePartyRequest{RequesterId: user.Sub, PartyId: pId})
+	res, err := h.partyClient.DeleteParty(c.Context(), &party.DeletePartyRequest{RequesterId: user.Sub, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

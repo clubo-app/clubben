@@ -7,6 +7,7 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/config"
 	authhandler "github.com/clubo-app/clubben/aggregator-service/handler/auth_handler"
 	commenthandler "github.com/clubo-app/clubben/aggregator-service/handler/comment_handler"
+	favoritehandler "github.com/clubo-app/clubben/aggregator-service/handler/favorite_handler"
 	participationhandler "github.com/clubo-app/clubben/aggregator-service/handler/participation_handler"
 	partyhandler "github.com/clubo-app/clubben/aggregator-service/handler/party_handler"
 	profilehandler "github.com/clubo-app/clubben/aggregator-service/handler/profile_handler"
@@ -33,47 +34,48 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	prf, err := prf.NewClient(c.PROFILE_SERVICE_ADDRESS)
+	profileClient, err := prf.NewClient(c.PROFILE_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to profile service: %v", err)
 	}
-	ac, err := ag.NewClient(c.AUTH_SERVICE_ADDRESS)
+	authClient, err := ag.NewClient(c.AUTH_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to auth service: %v", err)
 	}
-	pc, err := pg.NewClient(c.PARTY_SERVICE_ADDRESS)
+	partyClient, err := pg.NewClient(c.PARTY_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to party service: %v", err)
 	}
-	sc, err := sg.NewClient(c.STORY_SERVICE_ADDRESS)
+	storyClient, err := sg.NewClient(c.STORY_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to story service: %v", err)
 	}
-	rc, err := rg.NewClient(c.RELATION_SERVICE_ADDRESS)
+	relationClient, err := rg.NewClient(c.RELATION_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to relation service: %v", err)
 	}
-	cc, err := cg.NewClient(c.COMMENT_SERVICE_ADDRESS)
+	commentClient, err := cg.NewClient(c.COMMENT_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to comment service: %v", err)
 	}
-	participationC, err := participation.NewClient(c.PARTICIPATION_SERVICE_ADDRESS)
+	participationClient, err := participation.NewClient(c.PARTICIPATION_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to participation service: %v", err)
 	}
-	searchC, err := search.NewClient(c.SEARCH_SERVICE_ADDRESS)
+	searchClient, err := search.NewClient(c.SEARCH_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to search service: %v", err)
 	}
 
-	authHandler := authhandler.NewAuthGatewayHandler(ac, prf)
-	profileHandler := profilehandler.NewUserGatewayHandler(prf, rc, ac)
-	partyHandler := partyhandler.NewPartyGatewayHandler(pc, prf, sc, rc, participationC)
-	storyHandler := storyhandler.NewStoryGatewayHandler(sc, prf, pc)
-	relationHandler := relationhandler.NewRelationGatewayHandler(rc, prf)
-	commentHandler := commenthandler.NewCommentGatewayHandler(cc, prf)
-	participationHandler := participationhandler.NewParticipationHandler(participationC, pc, prf)
-	searchHandler := searchhandler.NewSearchGatewayHandler(searchC)
+	authHandler := authhandler.NewAuthHandler(authClient, profileClient)
+	profileHandler := profilehandler.NewUserHandler(profileClient, relationClient, authClient)
+	partyHandler := partyhandler.NewPartyHandler(partyClient, profileClient, storyClient, relationClient, participationClient)
+	storyHandler := storyhandler.NewStoryHandler(storyClient, profileClient, partyClient)
+	relationHandler := relationhandler.NewRelationHandler(relationClient, profileClient)
+	commentHandler := commenthandler.NewCommentHandler(commentClient, profileClient)
+	participationHandler := participationhandler.NewParticipationHandler(participationClient, partyClient, profileClient)
+	searchHandler := searchhandler.NewSearchHandler(searchClient)
+	favoriteHandler := favoritehandler.NewFavoriteHandler(relationClient, partyClient, profileClient)
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
@@ -124,10 +126,10 @@ func main() {
 	participants.Get("/:pid", participationHandler.GetPartyParticipants)
 
 	favorite := app.Group("/favorites")
-	favorite.Get("/user/:id", partyHandler.GetFavoritePartiesByUser)
-	favorite.Get("/:pid", partyHandler.GetFavorisingUsersByParty)
-	favorite.Put("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), relationHandler.FavorParty)
-	favorite.Delete("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), relationHandler.DefavorParty)
+	favorite.Get("/user/:id", favoriteHandler.GetFavoritePartiesByUser)
+	favorite.Get("/:pid", favoriteHandler.GetFavorisingUsersByParty)
+	favorite.Put("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), favoriteHandler.FavorParty)
+	favorite.Delete("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), favoriteHandler.DefavorParty)
 
 	story := app.Group("/stories")
 	story.Post("/", middleware.AuthRequired(c.TOKEN_SECRET), storyHandler.CreateStory)

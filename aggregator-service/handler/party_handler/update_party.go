@@ -25,7 +25,7 @@ type UpdatePartyReq struct {
 	EntryDate       timestamppb.Timestamp `json:"entry_date"`
 }
 
-func (h partyGatewayHandler) UpdateParty(c *fiber.Ctx) error {
+func (h partyHandler) UpdateParty(c *fiber.Ctx) error {
 	req := new(UpdatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err
@@ -37,7 +37,7 @@ func (h partyGatewayHandler) UpdateParty(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Party Id is required")
 	}
 
-	p, err := h.pc.UpdateParty(c.Context(), &party.UpdatePartyRequest{
+	p, err := h.partyClient.UpdateParty(c.Context(), &party.UpdatePartyRequest{
 		PartyId:       pId,
 		RequesterId:   user.Sub,
 		Title:         req.Title,
@@ -55,13 +55,13 @@ func (h partyGatewayHandler) UpdateParty(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	profileRes, err := h.prf.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
+	profileRes, err := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 	res := datastruct.PartyToAgg(p).AddCreator(datastruct.ProfileToAgg(profileRes))
 
-	storyRes, err := h.sc.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: p.Id})
+	storyRes, err := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: p.Id})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

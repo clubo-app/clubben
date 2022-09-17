@@ -1,4 +1,4 @@
-package relationhandler
+package favoritehandler
 
 import (
 	"time"
@@ -11,12 +11,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationGatewayHandler) FavorParty(c *fiber.Ctx) error {
+func (h favoriteHandler) FavorParty(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	pId := c.Params("pId")
 
-	f, err := h.rc.FavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
+	f, err := h.relationClient.FavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

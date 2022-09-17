@@ -12,7 +12,7 @@ func (h participationHandler) JoinParty(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	user := middleware.ParseUser(c)
 
-	pp, err := h.participationC.JoinParty(c.Context(), &participation.UserPartyRequest{
+	pp, err := h.participationClient.JoinParty(c.Context(), &participation.UserPartyRequest{
 		UserId:  user.Sub,
 		PartyId: pId,
 	})

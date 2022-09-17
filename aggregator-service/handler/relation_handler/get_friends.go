@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationGatewayHandler) GetFriends(c *fiber.Ctx) error {
+func (h relationHandler) GetFriends(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	uId := c.Params("id")
@@ -30,13 +30,13 @@ func (h relationGatewayHandler) GetFriends(c *fiber.Ctx) error {
 	fr := new(rg.PagedFriendRelations)
 	if !accepted && acceptedErr == nil {
 		var err error
-		fr, err = h.rc.GetIncomingFriendRequests(c.Context(), &rg.GetIncomingFriendRequestsRequest{UserId: uId, NextPage: nextPage, Limit: limit})
+		fr, err = h.relationClient.GetIncomingFriendRequests(c.Context(), &rg.GetIncomingFriendRequestsRequest{UserId: uId, NextPage: nextPage, Limit: limit})
 		if err != nil {
 			return utils.ToHTTPError(err)
 		}
 	} else {
 		var err error
-		fr, err = h.rc.GetFriends(c.Context(), &rg.GetFriendsRequest{UserId: uId, NextPage: nextPage, Limit: limit})
+		fr, err = h.relationClient.GetFriends(c.Context(), &rg.GetFriendsRequest{UserId: uId, NextPage: nextPage, Limit: limit})
 		if err != nil {
 			return utils.ToHTTPError(err)
 		}
@@ -48,7 +48,7 @@ func (h relationGatewayHandler) GetFriends(c *fiber.Ctx) error {
 	}
 
 	// we get the profile of all the user having a relation to the wanted user
-	profiles, err := h.pc.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(ids)})
+	profiles, err := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(ids)})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

@@ -20,7 +20,7 @@ func (h participationHandler) GetUserInvites(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 40")
 	}
 
-	pi, err := h.participationC.GetUserInvites(c.Context(), &participation.GetUserInvitesRequest{
+	pi, err := h.participationClient.GetUserInvites(c.Context(), &participation.GetUserInvitesRequest{
 		UserId:   uId,
 		NextPage: nextPage,
 		Limit:    int32(limit),
@@ -39,8 +39,8 @@ func (h participationHandler) GetUserInvites(c *fiber.Ctx) error {
 		inviterIds[i] = in.InviterId
 	}
 
-	parties, _ := h.partyC.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
-	inviters, _ := h.profileC.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(inviterIds)})
+	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
+	inviters, _ := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(inviterIds)})
 
 	aggI := make([]*datastruct.AggregatedPartyInvite, len(pi.Invites))
 	for i, pi := range pi.Invites {

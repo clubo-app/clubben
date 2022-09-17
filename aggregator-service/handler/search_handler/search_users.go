@@ -6,9 +6,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h searchGatewayHandler) SearchUsers(c *fiber.Ctx) error {
+func (h searchHandler) SearchUsers(c *fiber.Ctx) error {
 	q := c.Params("query")
-	res, err := h.sc.SearchUsers(c.Context(), &search.SearchUsersRequest{Query: q})
+	res, err := h.searchClient.SearchUsers(c.Context(), &search.SearchUsersRequest{Query: q})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

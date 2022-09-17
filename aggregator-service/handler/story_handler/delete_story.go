@@ -7,12 +7,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h storyGatewayHandler) DeleteStory(c *fiber.Ctx) error {
+func (h storyHandler) DeleteStory(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 
 	sId := c.Params("id")
 
-	res, err := h.sc.DeleteStory(c.Context(), &story.DeleteStoryRequest{RequesterId: user.Sub, StoryId: sId})
+	res, err := h.storyClient.DeleteStory(c.Context(), &story.DeleteStoryRequest{RequesterId: user.Sub, StoryId: sId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

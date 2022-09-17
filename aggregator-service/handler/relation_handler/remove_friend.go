@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationGatewayHandler) RemoveFriend(c *fiber.Ctx) error {
+func (h relationHandler) RemoveFriend(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
 	uId := c.Params("id")
 
@@ -15,7 +15,7 @@ func (h relationGatewayHandler) RemoveFriend(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Invalid Friend Id")
 	}
 
-	ok, err := h.rc.RemoveFriend(c.Context(), &rg.RemoveFriendRequest{UserId: user.Sub, FriendId: uId})
+	ok, err := h.relationClient.RemoveFriend(c.Context(), &rg.RemoveFriendRequest{UserId: user.Sub, FriendId: uId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

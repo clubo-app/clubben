@@ -5,17 +5,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type searchGatewayHandler struct {
-	sc search.SearchServiceClient
+type searchHandler struct {
+	searchClient search.SearchServiceClient
 }
 
-type SearchGatewayHandler interface {
+type SearchHandler interface {
 	SearchUsers(c *fiber.Ctx) error
 	SearchParties(c *fiber.Ctx) error
 }
 
-func NewSearchGatewayHandler(sc search.SearchServiceClient) SearchGatewayHandler {
-	return &searchGatewayHandler{
-		sc: sc,
+func NewSearchHandler(searchClient search.SearchServiceClient) SearchHandler {
+	return &searchHandler{
+		searchClient: searchClient,
 	}
 }

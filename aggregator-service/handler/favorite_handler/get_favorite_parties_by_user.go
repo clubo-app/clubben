@@ -1,4 +1,4 @@
-package partyhandler
+package favoritehandler
 
 import (
 	"strconv"
@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h *partyGatewayHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
+func (h *favoriteHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
 	uId := c.Params("id")
 	nextPage := c.Query("nextPage")
 
@@ -21,7 +21,7 @@ func (h *partyGatewayHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 20")
 	}
 
-	favParties, err := h.rc.GetFavoritePartiesByUser(c.Context(), &rg.GetFavoritePartiesByUserRequest{UserId: uId, NextPage: nextPage, Limit: limit})
+	favParties, err := h.relationClient.GetFavoritePartiesByUser(c.Context(), &rg.GetFavoritePartiesByUserRequest{UserId: uId, NextPage: nextPage, Limit: limit})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
@@ -31,7 +31,7 @@ func (h *partyGatewayHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
 		partyIds[i] = fp.PartyId
 	}
 
-	parties, _ := h.pc.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
+	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
 	if parties == nil {
 		res := datastruct.PagedAggregatedFavoriteParty{
 			FavoriteParties: []datastruct.AggregatedFavoriteParty{},

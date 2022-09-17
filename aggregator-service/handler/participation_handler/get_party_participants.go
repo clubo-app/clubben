@@ -25,13 +25,13 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 	var pps *participation.PagedPartyParticipants
 	var err error
 	if requested {
-		pps, err = h.participationC.GetPartyRequests(c.Context(), &participation.GetPartyParticipantsRequest{
+		pps, err = h.participationClient.GetPartyRequests(c.Context(), &participation.GetPartyParticipantsRequest{
 			PartyId:  pId,
 			NextPage: nextPage,
 			Limit:    int32(limit),
 		})
 	} else {
-		pps, err = h.participationC.GetPartyParticipants(c.Context(), &participation.GetPartyParticipantsRequest{
+		pps, err = h.participationClient.GetPartyParticipants(c.Context(), &participation.GetPartyParticipantsRequest{
 			PartyId:  pId,
 			NextPage: nextPage,
 			Limit:    int32(limit),
@@ -45,7 +45,7 @@ func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 	for i, pp := range pps.Participants {
 		userIds[i] = pp.UserId
 	}
-	profiles, _ := h.profileC.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(userIds)})
+	profiles, _ := h.profileClient.GetManyProfiles(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(userIds)})
 
 	aggP := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
 	for i, profile := range profiles.Profiles {

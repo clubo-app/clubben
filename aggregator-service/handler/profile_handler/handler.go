@@ -7,23 +7,23 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type profileGatewayHandler struct {
-	pc pg.ProfileServiceClient
-	rc rg.RelationServiceClient
-	ac ag.AuthServiceClient
+type profileHandler struct {
+	profileClient  pg.ProfileServiceClient
+	relationClient rg.RelationServiceClient
+	authClient     ag.AuthServiceClient
 }
 
-type ProfileGatewayHandler interface {
+type ProfileHandler interface {
 	GetMe(c *fiber.Ctx) error
 	GetProfile(c *fiber.Ctx) error
 	UpdateUser(c *fiber.Ctx) error
 	UsernameTaken(c *fiber.Ctx) error
 }
 
-func NewUserGatewayHandler(pc pg.ProfileServiceClient, rc rg.RelationServiceClient, ac ag.AuthServiceClient) ProfileGatewayHandler {
-	return &profileGatewayHandler{
-		pc: pc,
-		rc: rc,
-		ac: ac,
+func NewUserHandler(profileClient pg.ProfileServiceClient, relationClient rg.RelationServiceClient, authClient ag.AuthServiceClient) ProfileHandler {
+	return &profileHandler{
+		profileClient:  profileClient,
+		relationClient: relationClient,
+		authClient:     authClient,
 	}
 }
