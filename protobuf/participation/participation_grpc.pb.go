@@ -34,7 +34,6 @@ type ParticipationServiceClient interface {
 	GetPartyRequests(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetUserParticipation(ctx context.Context, in *GetUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetManyUserParticipation(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
-	GetManyUserParticipationMap(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipantsMap, error)
 }
 
 type participationServiceClient struct {
@@ -144,15 +143,6 @@ func (c *participationServiceClient) GetManyUserParticipation(ctx context.Contex
 	return out, nil
 }
 
-func (c *participationServiceClient) GetManyUserParticipationMap(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipantsMap, error) {
-	out := new(PagedPartyParticipantsMap)
-	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetManyUserParticipationMap", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ParticipationServiceServer is the server API for ParticipationService service.
 // All implementations must embed UnimplementedParticipationServiceServer
 // for forward compatibility
@@ -168,7 +158,6 @@ type ParticipationServiceServer interface {
 	GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
 	GetUserParticipation(context.Context, *GetUserParticipationRequest) (*PagedPartyParticipants, error)
 	GetManyUserParticipation(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipants, error)
-	GetManyUserParticipationMap(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipantsMap, error)
 	mustEmbedUnimplementedParticipationServiceServer()
 }
 
@@ -208,9 +197,6 @@ func (UnimplementedParticipationServiceServer) GetUserParticipation(context.Cont
 }
 func (UnimplementedParticipationServiceServer) GetManyUserParticipation(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipants, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetManyUserParticipation not implemented")
-}
-func (UnimplementedParticipationServiceServer) GetManyUserParticipationMap(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipantsMap, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetManyUserParticipationMap not implemented")
 }
 func (UnimplementedParticipationServiceServer) mustEmbedUnimplementedParticipationServiceServer() {}
 
@@ -423,24 +409,6 @@ func _ParticipationService_GetManyUserParticipation_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ParticipationService_GetManyUserParticipationMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetManyUserParticipationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ParticipationServiceServer).GetManyUserParticipationMap(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/participation.ParticipationService/GetManyUserParticipationMap",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ParticipationServiceServer).GetManyUserParticipationMap(ctx, req.(*GetManyUserParticipationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // ParticipationService_ServiceDesc is the grpc.ServiceDesc for ParticipationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -491,10 +459,6 @@ var ParticipationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetManyUserParticipation",
 			Handler:    _ParticipationService_GetManyUserParticipation_Handler,
-		},
-		{
-			MethodName: "GetManyUserParticipationMap",
-			Handler:    _ParticipationService_GetManyUserParticipationMap_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

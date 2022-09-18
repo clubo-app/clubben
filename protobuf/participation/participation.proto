@@ -21,7 +21,6 @@ service ParticipationService {
 
     rpc GetUserParticipation (GetUserParticipationRequest) returns (PagedPartyParticipants) {};
     rpc GetManyUserParticipation (GetManyUserParticipationRequest) returns (PagedPartyParticipants) {};
-    rpc GetManyUserParticipationMap (GetManyUserParticipationRequest) returns (PagedPartyParticipantsMap) {};
 }
 
 // Requests
@@ -92,9 +91,3 @@ message PagedPartyParticipants {
   repeated PartyParticipant participants = 1;
   string next_page = 2;
 }
-
-message PagedPartyParticipantsMap {
-  map<string, PartyParticipant> participants = 1;
-  string next_page = 2;
-}
-
