@@ -1,6 +1,8 @@
 package profilehandler
 
 import (
+	"sync"
+
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
@@ -26,20 +28,29 @@ func (h profileHandler) GetProfile(c *fiber.Ctx) error {
 
 	res := datastruct.ProfileToAgg(p)
 
-	relation := new(rg.FriendRelation)
-	// if somebody wants the Profile of somebody else we also return the friendship status between them two
-	if id != user.Sub {
-		relation, _ = h.relationClient.GetFriendRelation(c.Context(), &rg.GetFriendRelationRequest{UserId: user.Sub, FriendId: id})
-	}
-	if relation != nil {
-		fs := datastruct.ParseFriendShipStatus(user.Sub, relation)
-		res.AddFs(fs)
-	}
+	var wg sync.WaitGroup
+	wg.Add(2)
 
-	friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
-	if friendCountRes != nil {
-		res.AddFCount(friendCountRes.FriendCount)
-	}
+	go func() {
+		defer wg.Done()
+		relation := new(rg.FriendRelation)
+		// if somebody wants the Profile of somebody else we also return the friendship status between them two
+		if id != user.Sub {
+			relation, _ = h.relationClient.GetFriendRelation(c.Context(), &rg.GetFriendRelationRequest{UserId: user.Sub, FriendId: id})
+		}
+		if relation != nil {
+			fs := datastruct.ParseFriendShipStatus(user.Sub, relation)
+			res.AddFs(fs)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
+		if friendCountRes != nil {
+			res.AddFCount(friendCountRes.FriendCount)
+		}
+	}()
 
 	return c.Status(fiber.StatusOK).JSON(res)
 }

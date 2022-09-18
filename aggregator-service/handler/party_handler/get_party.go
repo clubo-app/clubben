@@ -2,6 +2,7 @@ package partyhandler
 
 import (
 	"log"
+	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
@@ -28,23 +29,35 @@ func (h partyHandler) GetParty(c *fiber.Ctx) error {
 		PartyToAgg(party).
 		AddCreator(datastruct.ProfileToAgg(profile))
 
-	stories, _ := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: party.Id})
-	if stories != nil {
-		res.AddStory(stories.Stories)
-	}
+	var wg sync.WaitGroup
+	wg.Add(3)
 
-	favoriteCount, _ := h.relationClient.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
-	if favoriteCount != nil {
-		res.AddFCount(favoriteCount.FavoriteCount)
-	}
-
-	if user.Sub != "" {
-		participation, err := h.participationClient.GetPartyParticipant(c.Context(), &participation.UserPartyRequest{UserId: user.Sub, PartyId: party.Id})
-		if err != nil {
-			log.Println("Error getting ParticipationStatus: ", err)
+	go func() {
+		defer wg.Done()
+		stories, _ := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: party.Id})
+		if stories != nil {
+			res.AddStory(stories.Stories)
 		}
-		res.AddParticipationStatus(datastruct.ParseParticipationStatus(participation))
-	}
+	}()
+
+	go func() {
+		defer wg.Done()
+		favoriteCount, _ := h.relationClient.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
+		if favoriteCount != nil {
+			res.AddFCount(favoriteCount.FavoriteCount)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		if user.Sub != "" {
+			participation, err := h.participationClient.GetPartyParticipant(c.Context(), &participation.UserPartyRequest{UserId: user.Sub, PartyId: party.Id})
+			if err != nil {
+				log.Println("Error getting ParticipationStatus: ", err)
+			}
+			res.AddParticipationStatus(datastruct.ParseParticipationStatus(participation))
+		}
+	}()
 
 	return c.Status(fiber.StatusOK).JSON(res)
 }
