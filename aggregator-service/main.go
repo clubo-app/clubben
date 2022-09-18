@@ -124,6 +124,7 @@ func main() {
 	participants.Put("/:pid", middleware.AuthRequired(c.TOKEN_SECRET), participationHandler.JoinParty)
 	participants.Delete("/:pid", middleware.AuthRequired(c.TOKEN_SECRET), participationHandler.LeaveParty)
 	participants.Get("/:pid", participationHandler.GetPartyParticipants)
+	participants.Get("/user/:uid", participationHandler.GetUserPartyParticipation)
 
 	favorite := app.Group("/favorites")
 	favorite.Get("/user/:id", favoriteHandler.GetFavoritePartiesByUser)

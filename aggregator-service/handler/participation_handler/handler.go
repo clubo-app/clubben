@@ -21,6 +21,8 @@ type ParticipationHandler interface {
 	JoinParty(c *fiber.Ctx) error
 	LeaveParty(c *fiber.Ctx) error
 	GetPartyParticipants(c *fiber.Ctx) error
+
+	GetUserPartyParticipation(c *fiber.Ctx) error
 }
 
 func NewParticipationHandler(
