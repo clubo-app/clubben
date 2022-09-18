@@ -41,9 +41,13 @@ type ParticipantRepository interface {
 	GetPartyParticipant(context.Context, UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
+
 	IncreaseParticipationCount(context.Context, string) error
 	DecreaseParticipationCount(context.Context, string) error
 	GetParticipationCount(context.Context, string) (int64, error)
+
+	GetUserParticipation(context.Context, GetUserParticipationParams) ([]datastruct.Participant, []byte, error)
+	GetManyUserParticipation(context.Context, GetManyUserParticipationParams) ([]datastruct.Participant, []byte, error)
 }
 
 type participantRepository struct {
@@ -347,4 +351,76 @@ func (r participantRepository) GetParticipationCount(ctx context.Context, pId st
 	}
 
 	return res.ParticipationCount, err
+}
+
+type GetUserParticipationParams struct {
+	UId   string
+	Page  []byte
+	Limit int
+}
+
+func (r participantRepository) GetUserParticipation(ctx context.Context, params GetUserParticipationParams) ([]datastruct.Participant, []byte, error) {
+	res := []datastruct.Participant{}
+	stmt, names := qb.
+		Select(PARTY_PARTICIPANTS).
+		Columns(participantMetadata.Columns...).
+		Where(qb.Eq("user_id")).
+		ToCql()
+
+	q := r.sess.
+		ContextQuery(ctx, stmt, names).
+		BindMap(qb.M{
+			"user_id": params.UId,
+		})
+
+	q.PageState(params.Page)
+	if params.Limit == 0 {
+		q.PageSize(20)
+	} else {
+		q.PageSize(params.Limit)
+	}
+
+	iter := q.Iter()
+	err := iter.Select(&res)
+	if err != nil {
+		return []datastruct.Participant{}, nil, status.Error(codes.NotFound, "Party Participation not found")
+	}
+
+	return res, iter.PageState(), nil
+}
+
+type GetManyUserParticipationParams struct {
+	UIds  []string
+	Page  []byte
+	Limit int
+}
+
+func (r participantRepository) GetManyUserParticipation(ctx context.Context, params GetManyUserParticipationParams) ([]datastruct.Participant, []byte, error) {
+	res := []datastruct.Participant{}
+	stmt, names := qb.
+		Select(PARTY_PARTICIPANTS).
+		Columns(participantMetadata.Columns...).
+		Where(qb.In("user_id")).
+		ToCql()
+
+	q := r.sess.
+		ContextQuery(ctx, stmt, names).
+		BindMap(qb.M{
+			"user_id": params.UIds,
+		})
+
+	q.PageState(params.Page)
+	if params.Limit == 0 {
+		q.PageSize(20)
+	} else {
+		q.PageSize(params.Limit)
+	}
+
+	iter := q.Iter()
+	err := iter.Select(&res)
+	if err != nil {
+		return []datastruct.Participant{}, nil, status.Error(codes.NotFound, "Party Participation not found")
+	}
+
+	return res, iter.PageState(), nil
 }

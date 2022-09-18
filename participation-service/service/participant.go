@@ -20,6 +20,9 @@ type Participant interface {
 	GetPartyParticipant(context.Context, repository.UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
+
+	GetUserParticipation(context.Context, repository.GetUserParticipationParams) ([]datastruct.Participant, []byte, error)
+	GetManyUserParticipation(context.Context, repository.GetManyUserParticipationParams) ([]datastruct.Participant, []byte, error)
 }
 
 type participant struct {
@@ -121,4 +124,12 @@ func (p participant) GetPartyParticipants(ctx context.Context, params repository
 
 func (p participant) GetPartyRequests(ctx context.Context, params repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error) {
 	return p.r.GetPartyRequests(ctx, params)
+}
+
+func (p participant) GetUserParticipation(ctx context.Context, params repository.GetUserParticipationParams) ([]datastruct.Participant, []byte, error) {
+	return p.r.GetUserParticipation(ctx, params)
+}
+
+func (p participant) GetManyUserParticipation(ctx context.Context, params repository.GetManyUserParticipationParams) ([]datastruct.Participant, []byte, error) {
+	return p.r.GetManyUserParticipation(ctx, params)
 }
