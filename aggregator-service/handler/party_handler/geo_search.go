@@ -54,9 +54,5 @@ func (h partyHandler) GeoSearch(c *fiber.Ctx) error {
 		aggP[i] = datastruct.PartyToAgg(p)
 	}
 
-	res := datastruct.PagedAggregatedParty{
-		Parties: aggP,
-	}
-
-	return c.Status(fiber.StatusOK).JSON(res)
+	return c.Status(fiber.StatusOK).JSON(aggP)
 }

@@ -7,10 +7,11 @@ import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
+func (h participationHandler) GetFriendsPartyParticipation(c *fiber.Ctx) error {
 	uId := c.Params("uid")
 	nextPage := c.Query("nextPage")
 	limitStr := c.Query("limit")
@@ -19,14 +20,28 @@ func (h participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 40")
 	}
 
-	participation, err := h.participationClient.GetUserParticipation(c.Context(), &participation.GetUserParticipationRequest{
+	friends, err := h.relationClient.GetFriends(c.Context(), &relation.GetFriendsRequest{
 		UserId:   uId,
+		Limit:    uint64(limit),
 		NextPage: nextPage,
-		Limit:    int32(limit),
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
+
+	if len(friends.Relations) == 0 {
+		return c.Status(fiber.StatusOK).JSON(datastruct.PagedAggregatedParty{Parties: make([]*datastruct.AggregatedParty, 0)})
+	}
+
+	friendIds := make([]string, len(friends.Relations))
+	for i, friend := range friends.Relations {
+		friendIds[i] = friend.FriendId
+	}
+
+	participation, err := h.participationClient.GetManyUserParticipation(c.Context(), &participation.GetManyUserParticipationRequest{
+		UserIds: friendIds,
+	})
+
 	if len(participation.Participants) == 0 {
 		return c.Status(fiber.StatusOK).JSON(datastruct.PagedAggregatedParty{Parties: make([]*datastruct.AggregatedParty, 0)})
 	}
@@ -47,7 +62,7 @@ func (h participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
 
 	res := datastruct.PagedAggregatedParty{
 		Parties:  aggParties,
-		NextPage: participation.NextPage,
+		NextPage: friends.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

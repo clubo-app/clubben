@@ -69,13 +69,24 @@ func main() {
 
 	authHandler := authhandler.NewAuthHandler(authClient, profileClient)
 	profileHandler := profilehandler.NewUserHandler(profileClient, relationClient, authClient)
-	partyHandler := partyhandler.NewPartyHandler(partyClient, profileClient, storyClient, relationClient, participationClient)
 	storyHandler := storyhandler.NewStoryHandler(storyClient, profileClient, partyClient)
 	relationHandler := relationhandler.NewRelationHandler(relationClient, profileClient)
 	commentHandler := commenthandler.NewCommentHandler(commentClient, profileClient)
-	participationHandler := participationhandler.NewParticipationHandler(participationClient, partyClient, profileClient)
 	searchHandler := searchhandler.NewSearchHandler(searchClient)
 	favoriteHandler := favoritehandler.NewFavoriteHandler(relationClient, partyClient, profileClient)
+	partyHandler := partyhandler.NewPartyHandler(
+		partyClient,
+		profileClient,
+		storyClient,
+		relationClient,
+		participationClient,
+	)
+	participationHandler := participationhandler.NewParticipationHandler(
+		participationClient,
+		partyClient,
+		profileClient,
+		relationClient,
+	)
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
@@ -125,6 +136,7 @@ func main() {
 	participants.Delete("/:pid", middleware.AuthRequired(c.TOKEN_SECRET), participationHandler.LeaveParty)
 	participants.Get("/:pid", participationHandler.GetPartyParticipants)
 	participants.Get("/user/:uid", participationHandler.GetUserPartyParticipation)
+	participants.Get("/friends/:uid", participationHandler.GetFriendsPartyParticipation)
 
 	favorite := app.Group("/favorites")
 	favorite.Get("/user/:id", favoriteHandler.GetFavoritePartiesByUser)

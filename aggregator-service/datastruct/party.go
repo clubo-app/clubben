@@ -86,7 +86,8 @@ func (p *AggregatedParty) AddParticipationStatus(s ParticipationStatus) *Aggrega
 }
 
 type PagedAggregatedParty struct {
-	Parties []*AggregatedParty `json:"parties"`
+	Parties  []*AggregatedParty `json:"parties"`
+	NextPage string             `json:"next_page"`
 }
 
 type AggregatedFavoriteParty struct {

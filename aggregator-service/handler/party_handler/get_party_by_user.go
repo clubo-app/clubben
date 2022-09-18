@@ -42,9 +42,5 @@ func (h partyHandler) GetPartyByUser(c *fiber.Ctx) error {
 		aggP[i] = datastruct.PartyToAgg(p).AddCreator(datastruct.ProfileToAgg(profile))
 	}
 
-	res := datastruct.PagedAggregatedParty{
-		Parties: aggP,
-	}
-
-	return c.Status(fiber.StatusOK).JSON(res)
+	return c.Status(fiber.StatusOK).JSON(aggP)
 }
