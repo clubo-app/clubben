@@ -18,6 +18,10 @@ service ParticipationService {
     rpc GetPartyParticipant (UserPartyRequest) returns (PartyParticipant) {};
     rpc GetPartyParticipants (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
     rpc GetPartyRequests (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
+
+    rpc GetUserParticipation (GetUserParticipationRequest) returns (PagedPartyParticipants) {};
+    rpc GetManyUserParticipation (GetManyUserParticipationRequest) returns (PagedPartyParticipants) {};
+    rpc GetManyUserParticipationMap (GetManyUserParticipationRequest) returns (PagedPartyParticipantsMap) {};
 }
 
 // Requests
@@ -51,6 +55,18 @@ message GetPartyParticipantsRequest {
   int32 limit = 3;
 }
 
+message GetUserParticipationRequest {
+  string user_id = 1;
+  string next_page = 2;
+  int32 limit = 3;
+}
+
+message GetManyUserParticipationRequest {
+  repeated string user_ids = 1;
+  string next_page = 2;
+  int32 limit = 3;
+}
+
 // Responses
 message PartyInvite {
   string user_id = 1;
@@ -74,6 +90,11 @@ message PagedPartyInvites {
 
 message PagedPartyParticipants {
   repeated PartyParticipant participants = 1;
+  string next_page = 2;
+}
+
+message PagedPartyParticipantsMap {
+  map<string, PartyParticipant> participants = 1;
   string next_page = 2;
 }
 
