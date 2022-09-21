@@ -59,5 +59,7 @@ func (h partyHandler) GetParty(c *fiber.Ctx) error {
 		}
 	}()
 
+	wg.Wait()
+
 	return c.Status(fiber.StatusOK).JSON(res)
 }

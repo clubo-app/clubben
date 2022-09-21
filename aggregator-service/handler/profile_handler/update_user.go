@@ -1,6 +1,8 @@
 package profilehandler
 
 import (
+	"sync"
+
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
@@ -29,38 +31,59 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 
 	a := new(ag.Account)
 	p := new(pg.Profile)
+	var friendCount int
 
-	if req.Email != "" || req.Password != "" {
-		res, err := h.authClient.UpdateAccount(c.Context(), &ag.UpdateAccountRequest{
-			Id:       user.Sub,
-			Email:    req.Email,
-			Password: req.Password,
-		})
-		if err != nil {
-			return utils.ToHTTPError(err)
+	var wg sync.WaitGroup
+	wg.Add(3)
+
+	var pErr error
+	go func() {
+		defer wg.Done()
+
+		if req.Email != "" || req.Password != "" {
+			a, pErr = h.authClient.UpdateAccount(c.Context(), &ag.UpdateAccountRequest{
+				Id:       user.Sub,
+				Email:    req.Email,
+				Password: req.Password,
+			})
 		}
-		a = res
-	}
+	}()
 
-	if req.Username != "" || req.Firstname != "" || req.Lastname != "" || req.Avatar != "" {
-		res, err := h.profileClient.UpdateProfile(c.Context(), &pg.UpdateProfileRequest{
-			Id:        user.Sub,
-			Username:  req.Username,
-			Firstname: req.Firstname,
-			Lastname:  req.Lastname,
-			Avatar:    req.Avatar,
-		})
-		if err != nil {
-			return utils.ToHTTPError(err)
+	var aErr error
+	go func() {
+		defer wg.Done()
+
+		if req.Username != "" || req.Firstname != "" || req.Lastname != "" || req.Avatar != "" {
+			p, aErr = h.profileClient.UpdateProfile(c.Context(), &pg.UpdateProfileRequest{
+				Id:        user.Sub,
+				Username:  req.Username,
+				Firstname: req.Firstname,
+				Lastname:  req.Lastname,
+				Avatar:    req.Avatar,
+			})
 		}
-		p = res
-	}
+	}()
 
-	friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
+	go func() {
+		defer wg.Done()
+		friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: user.Sub})
+		if friendCountRes != nil {
+			friendCount = int(friendCountRes.FriendCount)
+		}
+	}()
+
+	wg.Wait()
+
+	if pErr != nil {
+		return utils.ToHTTPError(pErr)
+	}
+	if aErr != nil {
+		return utils.ToHTTPError(aErr)
+	}
 
 	res := datastruct.AggregatedAccount{
 		Id:      p.Id,
-		Profile: datastruct.ProfileToAgg(p).AddFCount(friendCountRes.FriendCount),
+		Profile: datastruct.ProfileToAgg(p).AddFCount(uint32(friendCount)),
 		Email:   a.Email,
 	}
 

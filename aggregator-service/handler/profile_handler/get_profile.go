@@ -52,5 +52,7 @@ func (h profileHandler) GetProfile(c *fiber.Ctx) error {
 		}
 	}()
 
+	wg.Wait()
+
 	return c.Status(fiber.StatusOK).JSON(res)
 }
