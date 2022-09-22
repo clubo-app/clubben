@@ -30,7 +30,7 @@ var friendRelationMetadata = table.Metadata{
 }
 
 type FriendRelationRepository interface {
-	CreateFriendRequest(ctx context.Context, uId string, fId string) error
+	CreateFriendRequest(ctx context.Context, uId string, fId string) (datastruct.FriendRelation, error)
 	DeclineFriendRequest(ctx context.Context, uId, fId string) error
 	AcceptFriendRequest(ctx context.Context, uId, fId string) error
 	RemoveFriendRelation(ctx context.Context, uId, fId string) error
@@ -48,7 +48,7 @@ type friendRelationRepository struct {
 	val  *validator.Validate
 }
 
-func (r *friendRelationRepository) CreateFriendRequest(ctx context.Context, uId string, fId string) error {
+func (r *friendRelationRepository) CreateFriendRequest(ctx context.Context, uId string, fId string) (datastruct.FriendRelation, error) {
 	fr := datastruct.FriendRelation{
 		FriendId:    uId,
 		UserId:      fId,
@@ -58,7 +58,7 @@ func (r *friendRelationRepository) CreateFriendRequest(ctx context.Context, uId 
 
 	err := r.val.StructCtx(ctx, fr)
 	if err != nil {
-		return err
+		return datastruct.FriendRelation{}, err
 	}
 
 	stmt, names := qb.
@@ -72,10 +72,10 @@ func (r *friendRelationRepository) CreateFriendRequest(ctx context.Context, uId 
 		BindStruct(fr).
 		ExecRelease()
 	if err != nil {
-		return err
+		return datastruct.FriendRelation{}, err
 	}
 
-	return nil
+	return fr, nil
 }
 
 func (r *friendRelationRepository) DeclineFriendRequest(ctx context.Context, uId, fId string) error {
