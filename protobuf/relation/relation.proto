@@ -8,7 +8,7 @@ import "common/common.proto";
 
 service RelationService {
     rpc CreateFriendRequest (CreateFriendRequestRequest) returns (FriendRelation) {};
-    rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (FriendRelation) {};
+    rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (common.SuccessIndicator) {};
     rpc DeclineFriendRequest (DeclineFriendRequestRequest) returns (common.SuccessIndicator) {};
     rpc RemoveFriend (RemoveFriendRequest) returns (common.SuccessIndicator) {};
     rpc GetFriendRelation (GetFriendRelationRequest) returns (FriendRelation) {};
