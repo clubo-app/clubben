@@ -37,6 +37,7 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 	agg := &AggregatedParty{
 		Id:              p.Id,
 		Title:           p.Title,
+		Creator:         &AggregatedProfile{Id: p.UserId},
 		Description:     p.Description,
 		IsPublic:        p.IsPublic,
 		MusicGenre:      p.MusicGenre,
