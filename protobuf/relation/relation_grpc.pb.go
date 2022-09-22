@@ -23,8 +23,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RelationServiceClient interface {
-	CreateFriendRequest(ctx context.Context, in *CreateFriendRequestRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
-	AcceptFriendRequest(ctx context.Context, in *AcceptFriendRequestRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	CreateFriendRequest(ctx context.Context, in *CreateFriendRequestRequest, opts ...grpc.CallOption) (*FriendRelation, error)
+	AcceptFriendRequest(ctx context.Context, in *AcceptFriendRequestRequest, opts ...grpc.CallOption) (*FriendRelation, error)
 	DeclineFriendRequest(ctx context.Context, in *DeclineFriendRequestRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
 	RemoveFriend(ctx context.Context, in *RemoveFriendRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
 	GetFriendRelation(ctx context.Context, in *GetFriendRelationRequest, opts ...grpc.CallOption) (*FriendRelation, error)
@@ -48,8 +48,8 @@ func NewRelationServiceClient(cc grpc.ClientConnInterface) RelationServiceClient
 	return &relationServiceClient{cc}
 }
 
-func (c *relationServiceClient) CreateFriendRequest(ctx context.Context, in *CreateFriendRequestRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *relationServiceClient) CreateFriendRequest(ctx context.Context, in *CreateFriendRequestRequest, opts ...grpc.CallOption) (*FriendRelation, error) {
+	out := new(FriendRelation)
 	err := c.cc.Invoke(ctx, "/relation.RelationService/CreateFriendRequest", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,8 +57,8 @@ func (c *relationServiceClient) CreateFriendRequest(ctx context.Context, in *Cre
 	return out, nil
 }
 
-func (c *relationServiceClient) AcceptFriendRequest(ctx context.Context, in *AcceptFriendRequestRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *relationServiceClient) AcceptFriendRequest(ctx context.Context, in *AcceptFriendRequestRequest, opts ...grpc.CallOption) (*FriendRelation, error) {
+	out := new(FriendRelation)
 	err := c.cc.Invoke(ctx, "/relation.RelationService/AcceptFriendRequest", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -187,8 +187,8 @@ func (c *relationServiceClient) GetManyFavoritePartyCount(ctx context.Context, i
 // All implementations must embed UnimplementedRelationServiceServer
 // for forward compatibility
 type RelationServiceServer interface {
-	CreateFriendRequest(context.Context, *CreateFriendRequestRequest) (*common.SuccessIndicator, error)
-	AcceptFriendRequest(context.Context, *AcceptFriendRequestRequest) (*common.SuccessIndicator, error)
+	CreateFriendRequest(context.Context, *CreateFriendRequestRequest) (*FriendRelation, error)
+	AcceptFriendRequest(context.Context, *AcceptFriendRequestRequest) (*FriendRelation, error)
 	DeclineFriendRequest(context.Context, *DeclineFriendRequestRequest) (*common.SuccessIndicator, error)
 	RemoveFriend(context.Context, *RemoveFriendRequest) (*common.SuccessIndicator, error)
 	GetFriendRelation(context.Context, *GetFriendRelationRequest) (*FriendRelation, error)
@@ -209,10 +209,10 @@ type RelationServiceServer interface {
 type UnimplementedRelationServiceServer struct {
 }
 
-func (UnimplementedRelationServiceServer) CreateFriendRequest(context.Context, *CreateFriendRequestRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedRelationServiceServer) CreateFriendRequest(context.Context, *CreateFriendRequestRequest) (*FriendRelation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFriendRequest not implemented")
 }
-func (UnimplementedRelationServiceServer) AcceptFriendRequest(context.Context, *AcceptFriendRequestRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedRelationServiceServer) AcceptFriendRequest(context.Context, *AcceptFriendRequestRequest) (*FriendRelation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AcceptFriendRequest not implemented")
 }
 func (UnimplementedRelationServiceServer) DeclineFriendRequest(context.Context, *DeclineFriendRequestRequest) (*common.SuccessIndicator, error) {
