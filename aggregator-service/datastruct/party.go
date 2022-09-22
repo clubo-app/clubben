@@ -11,6 +11,7 @@ import (
 
 type AggregatedParty struct {
 	Id                  string               `json:"id"`
+	CreatorId           string               `json:"creator_id,omitempty"`
 	Creator             *AggregatedProfile   `json:"creator,omitempty"`
 	Title               string               `json:"title,omitempty"`
 	Description         string               `json:"description,omitempty"`
@@ -37,7 +38,7 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 	agg := &AggregatedParty{
 		Id:              p.Id,
 		Title:           p.Title,
-		Creator:         &AggregatedProfile{Id: p.UserId},
+		CreatorId:       p.UserId,
 		Description:     p.Description,
 		IsPublic:        p.IsPublic,
 		MusicGenre:      p.MusicGenre,
@@ -64,6 +65,7 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 
 func (p *AggregatedParty) AddCreator(prof *AggregatedProfile) *AggregatedParty {
 	if prof.Id != "" {
+		p.CreatorId = prof.Id
 		p.Creator = prof
 	}
 	return p
