@@ -1,6 +1,8 @@
 package partyhandler
 
 import (
+	"sync"
+
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
@@ -55,19 +57,24 @@ func (h partyHandler) UpdateParty(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	profileRes, err := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
-	if err != nil {
-		return utils.ToHTTPError(err)
-	}
-	res := datastruct.PartyToAgg(p).AddCreator(datastruct.ProfileToAgg(profileRes))
+	party := datastruct.PartyToAgg(p)
+	var wg sync.WaitGroup
+	wg.Add(2)
 
-	storyRes, err := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: p.Id})
-	if err != nil {
-		return utils.ToHTTPError(err)
-	}
-	if storyRes != nil {
-		res.AddStory(storyRes.Stories)
-	}
+	go func() {
+		defer wg.Done()
+		profileRes, _ := h.profileClient.GetProfile(c.Context(), &profile.GetProfileRequest{Id: p.UserId})
+		party.AddCreator(datastruct.ProfileToAgg(profileRes))
+	}()
 
-	return c.Status(fiber.StatusOK).JSON(res)
+	go func() {
+		storyRes, _ := h.storyClient.GetByParty(c.Context(), &sg.GetByPartyRequest{PartyId: p.Id})
+		if storyRes != nil {
+			party.AddStory(storyRes.Stories)
+		}
+	}()
+
+	wg.Wait()
+
+	return c.Status(fiber.StatusOK).JSON(party)
 }
