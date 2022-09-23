@@ -57,7 +57,7 @@ func (h participationHandler) GetFriendsPartyParticipation(c *fiber.Ctx) error {
 
 	aggParties := make([]*datastruct.AggregatedParty, len(parties.Parties))
 	for i, party := range parties.Parties {
-		aggParties[i] = datastruct.PartyToAgg(party).AddCreator(&datastruct.AggregatedProfile{Id: uId})
+		aggParties[i] = datastruct.PartyToAgg(party)
 	}
 
 	res := datastruct.PagedAggregatedParty{

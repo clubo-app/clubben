@@ -2,6 +2,7 @@ package participationhandler
 
 import (
 	"strconv"
+	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
@@ -29,18 +30,31 @@ func (h participationHandler) GetUserInvites(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	partyIds := make([]string, len(pi.Invites))
-	for i, in := range pi.Invites {
-		partyIds[i] = in.PartyId
-	}
+	var wg sync.WaitGroup
+	wg.Add(2)
 
-	inviterIds := make([]string, len(pi.Invites))
-	for i, in := range pi.Invites {
-		inviterIds[i] = in.InviterId
-	}
+	var parties *party.GetManyPartiesMapResponse
+	go func() {
+		defer wg.Done()
+		partyIds := make([]string, len(pi.Invites))
+		for i, in := range pi.Invites {
+			partyIds[i] = in.PartyId
+		}
 
-	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
-	inviters, _ := h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(inviterIds)})
+		parties, _ = h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
+	}()
+
+	var inviters *profile.GetManyProfilesMapResponse
+	go func() {
+		inviterIds := make([]string, len(pi.Invites))
+		for i, in := range pi.Invites {
+			inviterIds[i] = in.InviterId
+		}
+
+		inviters, _ = h.profileClient.GetManyProfilesMap(c.Context(), &profile.GetManyProfilesRequest{Ids: utils.UniqueStringSlice(inviterIds)})
+	}()
+
+	wg.Wait()
 
 	aggI := make([]*datastruct.AggregatedPartyInvite, len(pi.Invites))
 	for i, pi := range pi.Invites {
