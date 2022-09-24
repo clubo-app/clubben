@@ -18,8 +18,9 @@ service RelationService {
     rpc GetFriendCount (GetFriendCountRequest) returns (GetFriendCountResponse) {};
     rpc GetManyFriendCount (GetManyFriendCountRequest) returns (GetManyFriendCountResponse) {};
 
-    rpc FavorParty (FavorPartyRequest) returns (FavoriteParty) {};
-    rpc DefavorParty (FavorPartyRequest) returns (common.SuccessIndicator) {};
+    rpc FavorParty (PartyAndUserRequest) returns (FavoriteParty) {};
+    rpc DefavorParty (PartyAndUserRequest) returns (common.SuccessIndicator) {};
+    rpc GetFavoriteParty (PartyAndUserRequest) returns (FavoriteParty) {};
     rpc GetFavoritePartiesByUser (GetFavoritePartiesByUserRequest) returns (PagedFavoriteParties) {};
     rpc GetFavorisingUsersByParty (GetFavorisingUsersByPartyRequest) returns (PagedFavoriteParties) {};
 
@@ -73,7 +74,7 @@ message GetManyFriendCountRequest {
     repeated string user_ids = 1;
 }
 
-message FavorPartyRequest {
+message PartyAndUserRequest {
     string user_id = 1;
     string party_id = 2;
 }

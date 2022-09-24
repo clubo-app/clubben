@@ -32,8 +32,9 @@ type RelationServiceClient interface {
 	GetIncomingFriendRequests(ctx context.Context, in *GetIncomingFriendRequestsRequest, opts ...grpc.CallOption) (*PagedFriendRelations, error)
 	GetFriendCount(ctx context.Context, in *GetFriendCountRequest, opts ...grpc.CallOption) (*GetFriendCountResponse, error)
 	GetManyFriendCount(ctx context.Context, in *GetManyFriendCountRequest, opts ...grpc.CallOption) (*GetManyFriendCountResponse, error)
-	FavorParty(ctx context.Context, in *FavorPartyRequest, opts ...grpc.CallOption) (*FavoriteParty, error)
-	DefavorParty(ctx context.Context, in *FavorPartyRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	FavorParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*FavoriteParty, error)
+	DefavorParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	GetFavoriteParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*FavoriteParty, error)
 	GetFavoritePartiesByUser(ctx context.Context, in *GetFavoritePartiesByUserRequest, opts ...grpc.CallOption) (*PagedFavoriteParties, error)
 	GetFavorisingUsersByParty(ctx context.Context, in *GetFavorisingUsersByPartyRequest, opts ...grpc.CallOption) (*PagedFavoriteParties, error)
 	GetFavoritePartyCount(ctx context.Context, in *GetFavoritePartyCountRequest, opts ...grpc.CallOption) (*GetFavoritePartyCountResponse, error)
@@ -129,7 +130,7 @@ func (c *relationServiceClient) GetManyFriendCount(ctx context.Context, in *GetM
 	return out, nil
 }
 
-func (c *relationServiceClient) FavorParty(ctx context.Context, in *FavorPartyRequest, opts ...grpc.CallOption) (*FavoriteParty, error) {
+func (c *relationServiceClient) FavorParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*FavoriteParty, error) {
 	out := new(FavoriteParty)
 	err := c.cc.Invoke(ctx, "/relation.RelationService/FavorParty", in, out, opts...)
 	if err != nil {
@@ -138,9 +139,18 @@ func (c *relationServiceClient) FavorParty(ctx context.Context, in *FavorPartyRe
 	return out, nil
 }
 
-func (c *relationServiceClient) DefavorParty(ctx context.Context, in *FavorPartyRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
+func (c *relationServiceClient) DefavorParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
 	out := new(common.SuccessIndicator)
 	err := c.cc.Invoke(ctx, "/relation.RelationService/DefavorParty", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *relationServiceClient) GetFavoriteParty(ctx context.Context, in *PartyAndUserRequest, opts ...grpc.CallOption) (*FavoriteParty, error) {
+	out := new(FavoriteParty)
+	err := c.cc.Invoke(ctx, "/relation.RelationService/GetFavoriteParty", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -196,8 +206,9 @@ type RelationServiceServer interface {
 	GetIncomingFriendRequests(context.Context, *GetIncomingFriendRequestsRequest) (*PagedFriendRelations, error)
 	GetFriendCount(context.Context, *GetFriendCountRequest) (*GetFriendCountResponse, error)
 	GetManyFriendCount(context.Context, *GetManyFriendCountRequest) (*GetManyFriendCountResponse, error)
-	FavorParty(context.Context, *FavorPartyRequest) (*FavoriteParty, error)
-	DefavorParty(context.Context, *FavorPartyRequest) (*common.SuccessIndicator, error)
+	FavorParty(context.Context, *PartyAndUserRequest) (*FavoriteParty, error)
+	DefavorParty(context.Context, *PartyAndUserRequest) (*common.SuccessIndicator, error)
+	GetFavoriteParty(context.Context, *PartyAndUserRequest) (*FavoriteParty, error)
 	GetFavoritePartiesByUser(context.Context, *GetFavoritePartiesByUserRequest) (*PagedFavoriteParties, error)
 	GetFavorisingUsersByParty(context.Context, *GetFavorisingUsersByPartyRequest) (*PagedFavoriteParties, error)
 	GetFavoritePartyCount(context.Context, *GetFavoritePartyCountRequest) (*GetFavoritePartyCountResponse, error)
@@ -236,11 +247,14 @@ func (UnimplementedRelationServiceServer) GetFriendCount(context.Context, *GetFr
 func (UnimplementedRelationServiceServer) GetManyFriendCount(context.Context, *GetManyFriendCountRequest) (*GetManyFriendCountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetManyFriendCount not implemented")
 }
-func (UnimplementedRelationServiceServer) FavorParty(context.Context, *FavorPartyRequest) (*FavoriteParty, error) {
+func (UnimplementedRelationServiceServer) FavorParty(context.Context, *PartyAndUserRequest) (*FavoriteParty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FavorParty not implemented")
 }
-func (UnimplementedRelationServiceServer) DefavorParty(context.Context, *FavorPartyRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedRelationServiceServer) DefavorParty(context.Context, *PartyAndUserRequest) (*common.SuccessIndicator, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DefavorParty not implemented")
+}
+func (UnimplementedRelationServiceServer) GetFavoriteParty(context.Context, *PartyAndUserRequest) (*FavoriteParty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFavoriteParty not implemented")
 }
 func (UnimplementedRelationServiceServer) GetFavoritePartiesByUser(context.Context, *GetFavoritePartiesByUserRequest) (*PagedFavoriteParties, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFavoritePartiesByUser not implemented")
@@ -430,7 +444,7 @@ func _RelationService_GetManyFriendCount_Handler(srv interface{}, ctx context.Co
 }
 
 func _RelationService_FavorParty_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FavorPartyRequest)
+	in := new(PartyAndUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -442,13 +456,13 @@ func _RelationService_FavorParty_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/relation.RelationService/FavorParty",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RelationServiceServer).FavorParty(ctx, req.(*FavorPartyRequest))
+		return srv.(RelationServiceServer).FavorParty(ctx, req.(*PartyAndUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RelationService_DefavorParty_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FavorPartyRequest)
+	in := new(PartyAndUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -460,7 +474,25 @@ func _RelationService_DefavorParty_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/relation.RelationService/DefavorParty",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RelationServiceServer).DefavorParty(ctx, req.(*FavorPartyRequest))
+		return srv.(RelationServiceServer).DefavorParty(ctx, req.(*PartyAndUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RelationService_GetFavoriteParty_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PartyAndUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RelationServiceServer).GetFavoriteParty(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/relation.RelationService/GetFavoriteParty",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RelationServiceServer).GetFavoriteParty(ctx, req.(*PartyAndUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -587,6 +619,10 @@ var RelationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DefavorParty",
 			Handler:    _RelationService_DefavorParty_Handler,
+		},
+		{
+			MethodName: "GetFavoriteParty",
+			Handler:    _RelationService_GetFavoriteParty_Handler,
 		},
 		{
 			MethodName: "GetFavoritePartiesByUser",
