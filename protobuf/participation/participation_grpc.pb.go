@@ -32,6 +32,8 @@ type ParticipationServiceClient interface {
 	GetPartyParticipant(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
 	GetPartyParticipants(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetPartyRequests(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
+	GetPartyParticipantsCount(ctx context.Context, in *GetPartyParticipantsCountRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountResponse, error)
+	GetPartyParticipantsCountMap(ctx context.Context, in *GetPartyParticipantsCountMapRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountMapResponse, error)
 	GetUserParticipation(ctx context.Context, in *GetUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetManyUserParticipation(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 }
@@ -125,6 +127,24 @@ func (c *participationServiceClient) GetPartyRequests(ctx context.Context, in *G
 	return out, nil
 }
 
+func (c *participationServiceClient) GetPartyParticipantsCount(ctx context.Context, in *GetPartyParticipantsCountRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountResponse, error) {
+	out := new(GetPartyParticipantsCountResponse)
+	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipantsCount", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *participationServiceClient) GetPartyParticipantsCountMap(ctx context.Context, in *GetPartyParticipantsCountMapRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountMapResponse, error) {
+	out := new(GetPartyParticipantsCountMapResponse)
+	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipantsCountMap", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *participationServiceClient) GetUserParticipation(ctx context.Context, in *GetUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
 	out := new(PagedPartyParticipants)
 	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetUserParticipation", in, out, opts...)
@@ -156,6 +176,8 @@ type ParticipationServiceServer interface {
 	GetPartyParticipant(context.Context, *UserPartyRequest) (*PartyParticipant, error)
 	GetPartyParticipants(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
 	GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
+	GetPartyParticipantsCount(context.Context, *GetPartyParticipantsCountRequest) (*GetPartyParticipantsCountResponse, error)
+	GetPartyParticipantsCountMap(context.Context, *GetPartyParticipantsCountMapRequest) (*GetPartyParticipantsCountMapResponse, error)
 	GetUserParticipation(context.Context, *GetUserParticipationRequest) (*PagedPartyParticipants, error)
 	GetManyUserParticipation(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipants, error)
 	mustEmbedUnimplementedParticipationServiceServer()
@@ -191,6 +213,12 @@ func (UnimplementedParticipationServiceServer) GetPartyParticipants(context.Cont
 }
 func (UnimplementedParticipationServiceServer) GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPartyRequests not implemented")
+}
+func (UnimplementedParticipationServiceServer) GetPartyParticipantsCount(context.Context, *GetPartyParticipantsCountRequest) (*GetPartyParticipantsCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipantsCount not implemented")
+}
+func (UnimplementedParticipationServiceServer) GetPartyParticipantsCountMap(context.Context, *GetPartyParticipantsCountMapRequest) (*GetPartyParticipantsCountMapResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipantsCountMap not implemented")
 }
 func (UnimplementedParticipationServiceServer) GetUserParticipation(context.Context, *GetUserParticipationRequest) (*PagedPartyParticipants, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserParticipation not implemented")
@@ -373,6 +401,42 @@ func _ParticipationService_GetPartyRequests_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ParticipationService_GetPartyParticipantsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPartyParticipantsCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ParticipationServiceServer).GetPartyParticipantsCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/participation.ParticipationService/GetPartyParticipantsCount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ParticipationServiceServer).GetPartyParticipantsCount(ctx, req.(*GetPartyParticipantsCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ParticipationService_GetPartyParticipantsCountMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPartyParticipantsCountMapRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ParticipationServiceServer).GetPartyParticipantsCountMap(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/participation.ParticipationService/GetPartyParticipantsCountMap",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ParticipationServiceServer).GetPartyParticipantsCountMap(ctx, req.(*GetPartyParticipantsCountMapRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ParticipationService_GetUserParticipation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserParticipationRequest)
 	if err := dec(in); err != nil {
@@ -451,6 +515,14 @@ var ParticipationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPartyRequests",
 			Handler:    _ParticipationService_GetPartyRequests_Handler,
+		},
+		{
+			MethodName: "GetPartyParticipantsCount",
+			Handler:    _ParticipationService_GetPartyParticipantsCount_Handler,
+		},
+		{
+			MethodName: "GetPartyParticipantsCountMap",
+			Handler:    _ParticipationService_GetPartyParticipantsCountMap_Handler,
 		},
 		{
 			MethodName: "GetUserParticipation",
