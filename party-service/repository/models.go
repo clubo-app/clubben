@@ -12,17 +12,19 @@ import (
 )
 
 type Party struct {
-	ID              string
-	UserID          string
-	Title           string
-	Description     sql.NullString
-	IsPublic        bool
-	MusicGenre      sql.NullString
-	MaxParticipants int32
-	Location        orb.Point
-	StreetAddress   sql.NullString
-	PostalCode      sql.NullString
-	State           sql.NullString
-	Country         sql.NullString
-	EntryDate       time.Time
+	ID                string
+	UserID            string
+	Title             string
+	Description       sql.NullString
+	IsPublic          bool
+	MusicGenre        sql.NullString
+	Location          orb.Point
+	StreetAddress     sql.NullString
+	PostalCode        sql.NullString
+	State             sql.NullString
+	Country           sql.NullString
+	EntryDate         time.Time
+	MaxParticipants   int32
+	ParticipantsCount int32
+	FavoriteCount     int32
 }

@@ -9,10 +9,42 @@ import (
 	"context"
 )
 
+const decreaseFavoriteCount = `-- name: DecreaseFavoriteCount :exec
+UPDATE parties
+SET favorite_count = favorite_count - ?
+WHERE id = ?
+`
+
+type DecreaseFavoriteCountParams struct {
+	FavoriteCount int32
+	ID            string
+}
+
+func (q *Queries) DecreaseFavoriteCount(ctx context.Context, arg DecreaseFavoriteCountParams) error {
+	_, err := q.db.Exec(ctx, decreaseFavoriteCount, arg.FavoriteCount, arg.ID)
+	return err
+}
+
+const decreaseParticipantsCount = `-- name: DecreaseParticipantsCount :exec
+UPDATE parties
+SET participants_count = participants_count - ?
+WHERE id = ?
+`
+
+type DecreaseParticipantsCountParams struct {
+	ParticipantsCount int32
+	ID                string
+}
+
+func (q *Queries) DecreaseParticipantsCount(ctx context.Context, arg DecreaseParticipantsCountParams) error {
+	_, err := q.db.Exec(ctx, decreaseParticipantsCount, arg.ParticipantsCount, arg.ID)
+	return err
+}
+
 const deleteParty = `-- name: DeleteParty :exec
 DELETE FROM parties
 WHERE id = $1 AND user_id = $2
-RETURNING id, user_id, title, description, is_public, music_genre, max_participants, location, street_address, postal_code, state, country, entry_date
+RETURNING id, user_id, title, description, is_public, music_genre, location, street_address, postal_code, state, country, entry_date, max_participants, participants_count, favorite_count
 `
 
 type DeletePartyParams struct {
@@ -22,5 +54,37 @@ type DeletePartyParams struct {
 
 func (q *Queries) DeleteParty(ctx context.Context, arg DeletePartyParams) error {
 	_, err := q.db.Exec(ctx, deleteParty, arg.ID, arg.UserID)
+	return err
+}
+
+const increaseFavoriteCount = `-- name: IncreaseFavoriteCount :exec
+UPDATE parties
+SET favorite_count = favorite_count + ?
+WHERE id = ?
+`
+
+type IncreaseFavoriteCountParams struct {
+	FavoriteCount int32
+	ID            string
+}
+
+func (q *Queries) IncreaseFavoriteCount(ctx context.Context, arg IncreaseFavoriteCountParams) error {
+	_, err := q.db.Exec(ctx, increaseFavoriteCount, arg.FavoriteCount, arg.ID)
+	return err
+}
+
+const increaseParticipantsCount = `-- name: IncreaseParticipantsCount :exec
+UPDATE parties
+SET participants_count = participants_count + ?
+WHERE id = ?
+`
+
+type IncreaseParticipantsCountParams struct {
+	ParticipantsCount int32
+	ID                string
+}
+
+func (q *Queries) IncreaseParticipantsCount(ctx context.Context, arg IncreaseParticipantsCountParams) error {
+	_, err := q.db.Exec(ctx, increaseParticipantsCount, arg.ParticipantsCount, arg.ID)
 	return err
 }

@@ -77,7 +77,7 @@ type CreatePartyParams struct {
 	EntryDate       time.Time
 }
 
-const selectStmt = "id, user_id, title, description, is_public, music_genre, max_participants, ST_AsBinary(location) AS location, street_address, postal_code, state, country, entry_date"
+const selectStmt = "id, user_id, title, description, is_public, music_genre, ST_AsBinary(location) AS location, street_address, postal_code, state, country, entry_date, max_participants, participants_count, favorite_count"
 
 func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams) (Party, error) {
 	sqlf.SetDialect(sqlf.PostgreSQL)
@@ -107,13 +107,15 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		&i.Description,
 		&i.IsPublic,
 		&i.MusicGenre,
-		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
 		&i.StreetAddress,
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
 		&i.EntryDate,
+		&i.MaxParticipants,
+		&i.ParticipantsCount,
+		&i.FavoriteCount,
 	)
 	return i, err
 }
@@ -177,13 +179,15 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 		&i.Description,
 		&i.IsPublic,
 		&i.MusicGenre,
-		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
 		&i.StreetAddress,
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
 		&i.EntryDate,
+		&i.MaxParticipants,
+		&i.ParticipantsCount,
+		&i.FavoriteCount,
 	)
 
 	return i, err
@@ -205,13 +209,15 @@ func (r PartyRepository) GetParty(ctx context.Context, id string) (Party, error)
 		&i.Description,
 		&i.IsPublic,
 		&i.MusicGenre,
-		&i.MaxParticipants,
 		wkb.Scanner(&i.Location),
 		&i.StreetAddress,
 		&i.PostalCode,
 		&i.State,
 		&i.Country,
 		&i.EntryDate,
+		&i.MaxParticipants,
+		&i.ParticipantsCount,
+		&i.FavoriteCount,
 	)
 	return i, err
 }
@@ -244,13 +250,15 @@ func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesP
 			&i.Description,
 			&i.IsPublic,
 			&i.MusicGenre,
-			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),
 			&i.StreetAddress,
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
 			&i.EntryDate,
+			&i.MaxParticipants,
+			&i.ParticipantsCount,
+			&i.FavoriteCount,
 		); err != nil {
 			return nil, err
 		}
@@ -299,13 +307,15 @@ func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByU
 			&i.Description,
 			&i.IsPublic,
 			&i.MusicGenre,
-			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),
 			&i.StreetAddress,
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
 			&i.EntryDate,
+			&i.MaxParticipants,
+			&i.ParticipantsCount,
+			&i.FavoriteCount,
 		); err != nil {
 			return nil, err
 		}
@@ -356,13 +366,15 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 			&i.Description,
 			&i.IsPublic,
 			&i.MusicGenre,
-			&i.MaxParticipants,
 			wkb.Scanner(&i.Location),
 			&i.StreetAddress,
 			&i.PostalCode,
 			&i.State,
 			&i.Country,
 			&i.EntryDate,
+			&i.MaxParticipants,
+			&i.ParticipantsCount,
+			&i.FavoriteCount,
 		); err != nil {
 			return nil, err
 		}
@@ -376,4 +388,20 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 
 func (r PartyRepository) DeleteParty(ctx context.Context, arg DeletePartyParams) error {
 	return r.querier.DeleteParty(ctx, arg)
+}
+
+func (r PartyRepository) IncreaseFavoriteCount(ctx context.Context, arg IncreaseFavoriteCountParams) error {
+	return r.querier.IncreaseFavoriteCount(ctx, arg)
+}
+
+func (r PartyRepository) IncreaseParticipantsCount(ctx context.Context, arg IncreaseParticipantsCountParams) error {
+	return r.querier.IncreaseParticipantsCount(ctx, arg)
+}
+
+func (r PartyRepository) DecreaseFavoriteCount(ctx context.Context, arg DecreaseFavoriteCountParams) error {
+	return r.querier.DecreaseFavoriteCount(ctx, arg)
+}
+
+func (r PartyRepository) DecreaseParticipantsCount(ctx context.Context, arg DecreaseParticipantsCountParams) error {
+	return r.querier.DecreaseParticipantsCount(ctx, arg)
 }
