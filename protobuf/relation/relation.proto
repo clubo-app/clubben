@@ -24,8 +24,8 @@ service RelationService {
     rpc GetFavoritePartiesByUser (GetFavoritePartiesByUserRequest) returns (PagedFavoriteParties) {};
     rpc GetFavorisingUsersByParty (GetFavorisingUsersByPartyRequest) returns (PagedFavoriteParties) {};
 
-    rpc GetFavoritePartyCount (GetFavoritePartyCountRequest) returns (GetFavoritePartyCountResponse) {};
-    rpc GetManyFavoritePartyCount (GetManyFavoritePartyCountRequest) returns (GetManyFavoritePartyCountResponse) {};
+    // rpc GetFavoritePartyCount (GetFavoritePartyCountRequest) returns (GetFavoritePartyCountResponse) {};
+    // rpc GetManyFavoritePartyCount (GetManyFavoritePartyCountRequest) returns (GetManyFavoritePartyCountResponse) {};
 }
 
 // Requests
