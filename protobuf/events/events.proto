@@ -54,3 +54,15 @@ message PartyUnfavorited {
   string party_id = 2;
   google.protobuf.Timestamp unfavorited_at= 3; 
 }
+
+message PartyJoined {
+  string user_id = 1;
+  string party_id = 2;
+  google.protobuf.Timestamp joined_at = 5; 
+}
+
+message PartyLeft {
+  string user_id = 1;
+  string party_id = 2;
+  google.protobuf.Timestamp left_at = 5; 
+}

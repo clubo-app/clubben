@@ -566,6 +566,132 @@ func (x *PartyUnfavorited) GetUnfavoritedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+type PartyJoined struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId   string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	PartyId  string                 `protobuf:"bytes,2,opt,name=party_id,json=partyId,proto3" json:"party_id,omitempty"`
+	JoinedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=joined_at,json=joinedAt,proto3" json:"joined_at,omitempty"`
+}
+
+func (x *PartyJoined) Reset() {
+	*x = PartyJoined{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_events_events_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PartyJoined) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PartyJoined) ProtoMessage() {}
+
+func (x *PartyJoined) ProtoReflect() protoreflect.Message {
+	mi := &file_events_events_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PartyJoined.ProtoReflect.Descriptor instead.
+func (*PartyJoined) Descriptor() ([]byte, []int) {
+	return file_events_events_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *PartyJoined) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *PartyJoined) GetPartyId() string {
+	if x != nil {
+		return x.PartyId
+	}
+	return ""
+}
+
+func (x *PartyJoined) GetJoinedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.JoinedAt
+	}
+	return nil
+}
+
+type PartyLeft struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId  string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	PartyId string                 `protobuf:"bytes,2,opt,name=party_id,json=partyId,proto3" json:"party_id,omitempty"`
+	LeftAt  *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=left_at,json=leftAt,proto3" json:"left_at,omitempty"`
+}
+
+func (x *PartyLeft) Reset() {
+	*x = PartyLeft{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_events_events_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PartyLeft) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PartyLeft) ProtoMessage() {}
+
+func (x *PartyLeft) ProtoReflect() protoreflect.Message {
+	mi := &file_events_events_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PartyLeft.ProtoReflect.Descriptor instead.
+func (*PartyLeft) Descriptor() ([]byte, []int) {
+	return file_events_events_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *PartyLeft) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *PartyLeft) GetPartyId() string {
+	if x != nil {
+		return x.PartyId
+	}
+	return ""
+}
+
+func (x *PartyLeft) GetLeftAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LeftAt
+	}
+	return nil
+}
+
 var File_events_events_proto protoreflect.FileDescriptor
 
 var file_events_events_proto_rawDesc = []byte{
@@ -630,10 +756,25 @@ var file_events_events_proto_rawDesc = []byte{
 	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
 	0x61, 0x6d, 0x70, 0x52, 0x0d, 0x75, 0x6e, 0x66, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x64,
-	0x41, 0x74, 0x42, 0x2e, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x63, 0x6c, 0x75, 0x62, 0x6f, 0x2d, 0x61, 0x70, 0x70, 0x2f, 0x63, 0x6c, 0x75, 0x62, 0x62,
-	0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x76, 0x65, 0x6e,
-	0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x41, 0x74, 0x22, 0x7a, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x79, 0x4a, 0x6f, 0x69, 0x6e, 0x65,
+	0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x61,
+	0x72, 0x74, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x61,
+	0x72, 0x74, 0x79, 0x49, 0x64, 0x12, 0x37, 0x0a, 0x09, 0x6a, 0x6f, 0x69, 0x6e, 0x65, 0x64, 0x5f,
+	0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
+	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x52, 0x08, 0x6a, 0x6f, 0x69, 0x6e, 0x65, 0x64, 0x41, 0x74, 0x22, 0x74,
+	0x0a, 0x09, 0x50, 0x61, 0x72, 0x74, 0x79, 0x4c, 0x65, 0x66, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x61, 0x72, 0x74, 0x79, 0x5f, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x61, 0x72, 0x74, 0x79, 0x49, 0x64, 0x12,
+	0x33, 0x0a, 0x07, 0x6c, 0x65, 0x66, 0x74, 0x5f, 0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x06, 0x6c, 0x65,
+	0x66, 0x74, 0x41, 0x74, 0x42, 0x2e, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x63, 0x6c, 0x75, 0x62, 0x6f, 0x2d, 0x61, 0x70, 0x70, 0x2f, 0x63, 0x6c, 0x75,
+	0x62, 0x62, 0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x76,
+	0x65, 0x6e, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -648,7 +789,7 @@ func file_events_events_proto_rawDescGZIP() []byte {
 	return file_events_events_proto_rawDescData
 }
 
-var file_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_events_events_proto_goTypes = []interface{}{
 	(*ProfileCreated)(nil),        // 0: events.ProfileCreated
 	(*ProfileUpdated)(nil),        // 1: events.ProfileUpdated
@@ -660,24 +801,28 @@ var file_events_events_proto_goTypes = []interface{}{
 	(*FriendCreated)(nil),         // 7: events.FriendCreated
 	(*PartyFavorited)(nil),        // 8: events.PartyFavorited
 	(*PartyUnfavorited)(nil),      // 9: events.PartyUnfavorited
-	(*profile.Profile)(nil),       // 10: profile.Profile
-	(*party.Party)(nil),           // 11: party.Party
-	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
+	(*PartyJoined)(nil),           // 10: events.PartyJoined
+	(*PartyLeft)(nil),             // 11: events.PartyLeft
+	(*profile.Profile)(nil),       // 12: profile.Profile
+	(*party.Party)(nil),           // 13: party.Party
+	(*timestamppb.Timestamp)(nil), // 14: google.protobuf.Timestamp
 }
 var file_events_events_proto_depIdxs = []int32{
-	10, // 0: events.ProfileCreated.profile:type_name -> profile.Profile
-	10, // 1: events.ProfileUpdated.profile:type_name -> profile.Profile
-	11, // 2: events.PartyCreated.party:type_name -> party.Party
-	11, // 3: events.PartyUpdated.party:type_name -> party.Party
-	12, // 4: events.FriendRequested.requested_at:type_name -> google.protobuf.Timestamp
-	12, // 5: events.FriendCreated.accepted_at:type_name -> google.protobuf.Timestamp
-	12, // 6: events.PartyFavorited.favorited_at:type_name -> google.protobuf.Timestamp
-	12, // 7: events.PartyUnfavorited.unfavorited_at:type_name -> google.protobuf.Timestamp
-	8,  // [8:8] is the sub-list for method output_type
-	8,  // [8:8] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	12, // 0: events.ProfileCreated.profile:type_name -> profile.Profile
+	12, // 1: events.ProfileUpdated.profile:type_name -> profile.Profile
+	13, // 2: events.PartyCreated.party:type_name -> party.Party
+	13, // 3: events.PartyUpdated.party:type_name -> party.Party
+	14, // 4: events.FriendRequested.requested_at:type_name -> google.protobuf.Timestamp
+	14, // 5: events.FriendCreated.accepted_at:type_name -> google.protobuf.Timestamp
+	14, // 6: events.PartyFavorited.favorited_at:type_name -> google.protobuf.Timestamp
+	14, // 7: events.PartyUnfavorited.unfavorited_at:type_name -> google.protobuf.Timestamp
+	14, // 8: events.PartyJoined.joined_at:type_name -> google.protobuf.Timestamp
+	14, // 9: events.PartyLeft.left_at:type_name -> google.protobuf.Timestamp
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_events_events_proto_init() }
@@ -806,6 +951,30 @@ func file_events_events_proto_init() {
 				return nil
 			}
 		}
+		file_events_events_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PartyJoined); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_events_events_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PartyLeft); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -813,7 +982,7 @@ func file_events_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_events_events_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
