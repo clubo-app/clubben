@@ -1,0 +1,18 @@
+go 1.19
+
+use (
+	./aggregator-service
+	./auth-service
+	./libs/cqlx
+	./libs/stream
+	./libs/types
+	./libs/utils
+	./participation-service
+	./party-service
+	./profile-service
+	./protobuf
+	./relation-service
+	./scylla-sync
+	./search-service
+	./story-service
+)
