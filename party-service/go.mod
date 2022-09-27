@@ -3,14 +3,14 @@ module github.com/clubo-app/clubben/party-service
 go 1.18
 
 require (
-	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
+	github.com/clubo-app/clubben/libs/stream v0.0.0-20220927133152-822598fb7528
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
-	github.com/clubo-app/clubben/protobuf v0.0.0-20220911182935-faa13ab58305
+	github.com/clubo-app/clubben/protobuf v0.0.0-20220925161439-5b5bada19d62
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/jackc/pgconn v1.12.1
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/leporo/sqlf v1.3.0
-	github.com/nats-io/nats.go v1.16.0
+	github.com/nats-io/nats.go v1.17.0
 	github.com/paulmach/orb v0.7.1
 	github.com/segmentio/ksuid v1.0.4
 	github.com/spf13/viper v1.12.0
@@ -62,7 +62,7 @@ require (
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
+	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be // indirect
 	golang.org/x/net v0.0.0-20220526153639-5463443f8c37 // indirect
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect

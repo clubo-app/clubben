@@ -21,14 +21,18 @@ type PartyService interface {
 	GetMany(ctx context.Context, ids []string) ([]repository.Party, error)
 	GetByUser(ctx context.Context, params repository.GetPartiesByUserParams) ([]repository.Party, error)
 	GeoSearch(ctx context.Context, params repository.GeoSearchParams) ([]repository.Party, error)
+	IncreaseFavoriteCount(ctx context.Context, arg repository.IncreaseFavoriteCountParams) error
+	DecreaseFavoriteCount(ctx context.Context, arg repository.DecreaseFavoriteCountParams) error
+	IncreaseParticipantsCount(ctx context.Context, arg repository.IncreaseParticipantsCountParams) error
+	DecreaseParticipantsCount(ctx context.Context, arg repository.DecreaseParticipantsCountParams) error
 }
 
 type partyService struct {
 	r      *repository.PartyRepository
-	stream stream.Stream
+	stream *stream.Stream
 }
 
-func NewPartyService(r *repository.PartyRepository, stream stream.Stream) PartyService {
+func NewPartyService(r *repository.PartyRepository, stream *stream.Stream) PartyService {
 	return &partyService{
 		r:      r,
 		stream: stream,
@@ -105,52 +109,43 @@ func (s partyService) Update(ctx context.Context, p dto.Party) (res repository.P
 }
 
 func (s partyService) Delete(ctx context.Context, uId, pId string) error {
-	err := s.r.DeleteParty(ctx, repository.DeletePartyParams{
+	return s.r.DeleteParty(ctx, repository.DeletePartyParams{
 		ID:     pId,
 		UserID: uId,
 	})
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
 
-func (s partyService) Get(ctx context.Context, pId string) (res repository.Party, err error) {
-	res, err = s.r.GetParty(ctx, pId)
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
+func (s partyService) Get(ctx context.Context, pId string) (repository.Party, error) {
+	return s.r.GetParty(ctx, pId)
 }
 
-func (s partyService) GetMany(ctx context.Context, ids []string) (res []repository.Party, err error) {
-	res, err = s.r.GetManyParties(ctx, repository.GetManyPartiesParams{
+func (s partyService) GetMany(ctx context.Context, ids []string) ([]repository.Party, error) {
+	return s.r.GetManyParties(ctx, repository.GetManyPartiesParams{
 		Ids:   ids,
 		Limit: int32(len(ids)),
 	})
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
 }
 
 func (s partyService) GetByUser(ctx context.Context, params repository.GetPartiesByUserParams) (res []repository.Party, err error) {
-	res, err = s.r.GetPartiesByUser(ctx, params)
-	if err != nil {
-		return res, err
-	}
-
-	return res, nil
+	return s.r.GetPartiesByUser(ctx, params)
 }
 
 func (s partyService) GeoSearch(ctx context.Context, params repository.GeoSearchParams) ([]repository.Party, error) {
-	res, err := s.r.GeoSearch(ctx, params)
-	if err != nil {
-		return res, err
-	}
+	return s.r.GeoSearch(ctx, params)
+}
 
-	return res, nil
+func (s partyService) IncreaseFavoriteCount(ctx context.Context, arg repository.IncreaseFavoriteCountParams) error {
+	return s.r.IncreaseFavoriteCount(ctx, arg)
+}
+
+func (s partyService) DecreaseFavoriteCount(ctx context.Context, arg repository.DecreaseFavoriteCountParams) error {
+	return s.r.DecreaseFavoriteCount(ctx, arg)
+}
+
+func (s partyService) IncreaseParticipantsCount(ctx context.Context, arg repository.IncreaseParticipantsCountParams) error {
+	return s.r.IncreaseParticipantsCount(ctx, arg)
+}
+
+func (s partyService) DecreaseParticipantsCount(ctx context.Context, arg repository.DecreaseParticipantsCountParams) error {
+	return s.r.DecreaseParticipantsCount(ctx, arg)
 }

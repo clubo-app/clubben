@@ -5,6 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/party-service/config"
+	"github.com/clubo-app/clubben/party-service/consumer"
 	"github.com/clubo-app/clubben/party-service/repository"
 	"github.com/clubo-app/clubben/party-service/rpc"
 	"github.com/clubo-app/clubben/party-service/service"
@@ -21,13 +22,16 @@ func main() {
 	}
 	defer stream.Close()
 
-	d, err := repository.NewPartyRepository(c.POSTGRES_URL_PARTY_SERVICE)
+	repo, err := repository.NewPartyRepository(c.POSTGRES_URL_PARTY_SERVICE)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer d.Close()
+	defer repo.Close()
 
-	s := service.NewPartyService(d, stream)
+	s := service.NewPartyService(repo, &stream)
+
+	con := consumer.New(stream, repo)
+	go con.Start()
 
 	p := rpc.NewPartyServer(s, stream)
 	rpc.Start(p, c.PORT)

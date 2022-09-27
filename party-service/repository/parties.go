@@ -20,7 +20,7 @@ const (
 )
 
 type PartyRepository struct {
-	pool    *pgxpool.Pool
+	Pool    *pgxpool.Pool
 	querier Querier
 }
 
@@ -52,13 +52,13 @@ func NewPartyRepository(urlStr string) (*PartyRepository, error) {
 	}
 
 	return &PartyRepository{
-		pool:    pool,
+		Pool:    pool,
 		querier: New(pool),
 	}, nil
 }
 
 func (r PartyRepository) Close() {
-	r.pool.Close()
+	r.Pool.Close()
 }
 
 type CreatePartyParams struct {
@@ -98,7 +98,7 @@ func (r PartyRepository) CreateParty(ctx context.Context, arg CreatePartyParams)
 		Set("entry_date", arg.EntryDate).
 		Returning(selectStmt)
 
-	row := r.pool.QueryRow(ctx, b.String(), b.Args()...)
+	row := r.Pool.QueryRow(ctx, b.String(), b.Args()...)
 	var i Party
 	err := row.Scan(
 		&i.ID,
@@ -170,7 +170,7 @@ func (r PartyRepository) UpdateParty(ctx context.Context, arg UpdatePartyParams)
 		Where("id = ?", arg.ID).
 		Returning(selectStmt)
 
-	row := r.pool.QueryRow(ctx, b.String(), b.Args()...)
+	row := r.Pool.QueryRow(ctx, b.String(), b.Args()...)
 	var i Party
 	err := row.Scan(
 		&i.ID,
@@ -200,7 +200,7 @@ func (r PartyRepository) GetParty(ctx context.Context, id string) (Party, error)
 		From(TABLE_NAME).
 		Where("id = ?", id)
 
-	row := r.pool.QueryRow(ctx, b.String(), b.Args()...)
+	row := r.Pool.QueryRow(ctx, b.String(), b.Args()...)
 	var i Party
 	err := row.Scan(
 		&i.ID,
@@ -235,7 +235,7 @@ func (r PartyRepository) GetManyParties(ctx context.Context, arg GetManyPartiesP
 		Where("id = ANY(?)", arg.Ids).
 		Limit(arg.Limit)
 
-	rows, err := r.pool.Query(ctx, b.String(), b.Args()...)
+	rows, err := r.Pool.Query(ctx, b.String(), b.Args()...)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +292,7 @@ func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByU
 	}
 	b = b.Offset(arg.Offset)
 
-	rows, err := r.pool.Query(ctx, b.String(), b.Args()...)
+	rows, err := r.Pool.Query(ctx, b.String(), b.Args()...)
 	if err != nil {
 		return nil, err
 	}
@@ -351,7 +351,7 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 	}
 	b = b.Offset(arg.Offset)
 
-	rows, err := r.pool.Query(ctx, b.String(), b.Args()...)
+	rows, err := r.Pool.Query(ctx, b.String(), b.Args()...)
 	if err != nil {
 		return nil, err
 	}
