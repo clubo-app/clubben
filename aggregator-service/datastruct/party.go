@@ -12,8 +12,8 @@ import (
 type AggregatedParty struct {
 	Id                  string               `json:"id"`
 	CreatorId           string               `json:"creator_id,omitempty"`
-	Creator             *AggregatedProfile   `json:"creator,omitempty"`
 	Title               string               `json:"title,omitempty"`
+	Creator             *AggregatedProfile   `json:"creator,omitempty"`
 	Description         string               `json:"description,omitempty"`
 	IsPublic            bool                 `json:"is_public"`
 	MusicGenre          string               `json:"music_genre,omitempty"`
@@ -28,7 +28,9 @@ type AggregatedParty struct {
 	Stories             []*sg.Story          `json:"stories,omitempty"`
 	EntryDate           string               `json:"entry_date,omitempty"`
 	CreatedAt           string               `json:"created_at,omitempty"`
-	FavoriteCount       uint32               `json:"favorite_count"`
+	FavoriteCount       int32                `json:"favorite_count"`
+	IsFavorite          bool                 `json:"is_favorite"`
+	ParticipationCount  int32                `json:"participation_count"`
 }
 
 func PartyToAgg(p *pg.Party) *AggregatedParty {
@@ -50,6 +52,7 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 		PostalCode:      p.PostalCode,
 		State:           p.State,
 		Country:         p.Country,
+		FavoriteCount:   p.FavoriteCount,
 	}
 	if !utils.TimestamppIsZero(p.EntryDate) {
 		log.Println("Adding EntryDate")
@@ -75,11 +78,6 @@ func (p *AggregatedParty) AddStory(s []*sg.Story) *AggregatedParty {
 	if s != nil {
 		p.Stories = s
 	}
-	return p
-}
-
-func (p *AggregatedParty) AddFCount(c uint32) *AggregatedParty {
-	p.FavoriteCount = c
 	return p
 }
 

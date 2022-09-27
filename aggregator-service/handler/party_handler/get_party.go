@@ -10,7 +10,6 @@ import (
 	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/clubo-app/clubben/protobuf/profile"
-	"github.com/clubo-app/clubben/protobuf/relation"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
 )
@@ -30,7 +29,7 @@ func (h partyHandler) GetParty(c *fiber.Ctx) error {
 		AddCreator(datastruct.ProfileToAgg(profile))
 
 	var wg sync.WaitGroup
-	wg.Add(3)
+	wg.Add(5)
 
 	go func() {
 		defer wg.Done()
@@ -40,12 +39,16 @@ func (h partyHandler) GetParty(c *fiber.Ctx) error {
 		}
 	}()
 
+	// TODO: get IsFavorite from relation client
 	go func() {
 		defer wg.Done()
-		favoriteCount, _ := h.relationClient.GetFavoritePartyCount(c.Context(), &relation.GetFavoritePartyCountRequest{PartyId: party.Id})
-		if favoriteCount != nil {
-			res.AddFCount(favoriteCount.FavoriteCount)
-		}
+
+	}()
+
+	// TODO: get participation count
+	go func() {
+		defer wg.Done()
+
 	}()
 
 	go func() {
