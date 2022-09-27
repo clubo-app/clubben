@@ -13,10 +13,11 @@ import (
 
 type Stream struct {
 	nc *nats.EncodedConn
+	js nats.JetStreamContext
 }
 
-func new(nc *nats.EncodedConn) Stream {
-	return Stream{nc: nc}
+func new(nc *nats.EncodedConn, js nats.JetStreamContext) Stream {
+	return Stream{nc: nc, js: js}
 }
 
 func (s Stream) Close() {
@@ -34,19 +35,42 @@ func Connect(cluster string, opts []nats.Option) (Stream, error) {
 	if err != nil {
 		return Stream{}, err
 	}
+
+	js, err := nc.JetStream()
+	if err != nil {
+		log.Println("Error creating JestStream Context: ", err)
+	}
+
 	log.Println("Connected to Nats Server at ", c.Conn.ConnectedUrl())
-	return new(c), nil
+
+	return new(c, js), nil
 }
 
 func (s Stream) PublishEvent(event any) error {
-	sub := eventToSubject(event)
+	sub := EventToSubject(event)
 	return s.nc.Publish(sub, event)
 }
 
-func (s Stream) SubscribeToEvent(queue string, event any, handler nats.Handler) (*nats.Subscription, error) {
-	sub := eventToSubject(event)
+func (s Stream) JSPublish(sub string, msg []byte) (*nats.PubAck, error) {
+	return s.js.Publish(sub, msg)
+}
 
-	return s.nc.QueueSubscribe(sub, queue, handler)
+// PullSubscribe crates a Pull based Consumer
+func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscription, error) {
+	sub := EventToSubject(event)
+
+	return s.js.PullSubscribe(sub, "pull-consumer", opts)
+}
+
+// PushSubscribe creates a push-based Consumer.
+// When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
+func (s Stream) PushSubscribe(queue string, event any, handler nats.Handler) (*nats.Subscription, error) {
+	sub := EventToSubject(event)
+
+	if queue != "" {
+		return s.nc.QueueSubscribe(sub, queue, handler)
+	}
+	return s.nc.Subscribe(sub, handler)
 }
 
 func setupConnOptions(opts []nats.Option) []nats.Option {
@@ -67,7 +91,7 @@ func setupConnOptions(opts []nats.Option) []nats.Option {
 	return opts
 }
 
-func eventToSubject(event any) string {
+func EventToSubject(event any) string {
 	t := reflect.TypeOf(event)
 
 	str := strings.ReplaceAll(t.String(), "*", "")
