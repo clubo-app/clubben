@@ -1,60 +1,60 @@
-all: gen-participation gen-auth gen-comment gen-common gen-party gen-profile gen-relation gen-story gen-events gen-search
+all: participation auth comment common party profile relation story events search
 
-gen-participation:
+participation:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	participation/*.proto
 
-gen-auth:
+auth:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	auth/*.proto
 
-gen-comment:
+comment:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	comment/*.proto
 
-gen-common:
+common:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	common/*.proto
 
-gen-party:
+party:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	party/*.proto
 
-gen-profile:
+profile:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	profile/*.proto
 
-gen-relation:
+relation:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	relation/*.proto
 	
-gen-story:
+story:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	story/*.proto
 
-gen-events:
+events:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	events/*.proto
 
-gen-search:
+search:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
