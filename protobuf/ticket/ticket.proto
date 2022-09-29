@@ -71,7 +71,6 @@ message TicketType {
   string party_id = 2;
   string name = 3;
   common.Money price = 4;
-  string currency_code = 5;
   int32 max_sold = 7;
   int32 current_sold = 8;
 }
