@@ -28,6 +28,8 @@ func (c *FriendRelationConsumer) Consume(ctx context.Context, ch scyllacdc.Chang
 			_ = c.processUpdateOrInsert(ctx, change)
 		case scyllacdc.Insert:
 			_ = c.processUpdateOrInsert(ctx, change)
+		case scyllacdc.RowDelete:
+			_ = c.processDelete(ctx, change)
 		default:
 			log.Println("unsupported operation: " + change.GetOperation().String())
 		}
@@ -37,6 +39,7 @@ func (c *FriendRelationConsumer) Consume(ctx context.Context, ch scyllacdc.Chang
 }
 
 func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, change *scyllacdc.ChangeRow) error {
+	log.Println("Processing Friend Relation Update or Insert")
 	user_id, _ := change.GetValue("user_id")
 	friend_id, _ := change.GetValue("friend_id")
 	accepted_at, _ := change.GetValue("accepted_at")
@@ -54,7 +57,7 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 			FriendId:    fId,
 			RequestedAt: rAt,
 		}
-
+		log.Printf("Publishing: %+v", e)
 		err = c.Stream.PublishEvent(&e)
 	} else {
 		e := events.FriendCreated{
@@ -63,17 +66,19 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 			AcceptedAt: aAt,
 		}
 
+		log.Printf("Publishing: %+v", e)
 		err = c.Stream.PublishEvent(&e)
 	}
 
 	if err != nil {
-		log.Println(err)
+		log.Println("Update/Insert Error: ", err)
 	}
 
 	return err
 }
 
 func (c *FriendRelationConsumer) processDelete(ctx context.Context, change *scyllacdc.ChangeRow) error {
+	log.Println("Processing Friend Relation Delete")
 	log.Println(change)
 	user_id, _ := change.GetValue("user_id")
 	friend_id, _ := change.GetValue("friend_id")
@@ -88,7 +93,7 @@ func (c *FriendRelationConsumer) processDelete(ctx context.Context, change *scyl
 		log.Println("Publishing: ", e)
 		err := c.Stream.PublishEvent(&e)
 		if err != nil {
-			log.Println(err)
+			log.Println("Delete Error: ", err)
 		}
 	}
 	return nil
