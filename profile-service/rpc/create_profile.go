@@ -13,7 +13,7 @@ import (
 
 func (s *profileServer) CreateProfile(ctx context.Context, req *pg.CreateProfileRequest) (*pg.Profile, error) {
 	if strings.Contains(req.Username, "@") {
-		return nil, status.Error(codes.InvalidArgument, "Not allowed to have @ in your username")
+		return nil, status.Error(codes.InvalidArgument, "@ in your username is not allowd")
 	}
 
 	p, err := s.ps.Create(ctx, dto.Profile{
