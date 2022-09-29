@@ -15,4 +15,5 @@ use (
 	./scylla-sync
 	./search-service
 	./story-service
+	./ticket-service
 )

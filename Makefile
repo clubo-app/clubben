@@ -1,1 +1,1 @@
-workspace: go work init ./protobuf  ./libs/cqlx ./libs/stream ./libs/types ./libs/utils ./auth-service ./participation-service ./party-service ./profile-service ./relation-service ./scylla-sync ./search-service ./story-service
+workspace: go work init ./protobuf  ./libs/cqlx ./libs/stream ./libs/types ./libs/utils ./ticket-service ./auth-service ./participation-service ./party-service ./profile-service ./relation-service ./scylla-sync ./search-service ./story-service
