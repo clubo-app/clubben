@@ -80,7 +80,7 @@ message Ticket {
   string ticket_type_id = 2;
   string user_id = 3;
   bool is_requested = 4;
-  google.protobuf.Timestamp accepted_at = 7;
+  google.protobuf.Timestamp requested_at = 7;
   google.protobuf.Timestamp fulfilled_at = 8;
 }
 
