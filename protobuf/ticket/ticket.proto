@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package ticket;
+option go_package = "github.com/clubo-app/clubben/protobuf/ticket";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "common/common.proto";
+
+service TicketService {
+  // TODO: invite and requests
+
+  rpc CreateTicketType (CreateTicketTypeRequest) returns (TicketType) {};
+  rpc GetTicketType (GetTicketTypeRequest) returns (TicketType) {};
+  rpc UpdateTicketType (UpdateTicketTypeRequest) returns (TicketType) {};
+  rpc GetPartyTicketTypes (PartyRequest) returns (ManyTicketTypes) {};
+
+  rpc JoinParty (JoinPartyRequest) returns (Ticket) {};
+  rpc LeaveParty (LeavePartyRequest) returns (google.protobuf.Empty) {};
+  rpc GetTicketsByUser (GetTicketsByUserRequest) returns (ManyTickets) {};
+  rpc GetTicketsByParty (PartyRequest) returns (ManyTickets) {};
+  rpc GetTicketsByUserAndParty (UserPartyRequest) returns (ManyTickets) {};
+  rpc GetTicketRequestsByParty (PartyRequest) returns (ManyTickets) {};
+
+  rpc GetParticipantsCount (PartyRequest) returns (GetParticipantsCountResponse) {};
+}
+
+// Requests
+message CreateTicketTypeRequest {
+  string party_id = 1;
+  string name = 3;
+  common.Money price = 4;
+  string currency_code = 5;
+  int32 max_sold = 8;
+}
+
+message PartyRequest {
+  string party_id = 1;
+}
+
+message UserPartyRequest {
+  string user_id = 1;
+  string party_id = 2;
+}
+
+message GetTicketTypeRequest {
+  string ticket_type_id = 1;
+}
+
+message UpdateTicketTypeRequest {
+  string name = 1;
+}
+
+message JoinPartyRequest {
+  string ticket_type_id = 1;
+  string user_id = 2;
+}
+
+message LeavePartyRequest {
+  string ticket_type_id = 1;
+  string user_id = 2;
+}
+
+message GetTicketsByUserRequest {
+  string user_id = 1;
+}
+
+// Responses
+message TicketType {
+  string id = 1;
+  string party_id = 2;
+  string name = 3;
+  common.Money price = 4;
+  string currency_code = 5;
+  int32 max_sold = 7;
+  int32 current_sold = 8;
+}
+
+message Ticket {
+  string ticket_type_id = 2;
+  string user_id = 3;
+  bool is_requested = 4;
+  google.protobuf.Timestamp accepted_at = 7;
+  google.protobuf.Timestamp fulfilled_at = 8;
+}
+
+message Invite {
+  string user_id = 1;
+  string inviter_id = 2;
+  string party_id = 3;
+  google.protobuf.Timestamp valid_until = 4;
+}
+
+message ManyTicketTypes {
+  repeated TicketType ticket_types = 1;
+}
+
+message ManyTickets {
+  repeated Ticket tickets = 1;
+}
+
+message GetParticipantsCountResponse {
+  int32 count = 1;
+}
