@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/participation-service/datastruct"
 	"github.com/clubo-app/clubben/participation-service/repository"
 	"github.com/clubo-app/clubben/protobuf/party"
-	"github.com/clubo-app/packages/utils"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

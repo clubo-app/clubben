@@ -7,7 +7,6 @@ require (
 	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/protobuf v0.0.0-20220918155752-9626452ecf34
-	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/nats-io/nats.go v1.17.0
 	github.com/scylladb/gocqlx v1.5.0
