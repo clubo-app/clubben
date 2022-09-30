@@ -16,7 +16,7 @@ func (h favoriteHandler) FavorParty(c *fiber.Ctx) error {
 
 	pId := c.Params("pId")
 
-	f, err := h.relationClient.FavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
+	f, err := h.relationClient.FavorParty(c.Context(), &rg.PartyAndUserRequest{UserId: user.Sub, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

@@ -19,7 +19,7 @@ func (h participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Max limit is 40")
 	}
 
-	participation, err := h.participationClient.GetUserParticipation(c.Context(), &participation.GetUserParticipationRequest{
+	participation, err := h.participationClient.GetUserParticipations(c.Context(), &participation.GetUserParticipationsRequest{
 		UserId:   uId,
 		NextPage: nextPage,
 		Limit:    int32(limit),

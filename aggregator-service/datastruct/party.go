@@ -17,8 +17,6 @@ type AggregatedParty struct {
 	Description         string               `json:"description,omitempty"`
 	IsPublic            bool                 `json:"is_public"`
 	MusicGenre          string               `json:"music_genre,omitempty"`
-	MaxParticipants     int32                `json:"max_participants"`
-	ParticipationStatus *ParticipationStatus `json:"particpation_status,omitempty"`
 	Lat                 float32              `json:"lat,omitempty"`
 	Lon                 float32              `json:"lon,omitempty"`
 	StreetAddress       string               `json:"street_address,omitempty"`
@@ -28,9 +26,11 @@ type AggregatedParty struct {
 	Stories             []*sg.Story          `json:"stories,omitempty"`
 	EntryDate           string               `json:"entry_date,omitempty"`
 	CreatedAt           string               `json:"created_at,omitempty"`
-	FavoriteCount       int32                `json:"favorite_count"`
 	IsFavorite          bool                 `json:"is_favorite"`
-	ParticipationCount  int32                `json:"participation_count"`
+	FavoriteCount       int32                `json:"favorite_count"`
+	ParticipationStatus *ParticipationStatus `json:"particpation_status,omitempty"`
+	MaxParticipants     int32                `json:"max_participants"`
+	ParticipantsCount   int32                `json:"participants_count"`
 }
 
 func PartyToAgg(p *pg.Party) *AggregatedParty {
@@ -38,21 +38,22 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 		return &AggregatedParty{}
 	}
 	agg := &AggregatedParty{
-		Id:              p.Id,
-		Title:           p.Title,
-		CreatorId:       p.UserId,
-		Description:     p.Description,
-		IsPublic:        p.IsPublic,
-		MusicGenre:      p.MusicGenre,
-		MaxParticipants: p.MaxParticipants,
-		Lat:             p.Lat,
-		Lon:             p.Long,
-		StreetAddress:   p.StreetAddress,
-		Stories:         []*sg.Story{},
-		PostalCode:      p.PostalCode,
-		State:           p.State,
-		Country:         p.Country,
-		FavoriteCount:   p.FavoriteCount,
+		Id:                p.Id,
+		Title:             p.Title,
+		CreatorId:         p.UserId,
+		Description:       p.Description,
+		IsPublic:          p.IsPublic,
+		MusicGenre:        p.MusicGenre,
+		MaxParticipants:   p.MaxParticipants,
+		Lat:               p.Lat,
+		Lon:               p.Long,
+		StreetAddress:     p.StreetAddress,
+		Stories:           []*sg.Story{},
+		PostalCode:        p.PostalCode,
+		State:             p.State,
+		Country:           p.Country,
+		FavoriteCount:     p.FavoriteCount,
+		ParticipantsCount: p.ParticipantsCount,
 	}
 	if !utils.TimestamppIsZero(p.EntryDate) {
 		log.Println("Adding EntryDate")
@@ -81,8 +82,8 @@ func (p *AggregatedParty) AddStory(s []*sg.Story) *AggregatedParty {
 	return p
 }
 
-func (p *AggregatedParty) AddParticipationStatus(s ParticipationStatus) *AggregatedParty {
-	p.ParticipationStatus = &s
+func (p *AggregatedParty) AddParticipationStatus(s *ParticipationStatus) *AggregatedParty {
+	p.ParticipationStatus = s
 	return p
 }
 

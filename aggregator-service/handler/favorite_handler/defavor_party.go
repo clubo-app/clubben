@@ -12,7 +12,7 @@ func (h favoriteHandler) DefavorParty(c *fiber.Ctx) error {
 
 	pId := c.Params("pId")
 
-	ok, err := h.relationClient.DefavorParty(c.Context(), &rg.FavorPartyRequest{UserId: user.Sub, PartyId: pId})
+	ok, err := h.relationClient.DefavorParty(c.Context(), &rg.PartyAndUserRequest{UserId: user.Sub, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

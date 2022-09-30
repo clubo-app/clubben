@@ -38,7 +38,7 @@ func (h participationHandler) GetFriendsPartyParticipation(c *fiber.Ctx) error {
 		friendIds[i] = friend.FriendId
 	}
 
-	participation, err := h.participationClient.GetManyUserParticipation(c.Context(), &participation.GetManyUserParticipationRequest{
+	participation, err := h.participationClient.GetManyUserParticipations(c.Context(), &participation.GetManyUserParticipationsRequest{
 		UserIds: friendIds,
 	})
 

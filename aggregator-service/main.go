@@ -141,7 +141,6 @@ func main() {
 	favorite := app.Group("/favorites")
 	favorite.Get("/user/:id", favoriteHandler.GetFavoritePartiesByUser)
 	favorite.Get("/:pId", favoriteHandler.GetFavorisingUsersByParty)
-	favorite.Get("/count/:pId", favoriteHandler.GetFavoriteCountByParty)
 	favorite.Put("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), favoriteHandler.FavorParty)
 	favorite.Delete("/:pId", middleware.AuthRequired(c.TOKEN_SECRET), favoriteHandler.DefavorParty)
 

@@ -14,11 +14,15 @@ type ParticipationStatus struct {
 	JoinedAt      string `json:"joined_at,omitempty"`
 }
 
-func ParseParticipationStatus(p *participation.PartyParticipant) (s ParticipationStatus) {
+// This parses a *participation.PartyParticipant to a ParticipationStatus.
+// The proto Message can be nil and would just return default ParticipationStatus.
+// The ParticipationStatus holds weither the User is participating/requsting the Party.
+func ParseParticipationStatus(p *participation.PartyParticipant) *ParticipationStatus {
 	if p == nil {
-		return
+		return nil
 	}
 
+	s := new(ParticipationStatus)
 	s.Requested = p.Requested
 	if !p.Requested {
 		s.Participating = true
@@ -30,7 +34,7 @@ func ParseParticipationStatus(p *participation.PartyParticipant) (s Participatio
 	if !utils.TimestamppIsZero(p.RequestedAt) {
 		s.RequestedAt = p.RequestedAt.AsTime().UTC().Format(time.RFC3339)
 	}
-	return
+	return s
 }
 
 type AggregatedPartyParticipant struct {
