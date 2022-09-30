@@ -12,7 +12,7 @@ import (
 type FriendRelationConsumer struct {
 	Id        int
 	TableName string
-	Stream    stream.Stream
+	Stream    *stream.Stream
 	Reporter  *scyllacdc.PeriodicProgressReporter
 }
 
@@ -57,8 +57,8 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 			FriendId:    fId,
 			RequestedAt: rAt,
 		}
-		log.Printf("Publishing: %+v", e)
-		err = c.Stream.PublishEvent(&e)
+		log.Printf("Publishing: %+v", &e)
+		_, err = c.Stream.PublishEvent(&e)
 	} else {
 		e := events.FriendCreated{
 			UserId:     uId,
@@ -66,8 +66,8 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 			AcceptedAt: aAt,
 		}
 
-		log.Printf("Publishing: %+v", e)
-		err = c.Stream.PublishEvent(&e)
+		log.Printf("Publishing: %+v", &e)
+		_, err = c.Stream.PublishEvent(&e)
 	}
 
 	if err != nil {
@@ -90,8 +90,8 @@ func (c *FriendRelationConsumer) processDelete(ctx context.Context, change *scyl
 			UserId:   uId,
 			FriendId: fId,
 		}
-		log.Println("Publishing: ", e)
-		err := c.Stream.PublishEvent(&e)
+		log.Println("Publishing: ", &e)
+		_, err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println("Delete Error: ", err)
 		}

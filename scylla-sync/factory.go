@@ -14,11 +14,11 @@ import (
 
 type factory struct {
 	logger scyllacdc.Logger
-	stream stream.Stream
+	stream *stream.Stream
 	nextID int
 }
 
-func newFactory(logger scyllacdc.Logger, stream stream.Stream) *factory {
+func newFactory(logger scyllacdc.Logger, stream *stream.Stream) *factory {
 	return &factory{
 		logger: logger,
 		stream: stream,
@@ -47,6 +47,13 @@ func (f *factory) CreateChangeConsumer(ctx context.Context, input scyllacdc.Crea
 		}, nil
 	} else if splitTableName[1] == consumer.FAVORITE_PARTIES_TABLE {
 		return &consumer.FavoritePartiesConsumer{
+			Id:        f.nextID - 1,
+			TableName: splitTableName[1],
+			Stream:    f.stream,
+			Reporter:  reporter,
+		}, nil
+	} else if splitTableName[1] == consumer.PARTY_PARTICIPANTS_TABLE {
+		return &consumer.PartyParticipantsConsumer{
 			Id:        f.nextID - 1,
 			TableName: splitTableName[1],
 			Stream:    f.stream,

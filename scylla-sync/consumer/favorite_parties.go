@@ -13,7 +13,7 @@ import (
 type FavoritePartiesConsumer struct {
 	Id        int
 	TableName string
-	Stream    stream.Stream
+	Stream    *stream.Stream
 	Reporter  *scyllacdc.PeriodicProgressReporter
 }
 
@@ -56,7 +56,7 @@ func (c *FavoritePartiesConsumer) processInsert(ctx context.Context, change *scy
 			PartyId:     pId,
 			FavoritedAt: fAt,
 		}
-		err := c.Stream.PublishEvent(&e)
+		_, err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println(err)
 		}
@@ -79,8 +79,8 @@ func (c *FavoritePartiesConsumer) processDelete(ctx context.Context, change *scy
 			PartyId:       pId,
 			UnfavoritedAt: timestamppb.Now(),
 		}
-		log.Println("Publishing: ", e)
-		err := c.Stream.PublishEvent(&e)
+		log.Println("Publishing: ", &e)
+		_, err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println(err)
 		}

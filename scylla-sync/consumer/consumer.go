@@ -8,11 +8,12 @@ import (
 )
 
 type Consumer struct {
-	Id            int
-	TableName     string
-	Reporter      *scyllacdc.PeriodicProgressReporter
-	FriendHandler FriendRelationConsumer
-	PartyHandler  FavoritePartiesConsumer
+	Id                    int
+	TableName             string
+	Reporter              *scyllacdc.PeriodicProgressReporter
+	FriendConsumer        *FriendRelationConsumer
+	FavoritePartyConsumer *FavoritePartiesConsumer
+	ParticipantsConsumer  *PartyParticipantsConsumer
 }
 
 func (c *Consumer) End() error {
@@ -23,9 +24,11 @@ func (c *Consumer) End() error {
 func (c *Consumer) Consume(ctx context.Context, ch scyllacdc.Change) error {
 	log.Println(ch)
 	if c.TableName == FRIEND_RELATIONS_TABLE {
-		c.FriendHandler.Consume(ctx, ch)
+		c.FriendConsumer.Consume(ctx, ch)
 	} else if c.TableName == FAVORITE_PARTIES_TABLE {
-		c.PartyHandler.Consume(ctx, ch)
+		c.FavoritePartyConsumer.Consume(ctx, ch)
+	} else if c.TableName == PARTY_PARTICIPANTS_TABLE {
+		c.ParticipantsConsumer.Consume(ctx, ch)
 	}
 	return nil
 }

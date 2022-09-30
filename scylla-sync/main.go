@@ -31,15 +31,19 @@ func main() {
 	defer sess.Close()
 
 	logger := log.New(os.Stderr, "", log.Ldate|log.Lmicroseconds|log.Lshortfile)
-	factory := newFactory(logger, stream)
+	factory := newFactory(logger, &stream)
 	// progressManager, err := scyllacdc.NewTableBackedProgressManager(sess.Session, "cdc_progress", "scylla_sync")
 	// if err != nil {
 	// log.Println("Error creating progress Manager", err)
 	// }
 
 	cfg := &scyllacdc.ReaderConfig{
-		Session:    sess.Session,
-		TableNames: []string{"relation." + consumer.FRIEND_RELATIONS_TABLE, "relation." + consumer.FAVORITE_PARTIES_TABLE},
+		Session: sess.Session,
+		TableNames: []string{
+			"relation." + consumer.FRIEND_RELATIONS_TABLE,
+			"relation." + consumer.FAVORITE_PARTIES_TABLE,
+			"participants." + consumer.PARTY_PARTICIPANTS_TABLE,
+		},
 		// ProgressManager:       progressManager,
 		ChangeConsumerFactory: factory,
 		Logger:                logger,
