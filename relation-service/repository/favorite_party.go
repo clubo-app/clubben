@@ -27,7 +27,8 @@ type FavoritePartyRepository interface {
 	FavorParty(ctx context.Context, fp datastruct.FavoriteParty) (datastruct.FavoriteParty, error)
 	DefavorParty(ctx context.Context, uId, pId string) error
 	GetFavoriteParty(ctx context.Context, uId, pId string) (datastruct.FavoriteParty, error)
-	GetFavoritePartyManyUser(ctx context.Context, uId []string, pId string) ([]datastruct.FavoriteParty, error)
+	GetFavoritePartyManyUser(ctx context.Context, uIds []string, pId string) ([]datastruct.FavoriteParty, error)
+	GetFavoritePartyManyParties(ctx context.Context, uId string, pIds []string) ([]datastruct.FavoriteParty, error)
 	GetFavoritePartiesByUser(ctx context.Context, uId string, page []byte, limit uint64) ([]datastruct.FavoriteParty, []byte, error)
 	GetFavorisingUsersByParty(ctx context.Context, pId string, page []byte, limit uint64) ([]datastruct.FavoriteParty, []byte, error)
 }
@@ -98,8 +99,8 @@ func (r *favoritePartyRepository) GetFavoriteParty(ctx context.Context, uId, pId
 	return res, nil
 }
 
-func (r *favoritePartyRepository) GetFavoritePartyManyUser(ctx context.Context, uId []string, pId string) ([]datastruct.FavoriteParty, error) {
-	res := make([]datastruct.FavoriteParty, len(uId))
+func (r *favoritePartyRepository) GetFavoritePartyManyUser(ctx context.Context, uIds []string, pId string) ([]datastruct.FavoriteParty, error) {
+	res := make([]datastruct.FavoriteParty, len(uIds))
 
 	stmt, names := qb.
 		Select(FAVORITE_PARTIES).
@@ -111,6 +112,29 @@ func (r *favoritePartyRepository) GetFavoritePartyManyUser(ctx context.Context, 
 		Query(stmt, names).
 		BindMap((qb.M{
 			"party_id": pId,
+			"user_id":  uIds,
+		})).
+		SelectRelease(&res)
+	if err != nil {
+		return make([]datastruct.FavoriteParty, 0), err
+	}
+
+	return res, nil
+}
+
+func (r *favoritePartyRepository) GetFavoritePartyManyParties(ctx context.Context, uId string, pIds []string) ([]datastruct.FavoriteParty, error) {
+	res := make([]datastruct.FavoriteParty, len(pIds))
+
+	stmt, names := qb.
+		Select(FAVORITE_PARTIES).
+		Where(qb.Eq("user_id")).
+		Where(qb.In("party_id")).
+		ToCql()
+
+	err := r.sess.
+		Query(stmt, names).
+		BindMap((qb.M{
+			"party_id": pIds,
 			"user_id":  uId,
 		})).
 		SelectRelease(&res)

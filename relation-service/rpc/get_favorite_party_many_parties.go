@@ -10,13 +10,13 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (r *relationServer) GetFavoritePartyManyUser(ctx context.Context, req *relation.GetFavoritePartyManyUserRequest) (*relation.ManyFavoritePartiesMap, error) {
-	_, err := ksuid.Parse(req.PartyId)
+func (r *relationServer) GetFavoritePartyManyParties(ctx context.Context, req *relation.GetFavoritePartyManyPartiesRequest) (*relation.ManyFavoritePartiesMap, error) {
+	_, err := ksuid.Parse(req.UserId)
 	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
+		return nil, status.Error(codes.InvalidArgument, "Invalid User id")
 	}
 
-	favoriteParties, err := r.fp.GetFavoritePartyManyUser(ctx, req.UserIds, req.PartyId)
+	favoriteParties, err := r.fp.GetFavoritePartyManyParties(ctx, req.UserId, req.PartyIds)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}
