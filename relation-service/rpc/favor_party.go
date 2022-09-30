@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s relationServer) FavorParty(ctx context.Context, req *rg.PartyAndUserRequest) (*rg.FavoriteParty, error) {
+func (s *relationServer) FavorParty(ctx context.Context, req *rg.PartyAndUserRequest) (*rg.FavoriteParty, error) {
 	_, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")

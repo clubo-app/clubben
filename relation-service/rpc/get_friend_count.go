@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s relationServer) GetFriendCount(ctx context.Context, req *rg.GetFriendCountRequest) (*rg.GetFriendCountResponse, error) {
+func (s *relationServer) GetFriendCount(ctx context.Context, req *rg.GetFriendCountRequest) (*rg.GetFriendCountResponse, error) {
 	_, err := ksuid.Parse(req.UserId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid User id")

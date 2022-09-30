@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s relationServer) DeclineFriendRequest(ctx context.Context, req *rg.DeclineFriendRequestRequest) (*cg.SuccessIndicator, error) {
+func (s *relationServer) DeclineFriendRequest(ctx context.Context, req *rg.DeclineFriendRequestRequest) (*cg.SuccessIndicator, error) {
 	_, err := ksuid.Parse(req.UserId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid User id")

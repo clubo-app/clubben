@@ -9,7 +9,7 @@ import (
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 )
 
-func (s relationServer) RemoveFriend(ctx context.Context, req *rg.RemoveFriendRequest) (*cg.SuccessIndicator, error) {
+func (s *relationServer) RemoveFriend(ctx context.Context, req *rg.RemoveFriendRequest) (*cg.SuccessIndicator, error) {
 	err := s.fs.RemoveFriendRelation(ctx, req.UserId, req.FriendId)
 	if err != nil {
 		return nil, utils.HandleError(err)

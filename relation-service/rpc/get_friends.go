@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s relationServer) GetFriends(ctx context.Context, req *rg.GetFriendsRequest) (*rg.PagedFriendRelations, error) {
+func (s *relationServer) GetFriends(ctx context.Context, req *rg.GetFriendsRequest) (*rg.PagedFriendRelations, error) {
 	p, err := base64.URLEncoding.DecodeString(req.NextPage)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Next Page Param")

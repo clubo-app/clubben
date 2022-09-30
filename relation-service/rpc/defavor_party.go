@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s relationServer) DefavorParty(ctx context.Context, req *rg.PartyAndUserRequest) (*cg.SuccessIndicator, error) {
+func (s *relationServer) DefavorParty(ctx context.Context, req *rg.PartyAndUserRequest) (*cg.SuccessIndicator, error) {
 	_, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")

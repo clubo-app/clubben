@@ -7,7 +7,7 @@ import (
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 )
 
-func (s relationServer) GetManyFriendCount(ctx context.Context, req *rg.GetManyFriendCountRequest) (*rg.GetManyFriendCountResponse, error) {
+func (s *relationServer) GetManyFriendCount(ctx context.Context, req *rg.GetManyFriendCountRequest) (*rg.GetManyFriendCountResponse, error) {
 	fs, err := s.fs.GetManyFriendCount(ctx, req.UserIds)
 	if err != nil {
 		return nil, utils.HandleError(err)
