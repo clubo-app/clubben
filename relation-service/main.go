@@ -34,7 +34,7 @@ func main() {
 	fs := dao.NewFriendRelationRepository(val)
 	ps := dao.NewFavoritePartyRepository(val)
 
-	con := consumer.New(stream, fs, ps)
+	con := consumer.New(&stream, fs, ps)
 	go con.Start()
 
 	r := rpc.NewRelationServer(fs, ps, stream)
