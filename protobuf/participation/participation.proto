@@ -5,25 +5,22 @@ option go_package = "github.com/clubo-app/clubben/protobuf/participation";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
-import "common/common.proto";
+import "google/protobuf/empty.proto";
 
 service ParticipationService {
     rpc InviteToParty (InviteToPartyRequest) returns (PartyInvite) {};
-    rpc DeclinePartyInvite (DeclinePartyInviteRequest) returns (common.SuccessIndicator) {};
+    rpc DeclinePartyInvite (DeclinePartyInviteRequest) returns (google.protobuf.Empty) {};
     rpc AcceptPartyInvite (DeclinePartyInviteRequest) returns (PartyParticipant) {};
     rpc GetUserInvites (GetUserInvitesRequest) returns (PagedPartyInvites) {};
 
     rpc JoinParty (UserPartyRequest) returns (PartyParticipant) {};
-    rpc LeaveParty (UserPartyRequest) returns (common.SuccessIndicator) {};
+    rpc LeaveParty (UserPartyRequest) returns (google.protobuf.Empty) {};
     rpc GetPartyParticipant (UserPartyRequest) returns (PartyParticipant) {};
     rpc GetPartyParticipants (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
     rpc GetPartyRequests (GetPartyParticipantsRequest) returns (PagedPartyParticipants) {};
 
-    rpc GetPartyParticipantsCount (GetPartyParticipantsCountRequest) returns (GetPartyParticipantsCountResponse) {};
-    rpc GetPartyParticipantsCountMap (GetPartyParticipantsCountMapRequest) returns (GetPartyParticipantsCountMapResponse ) {};
-
-    rpc GetUserParticipation (GetUserParticipationRequest) returns (PagedPartyParticipants) {};
-    rpc GetManyUserParticipation (GetManyUserParticipationRequest) returns (PagedPartyParticipants) {};
+    rpc GetUserParticipations (GetUserParticipationsRequest) returns (PagedPartyParticipants) {};
+    rpc GetManyUserParticipations (GetManyUserParticipationsRequest) returns (PagedPartyParticipants) {};
 }
 
 // Requests
@@ -57,13 +54,13 @@ message GetPartyParticipantsRequest {
   int32 limit = 3;
 }
 
-message GetUserParticipationRequest {
+message GetUserParticipationsRequest {
   string user_id = 1;
   string next_page = 2;
   int32 limit = 3;
 }
 
-message GetManyUserParticipationRequest {
+message GetManyUserParticipationsRequest {
   repeated string user_ids = 1;
   string next_page = 2;
   int32 limit = 3;
@@ -101,12 +98,4 @@ message PagedPartyInvites {
 message PagedPartyParticipants {
   repeated PartyParticipant participants = 1;
   string next_page = 2;
-}
-
-message GetPartyParticipantsCountResponse {
-  int32 count = 1;
-}
-
-message GetPartyParticipantsCountMapResponse {
-  map<string, int32> counts = 1;
 }

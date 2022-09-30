@@ -8,10 +8,10 @@ package participation
 
 import (
 	context "context"
-	common "github.com/clubo-app/clubben/protobuf/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,18 +24,16 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ParticipationServiceClient interface {
 	InviteToParty(ctx context.Context, in *InviteToPartyRequest, opts ...grpc.CallOption) (*PartyInvite, error)
-	DeclinePartyInvite(ctx context.Context, in *DeclinePartyInviteRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	DeclinePartyInvite(ctx context.Context, in *DeclinePartyInviteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AcceptPartyInvite(ctx context.Context, in *DeclinePartyInviteRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
 	GetUserInvites(ctx context.Context, in *GetUserInvitesRequest, opts ...grpc.CallOption) (*PagedPartyInvites, error)
 	JoinParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
-	LeaveParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	LeaveParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetPartyParticipant(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*PartyParticipant, error)
 	GetPartyParticipants(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 	GetPartyRequests(ctx context.Context, in *GetPartyParticipantsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
-	GetPartyParticipantsCount(ctx context.Context, in *GetPartyParticipantsCountRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountResponse, error)
-	GetPartyParticipantsCountMap(ctx context.Context, in *GetPartyParticipantsCountMapRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountMapResponse, error)
-	GetUserParticipation(ctx context.Context, in *GetUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
-	GetManyUserParticipation(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
+	GetUserParticipations(ctx context.Context, in *GetUserParticipationsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
+	GetManyUserParticipations(ctx context.Context, in *GetManyUserParticipationsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error)
 }
 
 type participationServiceClient struct {
@@ -55,8 +53,8 @@ func (c *participationServiceClient) InviteToParty(ctx context.Context, in *Invi
 	return out, nil
 }
 
-func (c *participationServiceClient) DeclinePartyInvite(ctx context.Context, in *DeclinePartyInviteRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *participationServiceClient) DeclinePartyInvite(ctx context.Context, in *DeclinePartyInviteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/participation.ParticipationService/DeclinePartyInvite", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -91,8 +89,8 @@ func (c *participationServiceClient) JoinParty(ctx context.Context, in *UserPart
 	return out, nil
 }
 
-func (c *participationServiceClient) LeaveParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *participationServiceClient) LeaveParty(ctx context.Context, in *UserPartyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/participation.ParticipationService/LeaveParty", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -127,36 +125,18 @@ func (c *participationServiceClient) GetPartyRequests(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *participationServiceClient) GetPartyParticipantsCount(ctx context.Context, in *GetPartyParticipantsCountRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountResponse, error) {
-	out := new(GetPartyParticipantsCountResponse)
-	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipantsCount", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *participationServiceClient) GetPartyParticipantsCountMap(ctx context.Context, in *GetPartyParticipantsCountMapRequest, opts ...grpc.CallOption) (*GetPartyParticipantsCountMapResponse, error) {
-	out := new(GetPartyParticipantsCountMapResponse)
-	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetPartyParticipantsCountMap", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *participationServiceClient) GetUserParticipation(ctx context.Context, in *GetUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
+func (c *participationServiceClient) GetUserParticipations(ctx context.Context, in *GetUserParticipationsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
 	out := new(PagedPartyParticipants)
-	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetUserParticipation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetUserParticipations", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *participationServiceClient) GetManyUserParticipation(ctx context.Context, in *GetManyUserParticipationRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
+func (c *participationServiceClient) GetManyUserParticipations(ctx context.Context, in *GetManyUserParticipationsRequest, opts ...grpc.CallOption) (*PagedPartyParticipants, error) {
 	out := new(PagedPartyParticipants)
-	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetManyUserParticipation", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/participation.ParticipationService/GetManyUserParticipations", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -168,18 +148,16 @@ func (c *participationServiceClient) GetManyUserParticipation(ctx context.Contex
 // for forward compatibility
 type ParticipationServiceServer interface {
 	InviteToParty(context.Context, *InviteToPartyRequest) (*PartyInvite, error)
-	DeclinePartyInvite(context.Context, *DeclinePartyInviteRequest) (*common.SuccessIndicator, error)
+	DeclinePartyInvite(context.Context, *DeclinePartyInviteRequest) (*emptypb.Empty, error)
 	AcceptPartyInvite(context.Context, *DeclinePartyInviteRequest) (*PartyParticipant, error)
 	GetUserInvites(context.Context, *GetUserInvitesRequest) (*PagedPartyInvites, error)
 	JoinParty(context.Context, *UserPartyRequest) (*PartyParticipant, error)
-	LeaveParty(context.Context, *UserPartyRequest) (*common.SuccessIndicator, error)
+	LeaveParty(context.Context, *UserPartyRequest) (*emptypb.Empty, error)
 	GetPartyParticipant(context.Context, *UserPartyRequest) (*PartyParticipant, error)
 	GetPartyParticipants(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
 	GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error)
-	GetPartyParticipantsCount(context.Context, *GetPartyParticipantsCountRequest) (*GetPartyParticipantsCountResponse, error)
-	GetPartyParticipantsCountMap(context.Context, *GetPartyParticipantsCountMapRequest) (*GetPartyParticipantsCountMapResponse, error)
-	GetUserParticipation(context.Context, *GetUserParticipationRequest) (*PagedPartyParticipants, error)
-	GetManyUserParticipation(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipants, error)
+	GetUserParticipations(context.Context, *GetUserParticipationsRequest) (*PagedPartyParticipants, error)
+	GetManyUserParticipations(context.Context, *GetManyUserParticipationsRequest) (*PagedPartyParticipants, error)
 	mustEmbedUnimplementedParticipationServiceServer()
 }
 
@@ -190,7 +168,7 @@ type UnimplementedParticipationServiceServer struct {
 func (UnimplementedParticipationServiceServer) InviteToParty(context.Context, *InviteToPartyRequest) (*PartyInvite, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InviteToParty not implemented")
 }
-func (UnimplementedParticipationServiceServer) DeclinePartyInvite(context.Context, *DeclinePartyInviteRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedParticipationServiceServer) DeclinePartyInvite(context.Context, *DeclinePartyInviteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeclinePartyInvite not implemented")
 }
 func (UnimplementedParticipationServiceServer) AcceptPartyInvite(context.Context, *DeclinePartyInviteRequest) (*PartyParticipant, error) {
@@ -202,7 +180,7 @@ func (UnimplementedParticipationServiceServer) GetUserInvites(context.Context, *
 func (UnimplementedParticipationServiceServer) JoinParty(context.Context, *UserPartyRequest) (*PartyParticipant, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method JoinParty not implemented")
 }
-func (UnimplementedParticipationServiceServer) LeaveParty(context.Context, *UserPartyRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedParticipationServiceServer) LeaveParty(context.Context, *UserPartyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveParty not implemented")
 }
 func (UnimplementedParticipationServiceServer) GetPartyParticipant(context.Context, *UserPartyRequest) (*PartyParticipant, error) {
@@ -214,17 +192,11 @@ func (UnimplementedParticipationServiceServer) GetPartyParticipants(context.Cont
 func (UnimplementedParticipationServiceServer) GetPartyRequests(context.Context, *GetPartyParticipantsRequest) (*PagedPartyParticipants, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPartyRequests not implemented")
 }
-func (UnimplementedParticipationServiceServer) GetPartyParticipantsCount(context.Context, *GetPartyParticipantsCountRequest) (*GetPartyParticipantsCountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipantsCount not implemented")
+func (UnimplementedParticipationServiceServer) GetUserParticipations(context.Context, *GetUserParticipationsRequest) (*PagedPartyParticipants, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserParticipations not implemented")
 }
-func (UnimplementedParticipationServiceServer) GetPartyParticipantsCountMap(context.Context, *GetPartyParticipantsCountMapRequest) (*GetPartyParticipantsCountMapResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPartyParticipantsCountMap not implemented")
-}
-func (UnimplementedParticipationServiceServer) GetUserParticipation(context.Context, *GetUserParticipationRequest) (*PagedPartyParticipants, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserParticipation not implemented")
-}
-func (UnimplementedParticipationServiceServer) GetManyUserParticipation(context.Context, *GetManyUserParticipationRequest) (*PagedPartyParticipants, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetManyUserParticipation not implemented")
+func (UnimplementedParticipationServiceServer) GetManyUserParticipations(context.Context, *GetManyUserParticipationsRequest) (*PagedPartyParticipants, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetManyUserParticipations not implemented")
 }
 func (UnimplementedParticipationServiceServer) mustEmbedUnimplementedParticipationServiceServer() {}
 
@@ -401,74 +373,38 @@ func _ParticipationService_GetPartyRequests_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ParticipationService_GetPartyParticipantsCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPartyParticipantsCountRequest)
+func _ParticipationService_GetUserParticipations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserParticipationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ParticipationServiceServer).GetPartyParticipantsCount(ctx, in)
+		return srv.(ParticipationServiceServer).GetUserParticipations(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/participation.ParticipationService/GetPartyParticipantsCount",
+		FullMethod: "/participation.ParticipationService/GetUserParticipations",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ParticipationServiceServer).GetPartyParticipantsCount(ctx, req.(*GetPartyParticipantsCountRequest))
+		return srv.(ParticipationServiceServer).GetUserParticipations(ctx, req.(*GetUserParticipationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ParticipationService_GetPartyParticipantsCountMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPartyParticipantsCountMapRequest)
+func _ParticipationService_GetManyUserParticipations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManyUserParticipationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ParticipationServiceServer).GetPartyParticipantsCountMap(ctx, in)
+		return srv.(ParticipationServiceServer).GetManyUserParticipations(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/participation.ParticipationService/GetPartyParticipantsCountMap",
+		FullMethod: "/participation.ParticipationService/GetManyUserParticipations",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ParticipationServiceServer).GetPartyParticipantsCountMap(ctx, req.(*GetPartyParticipantsCountMapRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ParticipationService_GetUserParticipation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserParticipationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ParticipationServiceServer).GetUserParticipation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/participation.ParticipationService/GetUserParticipation",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ParticipationServiceServer).GetUserParticipation(ctx, req.(*GetUserParticipationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ParticipationService_GetManyUserParticipation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetManyUserParticipationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ParticipationServiceServer).GetManyUserParticipation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/participation.ParticipationService/GetManyUserParticipation",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ParticipationServiceServer).GetManyUserParticipation(ctx, req.(*GetManyUserParticipationRequest))
+		return srv.(ParticipationServiceServer).GetManyUserParticipations(ctx, req.(*GetManyUserParticipationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -517,20 +453,12 @@ var ParticipationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ParticipationService_GetPartyRequests_Handler,
 		},
 		{
-			MethodName: "GetPartyParticipantsCount",
-			Handler:    _ParticipationService_GetPartyParticipantsCount_Handler,
+			MethodName: "GetUserParticipations",
+			Handler:    _ParticipationService_GetUserParticipations_Handler,
 		},
 		{
-			MethodName: "GetPartyParticipantsCountMap",
-			Handler:    _ParticipationService_GetPartyParticipantsCountMap_Handler,
-		},
-		{
-			MethodName: "GetUserParticipation",
-			Handler:    _ParticipationService_GetUserParticipation_Handler,
-		},
-		{
-			MethodName: "GetManyUserParticipation",
-			Handler:    _ParticipationService_GetManyUserParticipation_Handler,
+			MethodName: "GetManyUserParticipations",
+			Handler:    _ParticipationService_GetManyUserParticipations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
