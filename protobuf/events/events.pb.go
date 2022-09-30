@@ -692,6 +692,69 @@ func (x *PartyLeft) GetLeftAt() *timestamppb.Timestamp {
 	return nil
 }
 
+type PartyRequested struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserId      string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	PartyId     string                 `protobuf:"bytes,2,opt,name=party_id,json=partyId,proto3" json:"party_id,omitempty"`
+	RequestedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=requested_at,json=requestedAt,proto3" json:"requested_at,omitempty"`
+}
+
+func (x *PartyRequested) Reset() {
+	*x = PartyRequested{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_events_events_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PartyRequested) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PartyRequested) ProtoMessage() {}
+
+func (x *PartyRequested) ProtoReflect() protoreflect.Message {
+	mi := &file_events_events_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PartyRequested.ProtoReflect.Descriptor instead.
+func (*PartyRequested) Descriptor() ([]byte, []int) {
+	return file_events_events_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *PartyRequested) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *PartyRequested) GetPartyId() string {
+	if x != nil {
+		return x.PartyId
+	}
+	return ""
+}
+
+func (x *PartyRequested) GetRequestedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RequestedAt
+	}
+	return nil
+}
+
 var File_events_events_proto protoreflect.FileDescriptor
 
 var file_events_events_proto_rawDesc = []byte{
@@ -771,10 +834,19 @@ var file_events_events_proto_rawDesc = []byte{
 	0x33, 0x0a, 0x07, 0x6c, 0x65, 0x66, 0x74, 0x5f, 0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
 	0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x06, 0x6c, 0x65,
-	0x66, 0x74, 0x41, 0x74, 0x42, 0x2e, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x63, 0x6c, 0x75, 0x62, 0x6f, 0x2d, 0x61, 0x70, 0x70, 0x2f, 0x63, 0x6c, 0x75,
-	0x62, 0x62, 0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x76,
-	0x65, 0x6e, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x66, 0x74, 0x41, 0x74, 0x22, 0x83, 0x01, 0x0a, 0x0e, 0x50, 0x61, 0x72, 0x74, 0x79, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x65, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
+	0x12, 0x19, 0x0a, 0x08, 0x70, 0x61, 0x72, 0x74, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x70, 0x61, 0x72, 0x74, 0x79, 0x49, 0x64, 0x12, 0x3d, 0x0a, 0x0c, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x65, 0x64, 0x5f, 0x61, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0b, 0x72,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x65, 0x64, 0x41, 0x74, 0x42, 0x2e, 0x5a, 0x2c, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6c, 0x75, 0x62, 0x6f, 0x2d, 0x61,
+	0x70, 0x70, 0x2f, 0x63, 0x6c, 0x75, 0x62, 0x62, 0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2f, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -789,7 +861,7 @@ func file_events_events_proto_rawDescGZIP() []byte {
 	return file_events_events_proto_rawDescData
 }
 
-var file_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_events_events_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_events_events_proto_goTypes = []interface{}{
 	(*ProfileCreated)(nil),        // 0: events.ProfileCreated
 	(*ProfileUpdated)(nil),        // 1: events.ProfileUpdated
@@ -803,26 +875,28 @@ var file_events_events_proto_goTypes = []interface{}{
 	(*PartyUnfavorited)(nil),      // 9: events.PartyUnfavorited
 	(*PartyJoined)(nil),           // 10: events.PartyJoined
 	(*PartyLeft)(nil),             // 11: events.PartyLeft
-	(*profile.Profile)(nil),       // 12: profile.Profile
-	(*party.Party)(nil),           // 13: party.Party
-	(*timestamppb.Timestamp)(nil), // 14: google.protobuf.Timestamp
+	(*PartyRequested)(nil),        // 12: events.PartyRequested
+	(*profile.Profile)(nil),       // 13: profile.Profile
+	(*party.Party)(nil),           // 14: party.Party
+	(*timestamppb.Timestamp)(nil), // 15: google.protobuf.Timestamp
 }
 var file_events_events_proto_depIdxs = []int32{
-	12, // 0: events.ProfileCreated.profile:type_name -> profile.Profile
-	12, // 1: events.ProfileUpdated.profile:type_name -> profile.Profile
-	13, // 2: events.PartyCreated.party:type_name -> party.Party
-	13, // 3: events.PartyUpdated.party:type_name -> party.Party
-	14, // 4: events.FriendRequested.requested_at:type_name -> google.protobuf.Timestamp
-	14, // 5: events.FriendCreated.accepted_at:type_name -> google.protobuf.Timestamp
-	14, // 6: events.PartyFavorited.favorited_at:type_name -> google.protobuf.Timestamp
-	14, // 7: events.PartyUnfavorited.unfavorited_at:type_name -> google.protobuf.Timestamp
-	14, // 8: events.PartyJoined.joined_at:type_name -> google.protobuf.Timestamp
-	14, // 9: events.PartyLeft.left_at:type_name -> google.protobuf.Timestamp
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	13, // 0: events.ProfileCreated.profile:type_name -> profile.Profile
+	13, // 1: events.ProfileUpdated.profile:type_name -> profile.Profile
+	14, // 2: events.PartyCreated.party:type_name -> party.Party
+	14, // 3: events.PartyUpdated.party:type_name -> party.Party
+	15, // 4: events.FriendRequested.requested_at:type_name -> google.protobuf.Timestamp
+	15, // 5: events.FriendCreated.accepted_at:type_name -> google.protobuf.Timestamp
+	15, // 6: events.PartyFavorited.favorited_at:type_name -> google.protobuf.Timestamp
+	15, // 7: events.PartyUnfavorited.unfavorited_at:type_name -> google.protobuf.Timestamp
+	15, // 8: events.PartyJoined.joined_at:type_name -> google.protobuf.Timestamp
+	15, // 9: events.PartyLeft.left_at:type_name -> google.protobuf.Timestamp
+	15, // 10: events.PartyRequested.requested_at:type_name -> google.protobuf.Timestamp
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_events_events_proto_init() }
@@ -975,6 +1049,18 @@ func file_events_events_proto_init() {
 				return nil
 			}
 		}
+		file_events_events_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PartyRequested); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -982,7 +1068,7 @@ func file_events_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_events_events_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

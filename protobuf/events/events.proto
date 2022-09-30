@@ -66,3 +66,9 @@ message PartyLeft {
   string party_id = 2;
   google.protobuf.Timestamp left_at = 5; 
 }
+
+message PartyRequested {
+  string user_id = 1;
+  string party_id = 2;
+  google.protobuf.Timestamp requested_at = 5; 
+}
