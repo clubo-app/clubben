@@ -91,7 +91,7 @@ func (c *consumer) partyFavorited(sub *nats.Subscription) {
 	}
 
 	for partyId, count := range aggregatedCount {
-		batch.Queue("UPDATE parties SET participants_count = participants_count + $1 WHERE id = $2", count, partyId)
+		batch.Queue("UPDATE parties SET favorite_count = favorite_count + $1 WHERE id = $2", count, partyId)
 	}
 
 	b := c.partyRepo.Pool.SendBatch(context.Background(), batch)
@@ -128,7 +128,7 @@ func (c *consumer) partyUnfavorited(sub *nats.Subscription) {
 	}
 
 	for partyId, count := range aggregatedCount {
-		batch.Queue("UPDATE parties SET participants_count = participants_count - $1 WHERE id = $2", count, partyId)
+		batch.Queue("UPDATE parties SET favorite_count = favorite_count - $1 WHERE id = $2", count, partyId)
 	}
 
 	b := c.partyRepo.Pool.SendBatch(context.Background(), batch)
