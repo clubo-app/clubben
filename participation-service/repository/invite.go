@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/clubo-app/clubben/participation-service/datastruct"
@@ -83,8 +82,6 @@ func (r inviteRepository) Decline(ctx context.Context, params DeclineParams) err
 		Where(qb.Eq("inviter_id")).
 		Where(qb.Eq("party_id")).
 		ToCql()
-
-	log.Printf("%+v\n", params)
 
 	err := r.sess.ContextQuery(ctx, stmt, names).
 		BindMap((qb.M{

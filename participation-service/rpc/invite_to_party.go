@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s server) InviteToParty(ctx context.Context, req *participation.InviteToPartyRequest) (*participation.PartyInvite, error) {
+func (s *server) InviteToParty(ctx context.Context, req *participation.InviteToPartyRequest) (*participation.PartyInvite, error) {
 	_, err := ksuid.Parse(req.UserId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid User id")

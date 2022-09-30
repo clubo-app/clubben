@@ -27,12 +27,6 @@ var participantMetadata = table.Metadata{
 	SortKey: []string{"user_id"},
 }
 
-var participationCount = table.Metadata{
-	Name:    PARTY_PARTICIPATION_COUNT,
-	Columns: []string{"party_id", "participation_count"},
-	PartKey: []string{"party_id"},
-}
-
 type ParticipantRepository interface {
 	Join(context.Context, UserPartyParams) (datastruct.Participant, error)
 	Request(context.Context, UserPartyParams) (datastruct.Participant, error)
@@ -41,10 +35,6 @@ type ParticipantRepository interface {
 	GetPartyParticipant(context.Context, UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
-
-	IncreaseParticipationCount(context.Context, string) error
-	DecreaseParticipationCount(context.Context, string) error
-	GetParticipationCount(context.Context, string) (int64, error)
 
 	GetUserParticipation(context.Context, GetUserParticipationParams) ([]datastruct.Participant, []byte, error)
 	GetManyUserParticipation(context.Context, GetManyUserParticipationParams) ([]datastruct.Participant, []byte, error)
@@ -60,42 +50,24 @@ type UserPartyParams struct {
 	PartyId string
 }
 
-func (r participantRepository) Join(ctx context.Context, params UserPartyParams) (p datastruct.Participant, err error) {
-	wg := new(sync.WaitGroup)
-	wg.Add(2)
+func (r participantRepository) Join(ctx context.Context, params UserPartyParams) (datastruct.Participant, error) {
+	p := datastruct.Participant{
+		UserId:    params.UserId,
+		PartyId:   params.PartyId,
+		JoinedAt:  time.Now(),
+		Requested: false,
+	}
 
-	go func() {
-		defer wg.Done()
-		p = datastruct.Participant{
-			UserId:    params.UserId,
-			PartyId:   params.PartyId,
-			JoinedAt:  time.Now(),
-			Requested: false,
-		}
+	stmt, names := qb.
+		Insert(PARTY_PARTICIPANTS).
+		Unique().
+		Columns(participantMetadata.Columns...).
+		ToCql()
 
-		stmt, names := qb.
-			Insert(PARTY_PARTICIPANTS).
-			Unique().
-			Columns(participantMetadata.Columns...).
-			ToCql()
-
-		err1 := r.sess.
-			ContextQuery(ctx, stmt, names).
-			BindStruct(p).
-			ExecRelease()
-		if err1 != nil {
-			err = err1
-		}
-	}()
-
-	go func() {
-		defer wg.Done()
-		err1 := r.IncreaseParticipationCount(ctx, params.PartyId)
-		if err1 != nil {
-			err = err1
-		}
-	}()
-	wg.Wait()
+	err := r.sess.
+		ContextQuery(ctx, stmt, names).
+		BindStruct(p).
+		ExecRelease()
 
 	if err != nil {
 		return datastruct.Participant{}, err
@@ -129,45 +101,32 @@ func (r participantRepository) Request(ctx context.Context, params UserPartyPara
 	return p, nil
 }
 
-func (r participantRepository) Accept(ctx context.Context, params UserPartyParams) (err error) {
-	wg := new(sync.WaitGroup)
-	wg.Add(2)
+func (r participantRepository) Accept(ctx context.Context, params UserPartyParams) error {
+	stmt, names := qb.
+		Update(PARTY_PARTICIPANTS).
+		Where(qb.Eq("party_id")).
+		Where(qb.EqNamed("requested", "old.requested")).
+		Where(qb.Eq("user_id")).
+		Existing().
+		Set("requested").
+		Set("joined_at").
+		ToCql()
 
-	go func() {
-		defer wg.Done()
-		stmt, names := qb.
-			Update(PARTY_PARTICIPANTS).
-			Where(qb.Eq("party_id")).
-			Where(qb.EqNamed("requested", "old.requested")).
-			Where(qb.Eq("user_id")).
-			Set("requested").
-			Set("joined_at").
-			ToCql()
+	err := r.sess.
+		ContextQuery(ctx, stmt, names).
+		BindMap((qb.M{
+			"party_id":      params.PartyId,
+			"user_id":       params.UserId,
+			"old.requested": true,
+			"requested":     false,
+			"joined_at":     time.Now(),
+		})).
+		ExecRelease()
+	if err != nil {
+		return err
+	}
 
-		err1 := r.sess.
-			ContextQuery(ctx, stmt, names).
-			BindMap((qb.M{
-				"party_id":      params.PartyId,
-				"user_id":       params.UserId,
-				"old.requested": true,
-				"requested":     false,
-				"joined_at":     time.Now(),
-			})).
-			ExecRelease()
-		if err1 != nil {
-			err = err1
-		}
-	}()
-	go func() {
-		defer wg.Done()
-		err1 := r.IncreaseParticipationCount(ctx, params.PartyId)
-		if err1 != nil {
-			err = err1
-		}
-	}()
-	wg.Wait()
-
-	return err
+	return nil
 }
 
 func (r participantRepository) Leave(ctx context.Context, params UserPartyParams) (err error) {
@@ -190,13 +149,6 @@ func (r participantRepository) Leave(ctx context.Context, params UserPartyParams
 				"party_id": params.PartyId,
 			})).
 			ExecRelease()
-		if err1 != nil {
-			err = err1
-		}
-	}()
-	go func() {
-		defer wg.Done()
-		err1 := r.DecreaseParticipationCount(ctx, params.PartyId)
 		if err1 != nil {
 			err = err1
 		}
@@ -289,68 +241,6 @@ func (r participantRepository) GetPartyRequests(ctx context.Context, params GetP
 	}
 
 	return res, iter.PageState(), nil
-}
-
-func (r participantRepository) IncreaseParticipationCount(ctx context.Context, pId string) error {
-	countStmt, countNames := qb.
-		Update(PARTY_PARTICIPATION_COUNT).
-		Where(qb.Eq("party_id")).
-		Add("participation_count").
-		ToCql()
-
-	err := r.sess.
-		ContextQuery(ctx, countStmt, countNames).
-		BindMap((qb.M{
-			"participation_count": 1,
-			"party_id":            pId,
-		})).
-		ExecRelease()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (r participantRepository) DecreaseParticipationCount(ctx context.Context, pId string) error {
-	countStmt, countNames := qb.
-		Update(PARTY_PARTICIPATION_COUNT).
-		Where(qb.Eq("party_id")).
-		Remove("participation_count").
-		ToCql()
-
-	err := r.sess.
-		ContextQuery(ctx, countStmt, countNames).
-		BindMap((qb.M{
-			"participation_count": 1,
-			"party_id":            pId,
-		})).
-		ExecRelease()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (r participantRepository) GetParticipationCount(ctx context.Context, pId string) (int64, error) {
-	var res datastruct.ParticipationCount
-
-	stmt, names := qb.
-		Select(PARTY_PARTICIPATION_COUNT).
-		Columns(participationCount.Columns...).
-		Where(qb.Eq("party_id")).
-		ToCql()
-
-	err := r.sess.
-		ContextQuery(ctx, stmt, names).
-		BindMap((qb.M{
-			"party_id": pId,
-		})).
-		GetRelease(&res)
-	if err != nil {
-		return 0, err
-	}
-
-	return res.ParticipationCount, err
 }
 
 type GetUserParticipationParams struct {

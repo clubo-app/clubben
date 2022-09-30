@@ -17,6 +17,7 @@ type Participant interface {
 	Request(context.Context, repository.UserPartyParams) (datastruct.Participant, error)
 	Accept(context.Context, AcceptRequestParams) error
 	Leave(context.Context, repository.UserPartyParams) error
+
 	GetPartyParticipant(context.Context, repository.UserPartyParams) (datastruct.Participant, error)
 	GetPartyParticipants(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
 	GetPartyRequests(context.Context, repository.GetPartyParticipantsParams) ([]datastruct.Participant, []byte, error)
@@ -48,24 +49,23 @@ func (p participant) Join(ctx context.Context, params JoinParams) (datastruct.Pa
 		PartyId: params.PartyId,
 	})
 	if err != nil || party == nil {
-		log.Println("Join Error: ", err)
+		log.Println("Failed to GetParty: ", err)
 		return datastruct.Participant{}, status.Error(codes.InvalidArgument, "Party not found")
 	}
 	if params.UserId == party.UserId {
 		return datastruct.Participant{}, status.Error(codes.InvalidArgument, "You can't join your own Party")
 	}
 
-	log.Println("Join Got Party: ", party)
+	log.Printf("Join got Party: %+v", party)
 
-	count, _ := p.r.GetParticipationCount(ctx, params.PartyId)
 	if err != nil {
-		log.Println("ParticipationCount: ", count)
+		log.Println("ParticipationCount: ", party.ParticipantsCount)
 		log.Println("Join Error ParticipationCount: ", err)
 		return datastruct.Participant{}, utils.HandleError(err)
 	}
 
 	// MaxParticipants of 0 mean there is no restriction for Participants
-	if party.MaxParticipants != 0 && count >= int64(party.MaxParticipants) {
+	if party.MaxParticipants != 0 && party.ParticipantsCount >= party.MaxParticipants {
 		return datastruct.Participant{}, status.Error(codes.PermissionDenied, "Party is already full")
 	}
 
@@ -99,8 +99,7 @@ func (p participant) Accept(ctx context.Context, params AcceptRequestParams) err
 		return status.Error(codes.PermissionDenied, "You are not the creator of the Party")
 	}
 
-	count, err := p.r.GetParticipationCount(ctx, params.PartyId)
-	if count >= int64(party.MaxParticipants) {
+	if party.ParticipantsCount >= party.MaxParticipants {
 		return status.Error(codes.PermissionDenied, "Party is already full")
 	}
 

@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s server) GetUserParticipation(ctx context.Context, req *participation.GetUserParticipationRequest) (*participation.PagedPartyParticipants, error) {
+func (s *server) GetUserParticipations(ctx context.Context, req *participation.GetUserParticipationsRequest) (*participation.PagedPartyParticipants, error) {
 	page, err := base64.URLEncoding.DecodeString(req.NextPage)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Next Page Param")
