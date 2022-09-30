@@ -24,8 +24,3 @@ func (i Participant) ToGRPCPartyParticipant() *participation.PartyParticipant {
 		RequestedAt: timestamppb.New(i.RequestedAt),
 	}
 }
-
-type ParticipationCount struct {
-	PartyId            string `db:"party_id"`
-	ParticipationCount int64  `db:"participation_count"`
-}
