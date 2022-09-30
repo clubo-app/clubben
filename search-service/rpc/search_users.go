@@ -3,8 +3,8 @@ package rpc
 import (
 	"context"
 
+	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/search"
-	"github.com/clubo-app/packages/utils"
 )
 
 func (s *searchServer) SearchUsers(ctx context.Context, req *search.SearchUsersRequest) (*search.SearchUsersResponse, error) {

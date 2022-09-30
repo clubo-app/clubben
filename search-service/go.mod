@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b
 	github.com/clubo-app/clubben/protobuf v0.0.0-20220912174446-05c23331a4f8
-	github.com/clubo-app/packages v0.0.0-20220804192943-16ef44176eeb
 	github.com/jonashiltl/govespa v0.0.0-20220912170216-405a0ae48d92
 	github.com/nats-io/nats.go v1.17.0
 	github.com/spf13/viper v1.13.0
