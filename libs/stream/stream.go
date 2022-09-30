@@ -8,16 +8,15 @@ import (
 	"unicode"
 
 	"github.com/nats-io/nats.go"
-	"github.com/nats-io/nats.go/encoders/protobuf"
 	"google.golang.org/protobuf/proto"
 )
 
 type Stream struct {
-	nc *nats.EncodedConn
+	nc *nats.Conn
 	js nats.JetStreamContext
 }
 
-func new(nc *nats.EncodedConn, js nats.JetStreamContext) Stream {
+func new(nc *nats.Conn, js nats.JetStreamContext) Stream {
 	return Stream{nc: nc, js: js}
 }
 
@@ -32,19 +31,15 @@ func Connect(cluster string, opts []nats.Option) (Stream, error) {
 	if err != nil {
 		return Stream{}, err
 	}
-	c, err := nats.NewEncodedConn(nc, protobuf.PROTOBUF_ENCODER)
-	if err != nil {
-		return Stream{}, err
-	}
 
 	js, err := nc.JetStream()
 	if err != nil {
 		log.Println("Error creating JestStream Context: ", err)
 	}
 
-	log.Println("Connected to Nats Server at ", c.Conn.ConnectedUrl())
+	log.Println("Connected to Nats Server at ", nc.ConnectedUrl())
 
-	return new(c, js), nil
+	return new(nc, js), nil
 }
 
 func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
