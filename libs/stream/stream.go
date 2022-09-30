@@ -9,6 +9,7 @@ import (
 
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nats.go/encoders/protobuf"
+	"google.golang.org/protobuf/proto"
 )
 
 type Stream struct {
@@ -46,9 +47,15 @@ func Connect(cluster string, opts []nats.Option) (Stream, error) {
 	return new(c, js), nil
 }
 
-func (s Stream) PublishEvent(event any) error {
+func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
+	msg, err := proto.Marshal(event)
+	if err != nil {
+		return nil, err
+	}
+
 	sub := EventToSubject(event)
-	return s.nc.Publish(sub, event)
+
+	return s.js.Publish(sub, msg)
 }
 
 func (s Stream) JSPublish(sub string, msg []byte) (*nats.PubAck, error) {
