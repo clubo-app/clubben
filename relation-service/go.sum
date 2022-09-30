@@ -204,12 +204,14 @@ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDk
 github.com/cloudflare/golz4 v0.0.0-20150217214814-ef862a3cdc58/go.mod h1:EOBUe0h4xcZ5GoxqC5SDxFQ8gwyZPKQoEzownBlhI80=
 github.com/clubo-app/clubben/libs/cqlx v0.0.0-20220827214751-554765ad172b h1:u5isZRGSca6ygh4SxIgWcFP36dSo76dFB+AuC+d1cIA=
 github.com/clubo-app/clubben/libs/cqlx v0.0.0-20220827214751-554765ad172b/go.mod h1:Xcbb2TOy1pCX0ltN9Hfb4ivUmyLMl7aVC0dqLPhV8PU=
-github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b h1:MCo8xqu7cxihSFUXXTnDWrN0Tq7rl2ryAoOB3uCbyF8=
-github.com/clubo-app/clubben/libs/stream v0.0.0-20220827214751-554765ad172b/go.mod h1:5BwfbGVmEo/oC23fjBzXn2eSTr+CzugbpLqV46TVSeE=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20220930132439-02dd4bd172e0 h1:p/twyBCfqsWb4Nq/a4ibDjKJfSPemGOxR9Mbjjda0RQ=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20220930132439-02dd4bd172e0/go.mod h1:0/n96AVREvD1kHWPlX6wkFX8mM7o2EaBAqTVpD7JcOg=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20220930151732-11d516e2bc15 h1:hycrdhBDkhPF37wg4qn8HCutOTN5g7o4H5F2Re7UV2k=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20220930151732-11d516e2bc15/go.mod h1:0/n96AVREvD1kHWPlX6wkFX8mM7o2EaBAqTVpD7JcOg=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b h1:3vb7ADYUEpG9NL/SIFqJ0sAGE+KEezfSy6kzIXR5IHM=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b/go.mod h1:W+b3iIsqN0szEhuAoninnnRY+Jd04xjJ5m92JLd+gQU=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220922171122-cf6ea3c6342a h1:cs+HgzVzipew3RjCKQN1jVeKjH9zTuy+ti+0apO3b5E=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220922171122-cf6ea3c6342a/go.mod h1:BOYzjRXIOw2rYG+/RB4dm2Xg5C4WL7t7coo3m1yIH5w=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220930110915-2e87533e5d25 h1:L2HTmKPi7bkjgF9V/kTmXW2ies+rKxlpJ+nVOW2fNYI=
+github.com/clubo-app/clubben/protobuf v0.0.0-20220930110915-2e87533e5d25/go.mod h1:7FoaN4ZTQtz1tzZykefw24A2vL+2+/AmS6dppX3pADM=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/cncf/udpa/go v0.0.0-20200629203442-efcf912fb354/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
 github.com/cncf/udpa/go v0.0.0-20201120205902-5459f2c99403/go.mod h1:WmhPx2Nbnhtbo57+VJT5O0JRkEi1Wbu0z5j0R8u5Hbk=
@@ -890,7 +892,6 @@ github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f/go.mod h1:qRW
 github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f/go.mod h1:ZdcZmHo+o7JKHSa8/e818NopupXU1YMK5fe1lsApnBw=
 github.com/nakagami/firebirdsql v0.0.0-20190310045651-3c02a58cfed8/go.mod h1:86wM1zFnC6/uDBfZGNwB65O+pR2OFi5q/YQaEUid1qA=
 github.com/nats-io/jwt/v2 v2.3.0 h1:z2mA1a7tIf5ShggOFlR1oBPgd6hGqcDYsISxZByUzdI=
-github.com/nats-io/jwt/v2 v2.3.0/go.mod h1:0tqz9Hlu6bCBFLWAASKhE5vUA4c24L9KPUUgvwumE/k=
 github.com/nats-io/nats-server/v2 v2.8.4 h1:0jQzze1T9mECg8YZEl8+WYUXb9JKluJfCBriPUtluB4=
 github.com/nats-io/nats.go v1.17.0 h1:1jp5BThsdGlN91hW0k3YEfJbfACjiOYtUiLXG0RL4IE=
 github.com/nats-io/nats.go v1.17.0/go.mod h1:BPko4oXsySz4aSWeFgOHLZs3G4Jq4ZAyE6/zMCxRT6w=
@@ -1557,7 +1558,6 @@ golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba/go.mod h1:tRJNPiyCQ0inRvYxb
 golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
 golang.org/x/time v0.0.0-20220224211638-0e9765cccd65/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
 golang.org/x/time v0.0.0-20220411224347-583f2d630306 h1:+gHMid33q6pen7kv9xvT+JRinntgeXO2AeZVd0AWD3w=
-golang.org/x/time v0.0.0-20220411224347-583f2d630306/go.mod h1:tRJNPiyCQ0inRvYxbN9jk5I+vvW/OXSQhTDSoE431IQ=
 golang.org/x/tools v0.0.0-20180221164845-07fd8470d635/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180525024113-a5b4c53f6e8b/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
