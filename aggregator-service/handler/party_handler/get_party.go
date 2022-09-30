@@ -45,7 +45,7 @@ func (h partyHandler) GetParty(c *fiber.Ctx) error {
 	go func() {
 		defer wg.Done()
 
-		favoriteParty, _ := h.relationClient.GetFavoriteStatus(c.Context(), &relation.PartyAndUserRequest{UserId: user.Sub, PartyId: party.Id})
+		favoriteParty, _ := h.relationClient.GetFavoriteParty(c.Context(), &relation.PartyAndUserRequest{UserId: user.Sub, PartyId: party.Id})
 		if favoriteParty != nil {
 			res.IsFavorite = true
 		}

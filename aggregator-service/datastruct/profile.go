@@ -15,7 +15,7 @@ type AggregatedProfile struct {
 
 func ProfileToAgg(p *profile.Profile) *AggregatedProfile {
 	if p == nil {
-		return &AggregatedProfile{}
+		return nil
 	}
 	return &AggregatedProfile{
 		Id:        p.Id,

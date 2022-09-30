@@ -68,6 +68,9 @@ func PartyToAgg(p *pg.Party) *AggregatedParty {
 }
 
 func (p *AggregatedParty) AddCreator(prof *AggregatedProfile) *AggregatedParty {
+	if prof == nil {
+		return p
+	}
 	if prof.Id != "" {
 		p.CreatorId = prof.Id
 		p.Creator = prof

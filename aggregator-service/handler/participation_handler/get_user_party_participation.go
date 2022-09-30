@@ -2,11 +2,13 @@ package participationhandler
 
 import (
 	"strconv"
+	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -36,13 +38,42 @@ func (h participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
 		partyIds[i] = p.PartyId
 	}
 
-	parties, err := h.partyClient.GetManyParties(c.Context(), &party.GetManyPartiesRequest{
-		Ids: partyIds,
-	})
+	if len(partyIds) == 0 {
+		res := make([]string, 0)
+		return c.Status(fiber.StatusOK).JSON(res)
+	}
 
-	aggParties := make([]*datastruct.AggregatedParty, len(parties.Parties))
-	for i, party := range parties.Parties {
-		aggParties[i] = datastruct.PartyToAgg(party)
+	// we use two goroutines to parallize data fetching
+	wg := new(sync.WaitGroup)
+	wg.Add(2)
+
+	var parties []*party.Party
+	go func() {
+		defer wg.Done()
+		partiesRes, _ := h.partyClient.GetManyParties(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
+		parties = partiesRes.Parties
+	}()
+
+	var favoriteParties map[string]*relation.FavoriteParty
+	go func() {
+		defer wg.Done()
+		fp, _ := h.relationClient.GetFavoritePartyManyParties(c.Context(), &relation.GetFavoritePartyManyPartiesRequest{
+			UserId:   uId,
+			PartyIds: partyIds,
+		})
+		favoriteParties = fp.FavoriteParties
+	}()
+
+	wg.Wait()
+
+	aggParties := make([]*datastruct.AggregatedParty, len(parties))
+	for i, p := range parties {
+		party := datastruct.PartyToAgg(p)
+		if _, ok := favoriteParties[party.Id]; ok {
+			party.IsFavorite = true
+		}
+
+		aggParties[i] = party
 	}
 
 	res := datastruct.PagedAggregatedParty{

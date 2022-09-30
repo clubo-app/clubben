@@ -2,7 +2,6 @@ package favoritehandler
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
@@ -31,27 +30,24 @@ func (h *favoriteHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
 		partyIds[i] = fp.PartyId
 	}
 
-	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
-	if parties == nil {
-		res := datastruct.PagedAggregatedFavoriteParty{
-			FavoriteParties: []datastruct.AggregatedFavoriteParty{},
-			NextPage:        favParties.NextPage,
-		}
+	if len(partyIds) == 0 {
+		res := make([]string, 0)
 		return c.Status(fiber.StatusOK).JSON(res)
 	}
 
-	aggFP := make([]datastruct.AggregatedFavoriteParty, len(favParties.FavoriteParties))
-	for i, fp := range favParties.FavoriteParties {
-		aggFP[i] = datastruct.AggregatedFavoriteParty{
-			UserId:      fp.UserId,
-			Party:       datastruct.PartyToAgg(parties.Parties[fp.PartyId]),
-			FavoritedAt: fp.FavoritedAt.AsTime().UTC().Format(time.RFC3339),
-		}
+	parties, _ := h.partyClient.GetManyParties(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
+
+	aggP := make([]*datastruct.AggregatedParty, len(favParties.FavoriteParties))
+	for i, p := range parties.Parties {
+		party := datastruct.PartyToAgg(p)
+		party.IsFavorite = true
+
+		aggP[i] = party
 	}
 
-	res := datastruct.PagedAggregatedFavoriteParty{
-		FavoriteParties: aggFP,
-		NextPage:        favParties.NextPage,
+	res := datastruct.PagedAggregatedParty{
+		Parties:  aggP,
+		NextPage: favParties.NextPage,
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)
