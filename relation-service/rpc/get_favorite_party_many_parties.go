@@ -23,7 +23,7 @@ func (r *relationServer) GetFavoritePartyManyParties(ctx context.Context, req *r
 
 	res := make(map[string]*relation.FavoriteParty)
 	for _, fp := range favoriteParties {
-		res[fp.UserId] = fp.ToGRPCFavoriteParty()
+		res[fp.PartyId] = fp.ToGRPCFavoriteParty()
 	}
 
 	return &relation.ManyFavoritePartiesMap{FavoriteParties: res}, nil
