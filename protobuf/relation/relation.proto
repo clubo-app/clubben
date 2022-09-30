@@ -20,12 +20,10 @@ service RelationService {
 
     rpc FavorParty (PartyAndUserRequest) returns (FavoriteParty) {};
     rpc DefavorParty (PartyAndUserRequest) returns (common.SuccessIndicator) {};
+    rpc GetFavoriteStatus (PartyAndUserRequest) returns (FavoriteParty) {};
     rpc GetFavoriteParty (PartyAndUserRequest) returns (FavoriteParty) {};
     rpc GetFavoritePartiesByUser (GetFavoritePartiesByUserRequest) returns (PagedFavoriteParties) {};
     rpc GetFavorisingUsersByParty (GetFavorisingUsersByPartyRequest) returns (PagedFavoriteParties) {};
-
-    // rpc GetFavoritePartyCount (GetFavoritePartyCountRequest) returns (GetFavoritePartyCountResponse) {};
-    // rpc GetManyFavoritePartyCount (GetManyFavoritePartyCountRequest) returns (GetManyFavoritePartyCountResponse) {};
 }
 
 // Requests
