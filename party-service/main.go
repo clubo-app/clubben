@@ -30,7 +30,7 @@ func main() {
 
 	s := service.NewPartyService(repo, &stream)
 
-	con := consumer.New(stream, repo)
+	con := consumer.New(&stream, repo)
 	go con.Start()
 
 	p := rpc.NewPartyServer(s, stream)
