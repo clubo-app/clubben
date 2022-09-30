@@ -57,7 +57,7 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscription, error) {
 	sub := EventToSubject(event)
 
-	return s.js.PullSubscribe(sub, "pull-consumer", opts)
+	return s.js.PullSubscribe(sub, "pull-consumer", opts...)
 }
 
 // PushSubscribe creates a push-based Consumer.
