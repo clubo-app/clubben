@@ -2,7 +2,10 @@ module github.com/clubo-app/clubben/libs/stream
 
 go 1.19
 
-require github.com/nats-io/nats.go v1.17.0
+require (
+	github.com/nats-io/nats.go v1.17.0
+	google.golang.org/protobuf v1.28.1
+)
 
 require (
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -15,5 +18,4 @@ require (
 	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be // indirect
 	golang.org/x/sys v0.0.0-20220915200043-7b5979e65e41 // indirect
 	golang.org/x/time v0.0.0-20220411224347-583f2d630306 // indirect
-	google.golang.org/protobuf v1.28.1 // indirect
 )
