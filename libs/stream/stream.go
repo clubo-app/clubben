@@ -58,10 +58,6 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 	return s.js.Publish(sub, msg)
 }
 
-func (s Stream) JSPublish(sub string, msg []byte) (*nats.PubAck, error) {
-	return s.js.Publish(sub, msg)
-}
-
 // PullSubscribe crates a Pull based Consumer
 func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscription, error) {
 	sub := EventToSubject(event)
@@ -71,13 +67,13 @@ func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscriptio
 
 // PushSubscribe creates a push-based Consumer.
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
-func (s Stream) PushSubscribe(queue string, event any, handler nats.Handler) (*nats.Subscription, error) {
+func (s Stream) PushSubscribe(queue string, event any, handler nats.MsgHandler) (*nats.Subscription, error) {
 	sub := EventToSubject(event)
 
 	if queue != "" {
-		return s.nc.QueueSubscribe(sub, queue, handler)
+		return s.js.QueueSubscribe(sub, queue, handler)
 	}
-	return s.nc.Subscribe(sub, handler)
+	return s.js.Subscribe(sub, handler)
 }
 
 func setupConnOptions(opts []nats.Option) []nats.Option {
