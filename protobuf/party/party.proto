@@ -98,6 +98,7 @@ message Party {
     google.protobuf.Timestamp created_at = 14;
     string music_genre = 15;
     int32 favorite_count = 20;
+    int32 participants_count = 21;
 }
 
 message PagedParties {
