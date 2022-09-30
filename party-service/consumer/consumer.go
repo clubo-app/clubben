@@ -27,32 +27,38 @@ func (c *consumer) Start() {
 	wg := sync.WaitGroup{}
 	wg.Add(4)
 
-	favoritedSub, err := c.stream.PullSubscribe(events.PartyFavorited{})
-	if err != nil {
-		log.Fatalln("Failed connect to PartyFavorited Event: ", err)
-	}
 	go func() {
+		sub, err := c.stream.PullSubscribe(events.PartyFavorited{})
+		if err != nil {
+			log.Fatalln("Failed to subscribe to PartyFavorited Event: ", err)
+		}
 		defer wg.Done()
-		c.partyFavorited(favoritedSub)
-	}()
-
-	unfavoritedSub, err := c.stream.PullSubscribe(events.PartyUnfavorited{})
-	if err != nil {
-		log.Fatalln("Failed connect to PartyUnfavorited Event: ", err)
-	}
-	go func() {
-		defer wg.Done()
-		c.partyUnfavorited(unfavoritedSub)
+		c.partyFavorited(sub)
 	}()
 
 	go func() {
+		sub, err := c.stream.PullSubscribe(events.PartyUnfavorited{})
+		if err != nil {
+			log.Fatalln("Failed to subscribe to PartyUnfavorited Event: ", err)
+		}
 		defer wg.Done()
-		c.stream.PushSubscribe("party-service.participants.joined.count", events.PartyJoined{}, c.partyJoined)
+		c.partyUnfavorited(sub)
 	}()
 
 	go func() {
 		defer wg.Done()
-		c.stream.PushSubscribe("party-service.participants.left.count", events.PartyJoined{}, c.partyLeft)
+		_, err := c.stream.PushSubscribe("party-service.participants.joined.count", events.PartyJoined{}, c.partyJoined)
+		if err != nil {
+			log.Fatalln("Failed to subscribe to PartyJoined Event: ", err)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		_, err := c.stream.PushSubscribe("party-service.participants.left.count", events.PartyJoined{}, c.partyLeft)
+		if err != nil {
+			log.Fatalln("Failed to subscribe to PartyLeft Event: ", err)
+		}
 	}()
 
 	wg.Wait()
