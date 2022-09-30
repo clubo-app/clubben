@@ -20,9 +20,8 @@ service RelationService {
 
     rpc FavorParty (PartyAndUserRequest) returns (FavoriteParty) {};
     rpc DefavorParty (PartyAndUserRequest) returns (common.SuccessIndicator) {};
-    rpc GetFavoriteStatus (PartyAndUserRequest) returns (FavoriteParty) {};
-    rpc GetFavoriteStatusManyUser (GetFavoriteStatusManyUserRequest) returns (ManyFavoritePartiesMap) {};
     rpc GetFavoriteParty (PartyAndUserRequest) returns (FavoriteParty) {};
+    rpc GetFavoritePartyManyUser (GetFavoritePartyManyUserRequest) returns (ManyFavoritePartiesMap) {};
     rpc GetFavoritePartiesByUser (GetFavoritePartiesByUserRequest) returns (PagedFavoriteParties) {};
     rpc GetFavorisingUsersByParty (GetFavorisingUsersByPartyRequest) returns (PagedFavoriteParties) {};
 }
@@ -90,7 +89,7 @@ message GetFavorisingUsersByPartyRequest {
     uint64 limit = 3;
 }
 
-message GetFavoriteStatusManyUserRequest {
+message GetFavoritePartyManyUserRequest{
     string party_id = 1;
     repeated string user_ids = 2;
 }
