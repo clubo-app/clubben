@@ -14,16 +14,16 @@ type GoogleClaims struct {
 	LastName      string `json:"family_name"`
 }
 
-type googleManager struct {
+type GoogleManager struct {
 	clientId string
 }
 
 // The clientId is the GCP OAuth2 clientId. It can be accessed through the Credentials Service.
-func NewGoogleManager(clientId string) googleManager {
-	return googleManager{clientId: clientId}
+func NewGoogleManager(clientId string) GoogleManager {
+	return GoogleManager{clientId: clientId}
 }
 
-func (g googleManager) ValidateGoogleToken(ctx context.Context, token string) (GoogleClaims, error) {
+func (g GoogleManager) ValidateGoogleToken(ctx context.Context, token string) (GoogleClaims, error) {
 	p, err := idtoken.Validate(ctx, token, g.clientId)
 	if err != nil {
 		return GoogleClaims{}, err
