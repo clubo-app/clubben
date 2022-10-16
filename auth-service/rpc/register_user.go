@@ -2,9 +2,9 @@ package rpc
 
 import (
 	"context"
+	"database/sql"
 	"net/mail"
 
-	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/clubben/protobuf/auth"
@@ -14,29 +14,46 @@ import (
 )
 
 func (s *authServer) RegisterUser(ctx context.Context, req *ag.RegisterUserRequest) (*ag.LoginUserResponse, error) {
-	hash, err := s.pw.HashPassword(req.Password)
-	if err != nil {
-		return nil, utils.HandleError(err)
+	code, _ := utils.GenerateOTP(4)
+
+	if req.GoogleToken != "" && req.AppleToken != "" {
+		return nil, status.Error(codes.InvalidArgument, "Can't use both Google & Apple Token")
 	}
 
-	_, err = mail.ParseAddress(req.Email)
+	params := repository.CreateAccountParams{
+		ID:            ksuid.New().String(),
+		Email:         req.Email,
+		EmailVerified: false,
+		EmailCode:     sql.NullString{Valid: code != "", String: code},
+		Type:          repository.TypeUSER,
+	}
+
+	if req.Password != "" {
+		hash, err := s.pw.HashPassword(req.Password)
+		if err != nil {
+			return nil, utils.HandleError(err)
+		}
+		params.PasswordHash = sql.NullString{Valid: hash != "", String: hash}
+	}
+
+	if req.GoogleToken != "" {
+		googleClaims, err := s.goog.ValidateGoogleToken(ctx, req.GoogleToken)
+		if err != nil {
+			return nil, status.Error(codes.InvalidArgument, "Invalid Google Token")
+		}
+
+		params.Email = googleClaims.Email
+		params.EmailVerified = googleClaims.EmailVerified
+		params.Provider = repository.NullProvider{Valid: true, Provider: repository.ProviderGOOGLE}
+		params.PasswordHash = sql.NullString{Valid: false}
+	}
+
+	_, err := mail.ParseAddress(req.Email)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Email")
 	}
 
-	code, _ := utils.GenerateOTP(4)
-
-	da := dto.Account{
-		ID:            ksuid.New().String(),
-		Email:         req.Email,
-		EmailVerified: false,
-		EmailCode:     code,
-		PasswordHash:  hash,
-		Provider:      repository.NullProvider{Valid: false},
-		Type:          repository.TypeUSER,
-	}
-
-	a, err := s.ac.Create(ctx, da)
+	a, err := s.ac.Create(ctx, params)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

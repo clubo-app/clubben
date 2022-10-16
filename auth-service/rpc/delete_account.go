@@ -5,12 +5,12 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/clubben/protobuf/auth"
-	cg "github.com/clubo-app/clubben/protobuf/common"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (s *authServer) DeleteAccount(ctx context.Context, req *ag.DeleteAccountRequest) (*cg.SuccessIndicator, error) {
+func (s *authServer) DeleteAccount(ctx context.Context, req *ag.DeleteAccountRequest) (*emptypb.Empty, error) {
 	if req.Id == "" {
 		return nil, status.Error(codes.InvalidArgument, "empty user id")
 	}
@@ -20,5 +20,5 @@ func (s *authServer) DeleteAccount(ctx context.Context, req *ag.DeleteAccountReq
 		return nil, utils.HandleError(err)
 	}
 
-	return &cg.SuccessIndicator{Sucess: true}, nil
+	return &emptypb.Empty{}, nil
 }

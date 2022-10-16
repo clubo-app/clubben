@@ -16,7 +16,7 @@ CREATE TABLE accounts (
     email TEXT NOT NULL,
     email_verified BOOLEAN NOT NULL DEFAULT false,
     email_code TEXT,
-    password_hash TEXT NOT NULL,
+    password_hash TEXT,
     refresh_token_generation SMALLINT NOT NULL DEFAULT 1,
     provider provider,
     type type NOT NULL DEFAULT 'USER'

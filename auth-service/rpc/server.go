@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/clubo-app/clubben/auth-service/service"
+	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"google.golang.org/grpc"
 )
@@ -13,13 +14,13 @@ import (
 type authServer struct {
 	token service.TokenManager
 	pw    service.PasswordManager
-	goog  service.GoogleManager
+	goog  utils.GoogleManager
 	ac    service.AccountService
 
 	ag.UnimplementedAuthServiceServer
 }
 
-func NewAuthServer(token service.TokenManager, pw service.PasswordManager, goog service.GoogleManager, ac service.AccountService) ag.AuthServiceServer {
+func NewAuthServer(token service.TokenManager, pw service.PasswordManager, goog utils.GoogleManager, ac service.AccountService) ag.AuthServiceServer {
 	return &authServer{
 		token: token,
 		pw:    pw,

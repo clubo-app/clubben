@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/mail"
 
-	"github.com/clubo-app/clubben/auth-service/dto"
+	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
 	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"github.com/segmentio/ksuid"
@@ -19,7 +19,7 @@ func (s *authServer) UpdateAccount(ctx context.Context, req *ag.UpdateAccountReq
 		return nil, errors.New("invalid id")
 	}
 
-	da := dto.Account{
+	params := repository.UpdateAccountParams{
 		ID: id.String(),
 	}
 
@@ -28,7 +28,7 @@ func (s *authServer) UpdateAccount(ctx context.Context, req *ag.UpdateAccountReq
 		if err != nil {
 			return nil, utils.HandleError(err)
 		}
-		da.PasswordHash = hash
+		params.PasswordHash = hash
 	}
 
 	if req.Email != "" {
@@ -36,10 +36,10 @@ func (s *authServer) UpdateAccount(ctx context.Context, req *ag.UpdateAccountReq
 		if err != nil {
 			return nil, status.Error(codes.InvalidArgument, "Invalid Email")
 		}
-		da.Email = req.Email
+		params.Email = req.Email
 	}
 
-	a, err := s.ac.Update(ctx, da)
+	a, err := s.ac.Update(ctx, params)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

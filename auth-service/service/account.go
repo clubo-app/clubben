@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"strings"
 
-	"github.com/clubo-app/clubben/auth-service/dto"
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
 	"google.golang.org/grpc/codes"
@@ -13,9 +12,9 @@ import (
 )
 
 type AccountService interface {
-	Create(context.Context, dto.Account) (repository.Account, error)
+	Create(context.Context, repository.CreateAccountParams) (repository.Account, error)
 	Delete(context.Context, string) error
-	Update(context.Context, dto.Account) (repository.Account, error)
+	Update(context.Context, repository.UpdateAccountParams) (repository.Account, error)
 	UpdateVerified(ctx context.Context, id, code string, emailVerified bool) (repository.Account, error)
 	RotateEmailCode(ctx context.Context, email string) (repository.Account, error)
 	EmailTaken(ctx context.Context, email string) bool
@@ -31,16 +30,8 @@ func NewAccountService(r *repository.AccountRepository) AccountService {
 	return &accountService{r: r}
 }
 
-func (s *accountService) Create(ctx context.Context, d dto.Account) (repository.Account, error) {
-	a, err := s.r.CreateAccount(ctx, repository.CreateAccountParams{
-		ID:            d.ID,
-		Email:         d.Email,
-		EmailVerified: d.EmailVerified,
-		EmailCode:     sql.NullString{String: d.EmailCode, Valid: d.EmailCode != ""},
-		PasswordHash:  d.PasswordHash,
-		Provider:      d.Provider,
-		Type:          d.Type,
-	})
+func (s *accountService) Create(ctx context.Context, params repository.CreateAccountParams) (repository.Account, error) {
+	a, err := s.r.CreateAccount(ctx, params)
 	if err != nil {
 		if strings.Contains(err.Error(), "duplicate key value violates unique constraint \"email_idx\"") {
 			return repository.Account{}, status.Error(codes.InvalidArgument, "Email already taken")
@@ -55,13 +46,8 @@ func (s *accountService) Delete(ctx context.Context, id string) error {
 	return s.r.DeleteAccount(ctx, id)
 }
 
-func (s *accountService) Update(ctx context.Context, d dto.Account) (repository.Account, error) {
-	return s.r.UpdateAccount(ctx, repository.UpdateAccountParams{
-		ID:           d.ID,
-		Email:        d.Email,
-		EmailCode:    d.EmailCode,
-		PasswordHash: d.PasswordHash,
-	})
+func (s *accountService) Update(ctx context.Context, params repository.UpdateAccountParams) (repository.Account, error) {
+	return s.r.UpdateAccount(ctx, params)
 }
 
 func (s *accountService) UpdateVerified(ctx context.Context, id, code string, emailVerified bool) (repository.Account, error) {

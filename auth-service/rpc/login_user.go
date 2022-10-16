@@ -20,7 +20,11 @@ func (s *authServer) LoginUser(ctx context.Context, req *ag.LoginUserRequest) (*
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	pwEqual := s.pw.CheckPasswordHash(req.Password, a.PasswordHash)
+	if !a.PasswordHash.Valid {
+		return nil, status.Error(codes.FailedPrecondition, "Your Account doesn't have a Password stored")
+	}
+
+	pwEqual := s.pw.CheckPasswordHash(req.Password, a.PasswordHash.String)
 	if !pwEqual {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Password")
 	}

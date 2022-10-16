@@ -7,6 +7,7 @@ import (
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/auth-service/rpc"
 	"github.com/clubo-app/clubben/auth-service/service"
+	"github.com/clubo-app/clubben/libs/utils"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 	defer r.Close()
 
 	t := service.NewTokenManager(c.TOKEN_SECRET)
-	goog := service.NewGoogleManager(c.GOOGLE_CLIENTID)
+	goog := utils.NewGoogleManager(c.GOOGLE_CLIENTID)
 	pw := service.NewPasswordManager()
 
 	as := service.NewAccountService(r)
