@@ -3,27 +3,30 @@ syntax = "proto3";
 package auth;
 option go_package = "github.com/clubo-app/clubben/protobuf/auth";
 
-import "common/common.proto";
+import "google/protobuf/empty.proto";
 
 service AuthService {
   rpc RegisterUser (RegisterUserRequest) returns (LoginUserResponse) {};
   rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {};
-  rpc GoogleLoginUser (GoogleLoginUserRequest) returns (LoginUserResponse) {}
-  rpc AppleLoginUser (AppleLoginUserRequest) returns (LoginUserResponse) {}
-  rpc VerifyEmail (VerifyEmailRequest) returns (Account) {}
-  rpc ResendVerificationEmail (ResendVerificationEmailRequest) returns (common.SuccessIndicator) {}
-  rpc RefreshAccessToken (RefreshAccessTokenRequest) returns (TokenResponse) {}
+  rpc GoogleLoginUser (GoogleLoginUserRequest) returns (LoginUserResponse) {};
+  rpc AppleLoginUser (AppleLoginUserRequest) returns (LoginUserResponse) {};
+  rpc VerifyEmail (VerifyEmailRequest) returns (Account) {};
+  rpc ResendVerificationEmail (ResendVerificationEmailRequest) returns (google.protobuf.Empty) {};
+  rpc RefreshAccessToken (RefreshAccessTokenRequest) returns (TokenResponse) {};
 
   rpc GetAccount (GetAccountRequest) returns (Account) {};
   rpc UpdateAccount (UpdateAccountRequest) returns (Account) {};
-  rpc DeleteAccount (DeleteAccountRequest) returns (common.SuccessIndicator) {};
+  rpc DeleteAccount (DeleteAccountRequest) returns (google.protobuf.Empty) {};
   rpc EmailTaken (EmailTakenRequest) returns (EmailTakenResponse) {};
 }
 
 // Requests
 message RegisterUserRequest {
   string email = 1;
-  string password = 2;
+  string password = 5;
+
+  string google_token = 7;
+  string apple_token = 8;
 }
 
 message LoginUserRequest {

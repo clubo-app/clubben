@@ -8,10 +8,10 @@ package auth
 
 import (
 	context "context"
-	common "github.com/clubo-app/clubben/protobuf/common"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -28,11 +28,11 @@ type AuthServiceClient interface {
 	GoogleLoginUser(ctx context.Context, in *GoogleLoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	AppleLoginUser(ctx context.Context, in *AppleLoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
 	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*Account, error)
-	ResendVerificationEmail(ctx context.Context, in *ResendVerificationEmailRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	ResendVerificationEmail(ctx context.Context, in *ResendVerificationEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RefreshAccessToken(ctx context.Context, in *RefreshAccessTokenRequest, opts ...grpc.CallOption) (*TokenResponse, error)
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Account, error)
-	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error)
+	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	EmailTaken(ctx context.Context, in *EmailTakenRequest, opts ...grpc.CallOption) (*EmailTakenResponse, error)
 }
 
@@ -89,8 +89,8 @@ func (c *authServiceClient) VerifyEmail(ctx context.Context, in *VerifyEmailRequ
 	return out, nil
 }
 
-func (c *authServiceClient) ResendVerificationEmail(ctx context.Context, in *ResendVerificationEmailRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *authServiceClient) ResendVerificationEmail(ctx context.Context, in *ResendVerificationEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/auth.AuthService/ResendVerificationEmail", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -125,8 +125,8 @@ func (c *authServiceClient) UpdateAccount(ctx context.Context, in *UpdateAccount
 	return out, nil
 }
 
-func (c *authServiceClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*common.SuccessIndicator, error) {
-	out := new(common.SuccessIndicator)
+func (c *authServiceClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/auth.AuthService/DeleteAccount", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -152,11 +152,11 @@ type AuthServiceServer interface {
 	GoogleLoginUser(context.Context, *GoogleLoginUserRequest) (*LoginUserResponse, error)
 	AppleLoginUser(context.Context, *AppleLoginUserRequest) (*LoginUserResponse, error)
 	VerifyEmail(context.Context, *VerifyEmailRequest) (*Account, error)
-	ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*common.SuccessIndicator, error)
+	ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*emptypb.Empty, error)
 	RefreshAccessToken(context.Context, *RefreshAccessTokenRequest) (*TokenResponse, error)
 	GetAccount(context.Context, *GetAccountRequest) (*Account, error)
 	UpdateAccount(context.Context, *UpdateAccountRequest) (*Account, error)
-	DeleteAccount(context.Context, *DeleteAccountRequest) (*common.SuccessIndicator, error)
+	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
 	EmailTaken(context.Context, *EmailTakenRequest) (*EmailTakenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
@@ -180,7 +180,7 @@ func (UnimplementedAuthServiceServer) AppleLoginUser(context.Context, *AppleLogi
 func (UnimplementedAuthServiceServer) VerifyEmail(context.Context, *VerifyEmailRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyEmail not implemented")
 }
-func (UnimplementedAuthServiceServer) ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedAuthServiceServer) ResendVerificationEmail(context.Context, *ResendVerificationEmailRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResendVerificationEmail not implemented")
 }
 func (UnimplementedAuthServiceServer) RefreshAccessToken(context.Context, *RefreshAccessTokenRequest) (*TokenResponse, error) {
@@ -192,7 +192,7 @@ func (UnimplementedAuthServiceServer) GetAccount(context.Context, *GetAccountReq
 func (UnimplementedAuthServiceServer) UpdateAccount(context.Context, *UpdateAccountRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccount not implemented")
 }
-func (UnimplementedAuthServiceServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*common.SuccessIndicator, error) {
+func (UnimplementedAuthServiceServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
 func (UnimplementedAuthServiceServer) EmailTaken(context.Context, *EmailTakenRequest) (*EmailTakenResponse, error) {
