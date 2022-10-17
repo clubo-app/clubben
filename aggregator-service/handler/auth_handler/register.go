@@ -9,12 +9,14 @@ import (
 )
 
 type RegisterRequest struct {
-	Email     string `json:"email,omitempty"`
-	Password  string `json:"password,omitempty"`
-	Username  string `json:"username,omitempty"`
-	Firstname string `json:"firstname,omitempty"`
-	Lastname  string `json:"lastname,omitempty"`
-	Avatar    string `json:"avatar,omitempty"`
+	Email       string `json:"email,omitempty"`
+	Password    string `json:"password,omitempty"`
+	Username    string `json:"username,omitempty"`
+	Firstname   string `json:"firstname,omitempty"`
+	Lastname    string `json:"lastname,omitempty"`
+	Avatar      string `json:"avatar,omitempty"`
+	GoogleToken string `json:"google_token"`
+	AppleToken  string `json:"apple_token"`
 }
 
 func (h authHandler) Register(c *fiber.Ctx) error {
@@ -31,8 +33,10 @@ func (h authHandler) Register(c *fiber.Ctx) error {
 	}
 
 	a, err := h.authClient.RegisterUser(c.Context(), &ag.RegisterUserRequest{
-		Email:    req.Email,
-		Password: req.Password,
+		Email:       req.Email,
+		Password:    req.Password,
+		GoogleToken: req.GoogleToken,
+		AppleToken:  req.AppleToken,
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)
