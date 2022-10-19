@@ -7,12 +7,11 @@ import (
 )
 
 func (h authHandler) GoogleLogin(c *fiber.Ctx) error {
-	req := new(ag.GoogleLoginUserRequest)
-	if err := c.BodyParser(req); err != nil {
-		return err
-	}
+	token := c.Params("token")
 
-	res, err := h.authClient.GoogleLoginUser(c.Context(), req)
+	res, err := h.authClient.GoogleLoginUser(c.Context(), &ag.GoogleLoginUserRequest{
+		Token: token,
+	})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
