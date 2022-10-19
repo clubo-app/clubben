@@ -12,20 +12,20 @@ import (
 )
 
 type authServer struct {
-	token service.TokenManager
-	pw    service.PasswordManager
-	goog  utils.GoogleManager
-	ac    service.AccountService
+	token          service.TokenManager
+	pw             service.PasswordManager
+	goog           utils.GoogleManager
+	accountService service.AccountService
 
 	ag.UnimplementedAuthServiceServer
 }
 
 func NewAuthServer(token service.TokenManager, pw service.PasswordManager, goog utils.GoogleManager, ac service.AccountService) ag.AuthServiceServer {
 	return &authServer{
-		token: token,
-		pw:    pw,
-		goog:  goog,
-		ac:    ac,
+		token:          token,
+		pw:             pw,
+		goog:           goog,
+		accountService: ac,
 	}
 }
 

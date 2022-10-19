@@ -15,7 +15,7 @@ func (s *authServer) DeleteAccount(ctx context.Context, req *ag.DeleteAccountReq
 		return nil, status.Error(codes.InvalidArgument, "empty user id")
 	}
 
-	err := s.ac.Delete(ctx, req.Id)
+	err := s.accountService.Delete(ctx, req.Id)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

@@ -39,7 +39,7 @@ func (s *authServer) UpdateAccount(ctx context.Context, req *ag.UpdateAccountReq
 		params.Email = req.Email
 	}
 
-	a, err := s.ac.Update(ctx, params)
+	a, err := s.accountService.Update(ctx, params)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

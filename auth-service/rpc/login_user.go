@@ -15,7 +15,7 @@ func (s *authServer) LoginUser(ctx context.Context, req *ag.LoginUserRequest) (*
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Email")
 	}
-	a, err := s.ac.GetByEmail(ctx, req.Email)
+	a, err := s.accountService.GetByEmail(ctx, req.Email)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}

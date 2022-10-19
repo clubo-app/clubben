@@ -16,7 +16,7 @@ func (s *authServer) RefreshAccessToken(ctx context.Context, req *ag.RefreshAcce
 		return nil, err
 	}
 
-	a, err := s.ac.GetById(ctx, p.Subject)
+	a, err := s.accountService.GetById(ctx, p.Subject)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

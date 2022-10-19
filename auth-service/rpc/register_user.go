@@ -53,7 +53,7 @@ func (s *authServer) RegisterUser(ctx context.Context, req *ag.RegisterUserReque
 		return nil, status.Error(codes.InvalidArgument, "Invalid Email")
 	}
 
-	a, err := s.ac.Create(ctx, params)
+	a, err := s.accountService.Create(ctx, params)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

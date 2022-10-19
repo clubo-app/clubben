@@ -7,7 +7,7 @@ import (
 )
 
 func (s *authServer) EmailTaken(ctx context.Context, req *ag.EmailTakenRequest) (*ag.EmailTakenResponse, error) {
-	taken := s.ac.EmailTaken(ctx, req.Email)
+	taken := s.accountService.EmailTaken(ctx, req.Email)
 
 	return &ag.EmailTakenResponse{Taken: taken}, nil
 }

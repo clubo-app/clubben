@@ -14,7 +14,7 @@ func (s *authServer) GetAccount(ctx context.Context, req *ag.GetAccountRequest) 
 		return nil, status.Error(codes.InvalidArgument, "Invalid User id")
 	}
 
-	a, err := s.ac.GetById(ctx, req.Id)
+	a, err := s.accountService.GetById(ctx, req.Id)
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}
