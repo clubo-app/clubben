@@ -23,6 +23,9 @@ func (s *profileServer) CreateProfile(ctx context.Context, req *pg.CreateProfile
 		Lastname:  req.Lastname,
 		Avatar:    req.Avatar,
 	})
+	if strings.Contains(err.Error(), `violates unique constraint "username_idx"`) {
+		return nil, status.Error(codes.InvalidArgument, "Username already taken")
+	}
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}
