@@ -58,7 +58,7 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 			RequestedAt: rAt,
 		}
 		log.Printf("Publishing: %+v", &e)
-		_, err = c.Stream.PublishEvent(&e)
+		err = c.Stream.PublishEvent(&e)
 	} else {
 		e := events.FriendCreated{
 			UserId:     uId,
@@ -67,7 +67,7 @@ func (c *FriendRelationConsumer) processUpdateOrInsert(ctx context.Context, chan
 		}
 
 		log.Printf("Publishing: %+v", &e)
-		_, err = c.Stream.PublishEvent(&e)
+		err = c.Stream.PublishEvent(&e)
 	}
 
 	if err != nil {
@@ -91,7 +91,7 @@ func (c *FriendRelationConsumer) processDelete(ctx context.Context, change *scyl
 			FriendId: fId,
 		}
 		log.Println("Publishing: ", &e)
-		_, err := c.Stream.PublishEvent(&e)
+		err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println("Delete Error: ", err)
 		}

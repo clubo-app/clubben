@@ -61,7 +61,7 @@ func (c *PartyParticipantsConsumer) processUpdateOrInsert(ctx context.Context, c
 			PartyId:     pId,
 			RequestedAt: rAt,
 		}
-		_, err := c.Stream.PublishEvent(&e)
+		err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println("Error publishing PartyRequested: ", err)
 		}
@@ -71,7 +71,7 @@ func (c *PartyParticipantsConsumer) processUpdateOrInsert(ctx context.Context, c
 			PartyId:  pId,
 			JoinedAt: jAt,
 		}
-		_, err := c.Stream.PublishEvent(&e)
+		err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println("Error publishing PartyJoined: ", err)
 		}
@@ -92,7 +92,7 @@ func (c *PartyParticipantsConsumer) processDelete(ctx context.Context, change *s
 		PartyId: pId,
 		LeftAt:  timestamppb.Now(),
 	}
-	_, err := c.Stream.PublishEvent(&e)
+	err := c.Stream.PublishEvent(&e)
 	if err != nil {
 		log.Println("Error publishing PartyLeft: ", err)
 	}

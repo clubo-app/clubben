@@ -56,7 +56,7 @@ func (c *FavoritePartiesConsumer) processInsert(ctx context.Context, change *scy
 			PartyId:     pId,
 			FavoritedAt: fAt,
 		}
-		_, err := c.Stream.PublishEvent(&e)
+		err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println(err)
 		}
@@ -80,7 +80,7 @@ func (c *FavoritePartiesConsumer) processDelete(ctx context.Context, change *scy
 			UnfavoritedAt: timestamppb.Now(),
 		}
 		log.Println("Publishing: ", &e)
-		_, err := c.Stream.PublishEvent(&e)
+		err := c.Stream.PublishEvent(&e)
 		if err != nil {
 			log.Println(err)
 		}
