@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"net/mail"
+	"strings"
 
 	"github.com/clubo-app/clubben/auth-service/repository"
 	"github.com/clubo-app/clubben/libs/utils"
@@ -56,6 +57,9 @@ func (s *authServer) RegisterUser(ctx context.Context, req *ag.RegisterUserReque
 	a, err := s.accountService.Create(ctx, params)
 	if err != nil {
 		return nil, utils.HandleError(err)
+	}
+	if strings.Contains(err.Error(), `violates unique constraint "email_idx"`) {
+		return nil, status.Error(codes.InvalidArgument, "Email already taken")
 	}
 
 	at, err := s.token.NewAccessToken(a)
