@@ -55,11 +55,11 @@ func (s *authServer) RegisterUser(ctx context.Context, req *ag.RegisterUserReque
 	}
 
 	a, err := s.accountService.Create(ctx, params)
-	if err != nil {
-		return nil, utils.HandleError(err)
-	}
 	if strings.Contains(err.Error(), `violates unique constraint "email_idx"`) {
 		return nil, status.Error(codes.InvalidArgument, "Email already taken")
+	}
+	if err != nil {
+		return nil, utils.HandleError(err)
 	}
 
 	at, err := s.token.NewAccessToken(a)
