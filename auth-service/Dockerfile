@@ -9,7 +9,7 @@ COPY . .
 RUN go mod download
 RUN go install github.com/cosmtrek/air@latest
 RUN go mod verify
-RUN go build -o auth-service 
+RUN go build -o auth-service cmd/main.go
 
 FROM base as dev
 CMD ["air"]

@@ -1,2 +1,0 @@
-DROP TABLE IF EXISTS account CASCADE;
-DROP INDEX email_idx;
