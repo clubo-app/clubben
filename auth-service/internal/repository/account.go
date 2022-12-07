@@ -55,12 +55,16 @@ func (repo *FirebaseRepository) CreateFromIdToken(ctx context.Context, token str
 type UpdateAccountParams struct {
 	UId      string
 	Password string
+	Email    string
 }
 
 func (repo *FirebaseRepository) Update(ctx context.Context, params UpdateAccountParams) (datastruct.Account, error) {
 	userParams := (&auth.UserToUpdate{})
 	if params.Password != "" {
 		userParams.Password(params.Password)
+	}
+	if params.Email != "" {
+		userParams.Email(params.Email)
 	}
 
 	user, err := repo.client.UpdateUser(ctx, params.UId, userParams)

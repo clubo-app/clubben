@@ -12,6 +12,7 @@ func (s *authServer) UpdateAccount(ctx context.Context, req *pbauth.UpdateAccoun
 	params := repository.UpdateAccountParams{
 		UId:      req.Id,
 		Password: req.Password,
+		Email:    req.Email,
 	}
 
 	if req.Password != "" {
