@@ -50,11 +50,7 @@ func (h authHandler) Register(c *fiber.Ctx) error {
 	}
 
 	res := datastruct.LoginResponse{
-		Account: datastruct.AggregatedAccount{
-			Id:      a.Account.Id,
-			Profile: datastruct.ProfileToAgg(p),
-			Email:   a.Account.Email,
-		},
+		Account: datastruct.AccountToAgg(a.Account).AddProfile(datastruct.ProfileToAgg(p)),
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(res)
