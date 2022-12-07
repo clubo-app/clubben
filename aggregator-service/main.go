@@ -111,10 +111,7 @@ func main() {
 	app.Get("/dashboard", monitor.New())
 
 	auth := app.Group("/auth")
-	auth.Post("/login", authHandler.Login)
 	auth.Post("/register", authHandler.Register)
-	auth.Get("/google-login/:idToken", authHandler.GoogleLogin)
-	auth.Get("/refresh/:rt", authHandler.RefreshAccessToken)
 
 	profile := app.Group("/profiles")
 	profile.Patch("/", middleware.AuthRequired(c.TOKEN_SECRET), profileHandler.UpdateUser)
