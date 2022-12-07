@@ -9,6 +9,7 @@ import (
 
 type AccountService interface {
 	Create(context.Context, CreateAccountParams) (datastruct.Account, error)
+	CreateAnonymously(context.Context, string) (datastruct.Account, error)
 	Delete(context.Context, string) error
 	Update(context.Context, UpdateAccountParams) (datastruct.Account, error)
 	EmailTaken(ctx context.Context, email string) bool
@@ -28,6 +29,10 @@ type CreateAccountParams = repository.CreateAccountParams
 
 func (s *accountService) Create(ctx context.Context, params repository.CreateAccountParams) (datastruct.Account, error) {
 	return s.repo.Create(ctx, params)
+}
+
+func (s *accountService) CreateAnonymously(ctx context.Context, id string) (datastruct.Account, error) {
+	return s.repo.CreateAnonymous(ctx, id)
 }
 
 func (s *accountService) Delete(ctx context.Context, id string) error {

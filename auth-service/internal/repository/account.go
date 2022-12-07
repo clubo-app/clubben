@@ -16,6 +16,17 @@ func NewFirebaseRepository(client *auth.Client) *FirebaseRepository {
 	return &FirebaseRepository{client: client}
 }
 
+func (repo *FirebaseRepository) CreateAnonymous(ctx context.Context, id string) (datastruct.Account, error) {
+	userParams := (&auth.UserToCreate{}).UID(id)
+
+	user, err := repo.client.CreateUser(ctx, userParams)
+	if err != nil {
+		return datastruct.Account{}, err
+	}
+
+	return datastruct.Account{Id: user.UID}, nil
+}
+
 type CreateAccountParams struct {
 	ID       string
 	Email    string
