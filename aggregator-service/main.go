@@ -14,8 +14,8 @@ import (
 	relationhandler "github.com/clubo-app/clubben/aggregator-service/handler/relation_handler"
 	searchhandler "github.com/clubo-app/clubben/aggregator-service/handler/search_handler"
 	storyhandler "github.com/clubo-app/clubben/aggregator-service/handler/story_handler"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	ag "github.com/clubo-app/clubben/protobuf/auth"
 	cg "github.com/clubo-app/clubben/protobuf/comment"
 	"github.com/clubo-app/clubben/protobuf/participation"
 	pg "github.com/clubo-app/clubben/protobuf/party"
@@ -26,6 +26,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
@@ -34,13 +36,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	authConn, err := grpc.Dial(c.AUTH_SERVICE_ADDRESS, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to connect to Auth Service: %v", err)
+	}
+	defer authConn.Close()
+	authClient := pbauth.NewAuthServiceClient(authConn)
+
 	profileClient, err := prf.NewClient(c.PROFILE_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to profile service: %v", err)
-	}
-	authClient, err := ag.NewClient(c.AUTH_SERVICE_ADDRESS)
-	if err != nil {
-		log.Fatalf("did not connect to auth service: %v", err)
 	}
 	partyClient, err := pg.NewClient(c.PARTY_SERVICE_ADDRESS)
 	if err != nil {

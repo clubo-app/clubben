@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package pb.v1;
+option go_package = "github.com/clubo-app/clubben/auth-service/pb/v1;pbauth";
+
+import "google/protobuf/empty.proto";
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (RegisterResponse) {};
+
+  rpc GetAccount (GetAccountRequest) returns (Account) {};
+  rpc UpdateAccount (UpdateAccountRequest) returns (Account) {};
+  rpc DeleteAccount (DeleteAccountRequest) returns (google.protobuf.Empty) {};
+  rpc EmailTaken (EmailTakenRequest) returns (EmailTakenResponse) {};
+}
+
+// Requests
+message RegisterRequest {
+  string email = 1;
+  string password = 5;
+}
+
+message GetAccountRequest {
+  string id = 1;
+}
+
+message UpdateAccountRequest {
+  string id = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message DeleteAccountRequest {
+  string id = 1;
+}
+
+message EmailTakenRequest {
+  string email = 1;
+}
+
+// Response
+message Account {
+  string id = 1;
+  string email = 2;
+  bool email_verified = 3;
+  string provider_id = 8;
+}
+
+message LoginResponse {
+  Account account = 2;
+}
+
+message RegisterResponse {
+  Account account = 2;
+}
+
+message EmailTakenResponse {
+  bool taken = 1;
+}

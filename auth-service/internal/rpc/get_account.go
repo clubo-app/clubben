@@ -3,13 +3,13 @@ package rpc
 import (
 	"context"
 
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *authServer) GetAccount(ctx context.Context, req *ag.GetAccountRequest) (*ag.Account, error) {
+func (s *authServer) GetAccount(ctx context.Context, req *pbauth.GetAccountRequest) (*pbauth.Account, error) {
 	if req.Id == "" {
 		return nil, status.Error(codes.InvalidArgument, "Invalid User id")
 	}

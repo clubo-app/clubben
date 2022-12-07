@@ -65,12 +65,14 @@ func PartyParticipantToAgg(p *participation.PartyParticipant) *AggregatedPartyPa
 	}
 	return &agg
 }
+
 func (p *AggregatedPartyParticipant) AddProfile(u *AggregatedProfile) *AggregatedPartyParticipant {
 	if u.Id != "" {
 		p.Profile = u
 	}
 	return p
 }
+
 func (pp *AggregatedPartyParticipant) AddParty(p *AggregatedParty) *AggregatedPartyParticipant {
 	if p.Id != "" {
 		pp.Party = p

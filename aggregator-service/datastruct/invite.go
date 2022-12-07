@@ -32,12 +32,14 @@ func (i *AggregatedPartyInvite) AddProfile(u *AggregatedProfile) *AggregatedPart
 	}
 	return i
 }
+
 func (i *AggregatedPartyInvite) AddInviter(u *AggregatedProfile) *AggregatedPartyInvite {
 	if u.Id != "" {
 		i.Inviter = u
 	}
 	return i
 }
+
 func (i *AggregatedPartyInvite) AddParty(p *AggregatedParty) *AggregatedPartyInvite {
 	if p.Id != "" {
 		i.Party = p

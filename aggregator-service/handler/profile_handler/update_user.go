@@ -4,9 +4,9 @@ import (
 	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	ag "github.com/clubo-app/clubben/protobuf/auth"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -29,7 +29,7 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 
 	user := middleware.ParseUser(c)
 
-	a := new(ag.Account)
+	a := new(pbauth.Account)
 	p := new(pg.Profile)
 	var friendCount int
 
@@ -41,7 +41,7 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 		defer wg.Done()
 
 		if req.Email != "" || req.Password != "" {
-			a, pErr = h.authClient.UpdateAccount(c.Context(), &ag.UpdateAccountRequest{
+			a, pErr = h.authClient.UpdateAccount(c.Context(), &pbauth.UpdateAccountRequest{
 				Id:       user.Sub,
 				Email:    req.Email,
 				Password: req.Password,
