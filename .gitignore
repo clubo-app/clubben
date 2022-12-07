@@ -1,6 +1,7 @@
 # private files
 credentials.txt
 prod.env
+*firebase*.json
 
 # generated data
 data/
