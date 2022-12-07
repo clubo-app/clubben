@@ -13,6 +13,7 @@ type authHandler struct {
 
 type AuthHandler interface {
 	Register(c *fiber.Ctx) error
+	RegisterAnonymously(c *fiber.Ctx) error
 }
 
 func NewAuthHandler(authClient pbauth.AuthServiceClient, profileClient pg.ProfileServiceClient) AuthHandler {

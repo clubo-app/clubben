@@ -17,7 +17,7 @@ type RegisterRequest struct {
 	Avatar    string `json:"avatar,omitempty"`
 }
 
-func (h authHandler) Register(c *fiber.Ctx) error {
+func (h *authHandler) Register(c *fiber.Ctx) error {
 	req := new(RegisterRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err
