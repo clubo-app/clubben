@@ -1,7 +1,7 @@
 package profilehandler
 
 import (
-	ag "github.com/clubo-app/clubben/protobuf/auth"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +10,7 @@ import (
 type profileHandler struct {
 	profileClient  pg.ProfileServiceClient
 	relationClient rg.RelationServiceClient
-	authClient     ag.AuthServiceClient
+	authClient     pbauth.AuthServiceClient
 }
 
 type ProfileHandler interface {
@@ -20,7 +20,7 @@ type ProfileHandler interface {
 	UsernameTaken(c *fiber.Ctx) error
 }
 
-func NewUserHandler(profileClient pg.ProfileServiceClient, relationClient rg.RelationServiceClient, authClient ag.AuthServiceClient) ProfileHandler {
+func NewUserHandler(profileClient pg.ProfileServiceClient, relationClient rg.RelationServiceClient, authClient pbauth.AuthServiceClient) ProfileHandler {
 	return &profileHandler{
 		profileClient:  profileClient,
 		relationClient: relationClient,

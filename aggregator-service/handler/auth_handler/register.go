@@ -2,21 +2,19 @@ package authhandler
 
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils"
-	ag "github.com/clubo-app/clubben/protobuf/auth"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
 
 type RegisterRequest struct {
-	Email       string `json:"email,omitempty"`
-	Password    string `json:"password,omitempty"`
-	Username    string `json:"username,omitempty"`
-	Firstname   string `json:"firstname,omitempty"`
-	Lastname    string `json:"lastname,omitempty"`
-	Avatar      string `json:"avatar,omitempty"`
-	GoogleToken string `json:"google_token"`
-	AppleToken  string `json:"apple_token"`
+	Email     string `json:"email,omitempty"`
+	Password  string `json:"password,omitempty"`
+	Username  string `json:"username,omitempty"`
+	Firstname string `json:"firstname,omitempty"`
+	Lastname  string `json:"lastname,omitempty"`
+	Avatar    string `json:"avatar,omitempty"`
 }
 
 func (h authHandler) Register(c *fiber.Ctx) error {
@@ -32,11 +30,9 @@ func (h authHandler) Register(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Username already taken")
 	}
 
-	a, err := h.authClient.RegisterUser(c.Context(), &ag.RegisterUserRequest{
-		Email:       req.Email,
-		Password:    req.Password,
-		GoogleToken: req.GoogleToken,
-		AppleToken:  req.AppleToken,
+	a, err := h.authClient.Register(c.Context(), &pbauth.RegisterRequest{
+		Email:    req.Email,
+		Password: req.Password,
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)
@@ -59,7 +55,6 @@ func (h authHandler) Register(c *fiber.Ctx) error {
 			Profile: datastruct.ProfileToAgg(p),
 			Email:   a.Account.Email,
 		},
-		Tokens: *a.Tokens,
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(res)

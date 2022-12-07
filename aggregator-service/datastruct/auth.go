@@ -1,9 +1,5 @@
 package datastruct
 
-import (
-	ag "github.com/clubo-app/clubben/protobuf/auth"
-)
-
 type AggregatedAccount struct {
 	Id      string             `json:"id"`
 	Profile *AggregatedProfile `json:"profile"`
@@ -11,6 +7,5 @@ type AggregatedAccount struct {
 }
 
 type LoginResponse struct {
-	Tokens  ag.TokenResponse  `json:"tokens"`
 	Account AggregatedAccount `json:"account"`
 }

@@ -2,9 +2,9 @@ package profilehandler
 
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
-	"github.com/clubo-app/clubben/protobuf/auth"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -21,7 +21,7 @@ func (h profileHandler) GetMe(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Profile not found")
 	}
 
-	a, err := h.authClient.GetAccount(c.Context(), &auth.GetAccountRequest{Id: user.Sub})
+	a, err := h.authClient.GetAccount(c.Context(), &pbauth.GetAccountRequest{Id: user.Sub})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

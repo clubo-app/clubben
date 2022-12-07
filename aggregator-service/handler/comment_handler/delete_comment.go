@@ -19,5 +19,4 @@ func (h commentHandler) DeleteComment(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)
-
 }
