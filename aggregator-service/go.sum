@@ -49,6 +49,8 @@ github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMn
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/clubo-app/clubben/auth-service v0.0.0-20221207215925-a140aac31307 h1:8X7HFmehIZzVRdNAHllzhdA/rkb2QEBndReEvjFEA8U=
 github.com/clubo-app/clubben/auth-service v0.0.0-20221207215925-a140aac31307/go.mod h1:Tg4xPAdxwt8+A3ICAkjVloEZftHjSUgNx43jN/y6CqA=
+github.com/clubo-app/clubben/auth-service v0.0.0-20221208211557-2039fa4545f3 h1:dAC/mBDuvkHblPAaEYfk9iuy6tSj6bNVwhEekbEz41w=
+github.com/clubo-app/clubben/auth-service v0.0.0-20221208211557-2039fa4545f3/go.mod h1:Tg4xPAdxwt8+A3ICAkjVloEZftHjSUgNx43jN/y6CqA=
 github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b h1:S5RaP0Txp7pbYawn8emTU+MxRu0XtqPVU94VWREsGXo=
 github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b/go.mod h1:/+pMuVUtVcWp5LHGG9tNX91grQ7/LWQyV+IkuTLk828=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96 h1:qTMUIiMpkPk+PeY3JpGunaDKqe2tMEWcEg9z2FaiYSc=

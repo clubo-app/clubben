@@ -8,6 +8,7 @@ type AggregatedAccount struct {
 	Email         string             `json:"email,omitempty"`
 	EmailVerified bool               `json:"email_verified"`
 	ProviderId    string             `json:"provider_id,omitempty"`
+	CustomToken   string             `json:"custom_token,omitempty"`
 }
 
 func AccountToAgg(a *pbauth.Account) *AggregatedAccount {
@@ -19,6 +20,7 @@ func AccountToAgg(a *pbauth.Account) *AggregatedAccount {
 		Email:         a.Email,
 		EmailVerified: a.EmailVerified,
 		ProviderId:    a.ProviderId,
+		CustomToken:   a.CustomToken,
 	}
 }
 
