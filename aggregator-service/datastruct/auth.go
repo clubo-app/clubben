@@ -4,10 +4,10 @@ import pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 
 type AggregatedAccount struct {
 	Id            string             `json:"id"`
-	Profile       *AggregatedProfile `json:"profile"`
-	Email         string             `json:"email"`
+	Profile       *AggregatedProfile `json:"profile,omitempty"`
+	Email         string             `json:"email,omitempty"`
 	EmailVerified bool               `json:"email_verified"`
-	ProviderId    string             `json:"provider_id"`
+	ProviderId    string             `json:"provider_id,omitempty"`
 }
 
 func AccountToAgg(a *pbauth.Account) *AggregatedAccount {
