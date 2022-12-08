@@ -2,23 +2,16 @@ package rpc
 
 import (
 	"context"
-	"errors"
 	"strings"
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/profile-service/dto"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
-	"github.com/segmentio/ksuid"
 )
 
 func (s *profileServer) UpdateProfile(ctx context.Context, req *pg.UpdateProfileRequest) (*pg.Profile, error) {
-	id, err := ksuid.Parse(req.Id)
-	if err != nil {
-		return nil, errors.New("invalid id")
-	}
-
 	dp := dto.Profile{
-		ID:        id.String(),
+		ID:        req.Id,
 		Username:  strings.ToLower(req.Username),
 		Firstname: req.Firstname,
 		Lastname:  req.Lastname,

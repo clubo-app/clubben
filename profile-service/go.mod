@@ -13,7 +13,6 @@ require (
 	github.com/jackc/pgx/v4 v4.17.2
 	github.com/leporo/sqlf v1.3.0
 	github.com/nats-io/nats.go v1.17.0
-	github.com/segmentio/ksuid v1.0.4
 	github.com/spf13/viper v1.13.0
 	google.golang.org/grpc v1.49.0
 )
