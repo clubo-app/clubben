@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *authServer) RegisterUser(ctx context.Context, req *pbauth.RegisterRequest) (*pbauth.RegisterResponse, error) {
+func (s *authServer) Register(ctx context.Context, req *pbauth.RegisterRequest) (*pbauth.RegisterResponse, error) {
 	params := repository.CreateAccountParams{
 		ID:    id.New(id.User),
 		Email: req.Email,
