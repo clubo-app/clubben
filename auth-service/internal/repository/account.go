@@ -39,6 +39,7 @@ type CreateAccountParams struct {
 }
 
 func (repo *FirebaseRepository) Create(ctx context.Context, params CreateAccountParams) (datastruct.Account, error) {
+	fmt.Printf("%v+", params)
 	userParams := (&auth.UserToCreate{}).
 		UID(params.ID).
 		Email(params.Email).

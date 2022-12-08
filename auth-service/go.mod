@@ -6,9 +6,6 @@ require (
 	firebase.google.com/go/v4 v4.10.0
 	github.com/clubo-app/clubben/libs/id v0.0.0-20221202223905-10823e43438e
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
-	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea
-	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/spf13/viper v1.13.0
 	google.golang.org/api v0.99.0
 	google.golang.org/grpc v1.50.1
@@ -25,6 +22,7 @@ require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gofiber/fiber/v2 v2.38.1 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect

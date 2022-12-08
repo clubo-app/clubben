@@ -14,8 +14,9 @@ import (
 
 func (s *authServer) Register(ctx context.Context, req *pbauth.RegisterRequest) (*pbauth.RegisterResponse, error) {
 	params := repository.CreateAccountParams{
-		ID:    id.New(id.User),
-		Email: req.Email,
+		ID:       id.New(id.User),
+		Email:    req.Email,
+		Password: req.Password,
 	}
 
 	_, err := mail.ParseAddress(req.Email)
