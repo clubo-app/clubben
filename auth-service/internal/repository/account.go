@@ -24,7 +24,12 @@ func (repo *FirebaseRepository) CreateAnonymous(ctx context.Context, id string) 
 		return datastruct.Account{}, err
 	}
 
-	return datastruct.Account{Id: user.UID}, nil
+	token, err := repo.client.CustomToken(ctx, user.UID)
+	if err != nil {
+		return datastruct.Account{}, err
+	}
+
+	return datastruct.Account{Id: user.UID, CustomToken: token}, nil
 }
 
 type CreateAccountParams struct {
@@ -44,9 +49,17 @@ func (repo *FirebaseRepository) Create(ctx context.Context, params CreateAccount
 		return datastruct.Account{}, err
 	}
 
+	token, err := repo.client.CustomToken(ctx, user.UID)
+	if err != nil {
+		return datastruct.Account{}, err
+	}
+
 	account := datastruct.Account{
-		Id:    user.UID,
-		Email: user.Email,
+		Id:            user.UID,
+		Email:         user.Email,
+		EmailVerified: user.EmailVerified,
+		ProviderId:    user.ProviderID,
+		CustomToken:   token,
 	}
 
 	return account, nil

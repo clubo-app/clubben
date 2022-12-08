@@ -8,6 +8,7 @@ type Account struct {
 	EmailVerified bool
 	Password      string
 	ProviderId    string
+	CustomToken   string
 }
 
 func (a Account) ToGRPCAccount() *pbauth.Account {
@@ -16,5 +17,6 @@ func (a Account) ToGRPCAccount() *pbauth.Account {
 		Email:         a.Email,
 		EmailVerified: a.EmailVerified,
 		ProviderId:    a.ProviderId,
+		CustomToken:   a.CustomToken,
 	}
 }
