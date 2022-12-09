@@ -112,7 +112,7 @@ func main() {
 
 	auth := app.Group("/auth")
 	auth.Post("/register", authHandler.Register)
-	auth.Post("/register-anon", authHandler.RegisterAnonymously)
+	auth.Get("/register-anon", authHandler.RegisterAnonymously)
 
 	profile := app.Group("/profiles")
 	profile.Patch("/", middleware.AuthRequired(c.TOKEN_SECRET), profileHandler.UpdateUser)
