@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Account, error)
+	RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RegisterAnonymouslyResponse, error)
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -48,8 +48,8 @@ func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, o
 	return out, nil
 }
 
-func (c *authServiceClient) RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Account, error) {
-	out := new(Account)
+func (c *authServiceClient) RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RegisterAnonymouslyResponse, error) {
+	out := new(RegisterAnonymouslyResponse)
 	err := c.cc.Invoke(ctx, "/pb.v1.AuthService/RegisterAnonymously", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -98,7 +98,7 @@ func (c *authServiceClient) EmailTaken(ctx context.Context, in *EmailTakenReques
 // for forward compatibility
 type AuthServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	RegisterAnonymously(context.Context, *emptypb.Empty) (*Account, error)
+	RegisterAnonymously(context.Context, *emptypb.Empty) (*RegisterAnonymouslyResponse, error)
 	GetAccount(context.Context, *GetAccountRequest) (*Account, error)
 	UpdateAccount(context.Context, *UpdateAccountRequest) (*Account, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
@@ -113,7 +113,7 @@ type UnimplementedAuthServiceServer struct {
 func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedAuthServiceServer) RegisterAnonymously(context.Context, *emptypb.Empty) (*Account, error) {
+func (UnimplementedAuthServiceServer) RegisterAnonymously(context.Context, *emptypb.Empty) (*RegisterAnonymouslyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterAnonymously not implemented")
 }
 func (UnimplementedAuthServiceServer) GetAccount(context.Context, *GetAccountRequest) (*Account, error) {

@@ -29,5 +29,5 @@ func (s *authServer) Register(ctx context.Context, req *pbauth.RegisterRequest) 
 		return nil, utils.HandleError(err)
 	}
 
-	return &pbauth.RegisterResponse{Account: a.ToGRPCAccount()}, nil
+	return &pbauth.RegisterResponse{Account: a.ToGRPCAccount(), CustomToken: a.CustomToken}, nil
 }

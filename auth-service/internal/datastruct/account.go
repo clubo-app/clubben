@@ -17,6 +17,5 @@ func (a Account) ToGRPCAccount() *pbauth.Account {
 		Email:         a.Email,
 		EmailVerified: a.EmailVerified,
 		ProviderId:    a.ProviderId,
-		CustomToken:   a.CustomToken,
 	}
 }

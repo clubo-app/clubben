@@ -8,11 +8,11 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (s *authServer) RegisterAnonymously(ctx context.Context, req *emptypb.Empty) (*pbauth.Account, error) {
+func (s *authServer) RegisterAnonymously(ctx context.Context, req *emptypb.Empty) (*pbauth.RegisterAnonymouslyResponse, error) {
 	a, err := s.accountService.CreateAnonymously(ctx, id.New(id.User))
 	if err != nil {
 		return nil, err
 	}
 
-	return a.ToGRPCAccount(), nil
+	return &pbauth.RegisterAnonymouslyResponse{CustomToken: a.CustomToken}, nil
 }
