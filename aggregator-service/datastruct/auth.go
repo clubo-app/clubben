@@ -20,15 +20,10 @@ func AccountToAgg(a *pbauth.Account) *AggregatedAccount {
 		Email:         a.Email,
 		EmailVerified: a.EmailVerified,
 		ProviderId:    a.ProviderId,
-		CustomToken:   a.CustomToken,
 	}
 }
 
 func (a *AggregatedAccount) AddProfile(p *AggregatedProfile) *AggregatedAccount {
 	a.Profile = p
 	return a
-}
-
-type LoginResponse struct {
-	Account *AggregatedAccount `json:"account"`
 }

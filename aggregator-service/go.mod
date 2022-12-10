@@ -3,7 +3,7 @@ module github.com/clubo-app/clubben/aggregator-service
 go 1.18
 
 require (
-	github.com/clubo-app/clubben/auth-service v0.0.0-20221208211557-2039fa4545f3
+	github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
 	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea
 	github.com/gofiber/fiber/v2 v2.38.1

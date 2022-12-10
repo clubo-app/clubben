@@ -17,6 +17,11 @@ type RegisterRequest struct {
 	Avatar    string `json:"avatar,omitempty"`
 }
 
+type RegisterResponse struct {
+	Account     *datastruct.AggregatedAccount `json:"account"`
+	CustomToken string                        `json:"custom_token"`
+}
+
 func (h *authHandler) Register(c *fiber.Ctx) error {
 	req := new(RegisterRequest)
 	if err := c.BodyParser(req); err != nil {
@@ -49,8 +54,9 @@ func (h *authHandler) Register(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	res := datastruct.LoginResponse{
-		Account: datastruct.AccountToAgg(a.Account).AddProfile(datastruct.ProfileToAgg(p)),
+	res := RegisterResponse{
+		Account:     datastruct.AccountToAgg(a.Account).AddProfile(datastruct.ProfileToAgg(p)),
+		CustomToken: a.CustomToken,
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(res)
