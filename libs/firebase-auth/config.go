@@ -51,6 +51,7 @@ func makeCfg(config []Config) (cfg Config) {
 
 	if cfg.ErrorHandler == nil {
 		cfg.ErrorHandler = func(c *fiber.Ctx, err error) error {
+			fmt.Println(err)
 			if err.Error() != invalidToken.Error() {
 				return c.Status(fiber.StatusBadRequest).SendString(err.Error())
 			}
