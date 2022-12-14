@@ -33,7 +33,7 @@ type Config struct {
 
 var (
 	missingErrMsg    = errors.New("Missing or malformed ID Token")
-	invalidToken     = errors.New("Invalid or expiret ID Token")
+	invalidToken     = errors.New("Invalid or expired ID Token")
 	emailNotVerified = errors.New("Email is not verified")
 )
 

@@ -32,23 +32,30 @@ func New(config ...Config) fiber.Handler {
 
 		// Verify IDToken
 		token, err := client.VerifyIDToken(context.Background(), IDToken)
-		if err != nil && !cfg.AuthOptional {
+		if err != nil {
+			if cfg.AuthOptional {
+				return c.Next()
+			}
 			return cfg.ErrorHandler(c, invalidToken)
 		}
 
-		if cfg.CheckEmailVerified && !token.Claims["email_verified"].(bool) && !cfg.AuthOptional {
+		if token == nil {
+			if cfg.AuthOptional {
+				return c.Next()
+			} else {
+				return cfg.ErrorHandler(c, invalidToken)
+			}
+		}
+
+		if cfg.CheckEmailVerified && !cfg.AuthOptional && !token.Claims["email_verified"].(bool) {
 			return cfg.ErrorHandler(c, errors.New("Email not verified"))
 		}
 
-		if token != nil {
-			c.Locals(cfg.ContextKey, FirebaseUser{
-				UserID:        token.Claims["user_id"].(string),
-				Email:         token.Claims["email"].(string),
-				EmailVerified: token.Claims["email_verified"].(bool),
-			})
-		} else if !cfg.AuthOptional {
-			return cfg.ErrorHandler(c, invalidToken)
-		}
+		c.Locals(cfg.ContextKey, FirebaseUser{
+			UserID:        token.Claims["user_id"].(string),
+			Email:         token.Claims["email"].(string),
+			EmailVerified: token.Claims["email_verified"].(bool),
+		})
 
 		return c.Next()
 	}
