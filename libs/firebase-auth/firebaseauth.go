@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,7 +13,8 @@ func New(config ...Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		cfg := makeCfg(config)
 
-		IDToken := c.Get(fiber.HeaderAuthorization)
+		bearerToken := c.Get(fiber.HeaderAuthorization)
+		IDToken := strings.TrimPrefix(bearerToken, "Bearer ")
 		fmt.Println("Token: ", IDToken)
 		// Validate token
 		if len(IDToken) == 0 {
