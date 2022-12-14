@@ -45,7 +45,6 @@ func New(config ...Config) fiber.Handler {
 				UserID:        token.Claims["user_id"].(string),
 				Email:         token.Claims["email"].(string),
 				EmailVerified: token.Claims["email_verified"].(bool),
-				ProviderId:    token.Claims["provider_id"].(string),
 			})
 		} else if !cfg.AuthOptional {
 			return cfg.ErrorHandler(c, invalidToken)

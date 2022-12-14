@@ -12,7 +12,6 @@ type FirebaseUser struct {
 	UserID        string
 	Email         string
 	EmailVerified bool
-	ProviderId    string
 }
 
 type Config struct {
