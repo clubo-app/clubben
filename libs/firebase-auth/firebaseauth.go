@@ -40,6 +40,7 @@ func New(config ...Config) fiber.Handler {
 			if cfg.AuthOptional {
 				return c.Next()
 			}
+			println("Error from Firebase: ", err)
 			return cfg.ErrorHandler(c, invalidToken)
 		}
 
@@ -47,6 +48,7 @@ func New(config ...Config) fiber.Handler {
 			if cfg.AuthOptional {
 				return c.Next()
 			} else {
+				println("Token is nil")
 				return cfg.ErrorHandler(c, invalidToken)
 			}
 		}
