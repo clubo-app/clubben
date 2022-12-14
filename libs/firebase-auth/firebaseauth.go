@@ -32,11 +32,11 @@ func New(config ...Config) fiber.Handler {
 
 		// Verify IDToken
 		token, err := client.VerifyIDToken(context.Background(), IDToken)
-		if err != nil {
+		if err != nil && !cfg.AuthOptional {
 			return cfg.ErrorHandler(c, invalidToken)
 		}
 
-		if cfg.CheckEmailVerified && !token.Claims["email_verified"].(bool) {
+		if cfg.CheckEmailVerified && !token.Claims["email_verified"].(bool) && !cfg.AuthOptional {
 			return cfg.ErrorHandler(c, errors.New("Email not verified"))
 		}
 
@@ -47,9 +47,10 @@ func New(config ...Config) fiber.Handler {
 				EmailVerified: token.Claims["email_verified"].(bool),
 				ProviderId:    token.Claims["provider_id"].(string),
 			})
-
-			return c.Next()
+		} else if !cfg.AuthOptional {
+			return cfg.ErrorHandler(c, invalidToken)
 		}
-		return cfg.ErrorHandler(c, invalidToken)
+
+		return c.Next()
 	}
 }

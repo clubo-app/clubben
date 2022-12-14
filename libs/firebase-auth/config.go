@@ -26,6 +26,10 @@ type Config struct {
 	// Skip Email Check.
 	// Optional. Default: false
 	CheckEmailVerified bool
+
+	// Call next even on auth error.
+	// Optional. Default: false
+	AuthOptional bool
 }
 
 var (
