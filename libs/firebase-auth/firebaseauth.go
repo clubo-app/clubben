@@ -15,7 +15,8 @@ func New(config ...Config) fiber.Handler {
 
 		bearerToken := c.Get(fiber.HeaderAuthorization)
 		IDToken := strings.TrimPrefix(bearerToken, "Bearer ")
-		fmt.Println("Token: ", IDToken)
+		fmt.Println("Bearer: ", bearerToken)
+		fmt.Println("IDToken: ", IDToken)
 		// Validate token
 		if len(IDToken) == 0 {
 			return cfg.ErrorHandler(c, missingErrMsg)
