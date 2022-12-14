@@ -13,6 +13,7 @@ func New(config ...Config) fiber.Handler {
 		cfg := makeCfg(config)
 
 		IDToken := c.Get(fiber.HeaderAuthorization)
+		fmt.Println("Token: ", IDToken)
 		// Validate token
 		if len(IDToken) == 0 {
 			return cfg.ErrorHandler(c, missingErrMsg)
