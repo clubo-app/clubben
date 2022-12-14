@@ -103,6 +103,10 @@ github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214193532-be2fe564b1
 github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214193532-be2fe564b195/go.mod h1:6DySCKas/00liihmV4X+fOtEsl+oquwdgQ7ZFMmyPas=
 github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214202144-f19e3ecba1cf h1:qfqTUW0wNGLm3yQ9pdparTojZWk6A150DfBIl4vnwK0=
 github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214202144-f19e3ecba1cf/go.mod h1:6DySCKas/00liihmV4X+fOtEsl+oquwdgQ7ZFMmyPas=
+github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214204648-79de0bbef438 h1:XOZ6+q0SABTik078cw8vtLol+GkSghK9bKtVGyL1HgY=
+github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214204648-79de0bbef438/go.mod h1:6DySCKas/00liihmV4X+fOtEsl+oquwdgQ7ZFMmyPas=
+github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214211313-81513e71075a h1:4IGSgdHmt6AZvBzgPi4EIeCQiVX/qknMQ2vJSJqa40E=
+github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214211313-81513e71075a/go.mod h1:6DySCKas/00liihmV4X+fOtEsl+oquwdgQ7ZFMmyPas=
 github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b h1:S5RaP0Txp7pbYawn8emTU+MxRu0XtqPVU94VWREsGXo=
 github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b/go.mod h1:/+pMuVUtVcWp5LHGG9tNX91grQ7/LWQyV+IkuTLk828=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96 h1:qTMUIiMpkPk+PeY3JpGunaDKqe2tMEWcEg9z2FaiYSc=

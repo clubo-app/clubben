@@ -22,7 +22,7 @@ require (
 	cloud.google.com/go/storage v1.28.1 // indirect
 	firebase.google.com/go v3.13.0+incompatible // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214202144-f19e3ecba1cf // indirect
+	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214211313-81513e71075a // indirect
 	github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gofiber/jwt/v3 v3.2.14 // indirect
