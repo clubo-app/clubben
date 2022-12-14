@@ -3,11 +3,14 @@ module github.com/clubo-app/clubben/aggregator-service
 go 1.18
 
 require (
+	firebase.google.com/go/v4 v4.10.0
 	github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214
+	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214222327-081efebdbda3
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
 	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea
 	github.com/gofiber/fiber/v2 v2.40.1
 	github.com/spf13/viper v1.13.0
+	google.golang.org/api v0.105.0
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1
 )
@@ -20,13 +23,12 @@ require (
 	cloud.google.com/go/iam v0.8.0 // indirect
 	cloud.google.com/go/longrunning v0.3.0 // indirect
 	cloud.google.com/go/storage v1.28.1 // indirect
-	firebase.google.com/go v3.13.0+incompatible // indirect
+	github.com/MicahParks/keyfunc v1.7.0 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214211313-81513e71075a // indirect
 	github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/gofiber/jwt/v3 v3.2.14 // indirect
-	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
+	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
@@ -59,8 +61,8 @@ require (
 	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	google.golang.org/api v0.104.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/appengine/v2 v2.0.2 // indirect
 	google.golang.org/genproto v0.0.0-20221207170731-23e4bf6bdc37 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

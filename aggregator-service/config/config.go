@@ -19,14 +19,13 @@ func LoadConfig() (config Config, err error) {
 	viper.AddConfigPath("./config/envs")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("env")
+	viper.ReadInConfig()
+
+	viper.SetConfigName("prod")
+	viper.MergeInConfig()
 
 	viper.AutomaticEnv()
 
-	err = viper.ReadInConfig()
-	if err != nil {
-		return
-	}
-
-	err = viper.Unmarshal(&config)
+	viper.Unmarshal(&config)
 	return
 }

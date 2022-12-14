@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	firebase "firebase.google.com/go"
+	firebase "firebase.google.com/go/v4"
 	"github.com/clubo-app/clubben/aggregator-service/config"
 	authhandler "github.com/clubo-app/clubben/aggregator-service/handler/auth_handler"
 	commenthandler "github.com/clubo-app/clubben/aggregator-service/handler/comment_handler"
