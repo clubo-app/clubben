@@ -1,7 +1,8 @@
-package profilehandler
+package authhandler
 
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/libs/utils/middleware"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
@@ -9,8 +10,15 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h profileHandler) GetMe(c *fiber.Ctx) error {
+func (h authHandler) GetMe(c *fiber.Ctx) error {
 	user := middleware.ParseUser(c)
+
+	a, err := h.authClient.GetAccount(c.Context(), &pbauth.GetAccountRequest{
+		Id: user.Sub,
+	})
+	if err != nil {
+		return utils.ToHTTPError(err)
+	}
 
 	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{Id: user.Sub})
 	if err != nil {
@@ -20,11 +28,11 @@ func (h profileHandler) GetMe(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, "Profile not found")
 	}
 
-	res := datastruct.ProfileToAgg(p)
+	res := datastruct.AccountToAgg(a).AddProfile(datastruct.ProfileToAgg(p))
 
 	friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: p.Id})
 	if friendCountRes != nil {
-		res.AddFCount(friendCountRes.FriendCount)
+		res.Profile.AddFCount(friendCountRes.FriendCount)
 	}
 
 	return c.Status(fiber.StatusOK).JSON(res)

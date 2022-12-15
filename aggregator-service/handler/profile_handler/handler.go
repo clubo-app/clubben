@@ -14,7 +14,6 @@ type profileHandler struct {
 }
 
 type ProfileHandler interface {
-	GetMe(c *fiber.Ctx) error
 	GetProfile(c *fiber.Ctx) error
 	UpdateUser(c *fiber.Ctx) error
 	UsernameTaken(c *fiber.Ctx) error

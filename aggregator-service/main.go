@@ -123,12 +123,12 @@ func main() {
 	app.Get("/dashboard", monitor.New())
 
 	auth := app.Group("/auth")
+	auth.Get("/me", requireAuth, authHandler.GetMe)
 	auth.Post("/register", authHandler.Register)
 	auth.Post("/register-anon", authHandler.RegisterAnonymously)
 
 	profile := app.Group("/profiles")
 	profile.Patch("/", requireAuth, profileHandler.UpdateUser)
-	profile.Get("/me", requireAuth, profileHandler.GetMe)
 	profile.Get("/:id", requireAuth, profileHandler.GetProfile)
 	profile.Get("/username-taken/:username", profileHandler.UsernameTaken)
 	profile.Get("/search/:query", searchHandler.SearchUsers)
