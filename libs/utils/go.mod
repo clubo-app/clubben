@@ -3,10 +3,7 @@ module github.com/clubo-app/clubben/libs/utils
 go 1.19
 
 require (
-	github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b
 	github.com/gofiber/fiber/v2 v2.37.1
-	github.com/gofiber/jwt/v3 v3.2.14
-	github.com/golang-jwt/jwt/v4 v4.4.2
 	google.golang.org/api v0.99.0
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
