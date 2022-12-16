@@ -3,24 +3,27 @@ package authhandler
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (h authHandler) GetMe(c *fiber.Ctx) error {
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
 
 	a, err := h.authClient.GetAccount(c.Context(), &pbauth.GetAccountRequest{
-		Id: user.Sub,
+		Id: user.UserID,
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}
 
-	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{Id: user.Sub})
+	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{Id: user.UserID})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

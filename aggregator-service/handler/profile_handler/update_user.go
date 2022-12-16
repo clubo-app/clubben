@@ -5,8 +5,8 @@ import (
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	pbauth "github.com/clubo-app/clubben/auth-service/pb/v1"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -27,7 +27,10 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 		return err
 	}
 
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
 
 	a := new(pbauth.Account)
 	p := new(pg.Profile)
@@ -42,7 +45,7 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 
 		if req.Email != "" || req.Password != "" {
 			a, pErr = h.authClient.UpdateAccount(c.Context(), &pbauth.UpdateAccountRequest{
-				Id:       user.Sub,
+				Id:       user.UserID,
 				Email:    req.Email,
 				Password: req.Password,
 			})
@@ -55,7 +58,7 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 
 		if req.Username != "" || req.Firstname != "" || req.Lastname != "" || req.Avatar != "" {
 			p, aErr = h.profileClient.UpdateProfile(c.Context(), &pg.UpdateProfileRequest{
-				Id:        user.Sub,
+				Id:        user.UserID,
 				Username:  req.Username,
 				Firstname: req.Firstname,
 				Lastname:  req.Lastname,
@@ -66,7 +69,7 @@ func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
 
 	go func() {
 		defer wg.Done()
-		friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: user.Sub})
+		friendCountRes, _ := h.relationClient.GetFriendCount(c.Context(), &rg.GetFriendCountRequest{UserId: user.UserID})
 		if friendCountRes != nil {
 			friendCount = int(friendCountRes.FriendCount)
 		}

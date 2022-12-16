@@ -4,15 +4,15 @@ import (
 	"strconv"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (h relationHandler) GetFriends(c *fiber.Ctx) error {
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
 
 	uId := c.Params("id")
 	nextPage := c.Query("nextPage")
@@ -53,18 +53,21 @@ func (h relationHandler) GetFriends(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	aggP := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
+	profileRes := make([]*datastruct.AggregatedProfile, len(profiles.Profiles))
 	for i, f := range fr.Relations {
 		p := profiles.Profiles[f.FriendId]
+		aggP := datastruct.ProfileToAgg(p)
 
-		// we see if the friends are also freinds of the requester, this way we can display if the user is already friends with the friends
-		fs := datastruct.ParseFriendShipStatus(user.Sub, f)
+		if userErr != nil {
+			// we see if the friends are also freinds of the requester, this way we can display if the user is already friends with the friends
+			aggP.AddFs(datastruct.ParseFriendShipStatus(user.UserID, f))
+		}
 
-		aggP[i] = datastruct.ProfileToAgg(p).AddFs(fs)
+		profileRes[i] = aggP
 	}
 
 	res := datastruct.PagedAggregatedProfile{
-		Profiles: aggP,
+		Profiles: profileRes,
 		NextPage: fr.NextPage,
 	}
 

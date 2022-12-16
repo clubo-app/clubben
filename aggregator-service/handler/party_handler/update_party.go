@@ -4,8 +4,8 @@ import (
 	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
@@ -33,7 +33,11 @@ func (h partyHandler) UpdateParty(c *fiber.Ctx) error {
 		return err
 	}
 
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
+
 	pId := c.Params("id")
 	if pId == "" {
 		return fiber.NewError(fiber.ErrBadRequest.Code, "Party Id is required")
@@ -41,7 +45,7 @@ func (h partyHandler) UpdateParty(c *fiber.Ctx) error {
 
 	p, err := h.partyClient.UpdateParty(c.Context(), &party.UpdatePartyRequest{
 		PartyId:       pId,
-		RequesterId:   user.Sub,
+		RequesterId:   user.UserID,
 		Title:         req.Title,
 		Description:   req.Description,
 		Lat:           req.Lat,

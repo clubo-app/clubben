@@ -129,7 +129,7 @@ func main() {
 
 	profile := app.Group("/profiles")
 	profile.Patch("/", requireAuth, profileHandler.UpdateUser)
-	profile.Get("/:id", requireAuth, profileHandler.GetProfile)
+	profile.Get("/:id", optionalAuth, profileHandler.GetProfile)
 	profile.Get("/username-taken/:username", profileHandler.UsernameTaken)
 	profile.Get("/search/:query", searchHandler.SearchUsers)
 

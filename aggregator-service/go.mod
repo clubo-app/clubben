@@ -5,7 +5,7 @@ go 1.18
 require (
 	firebase.google.com/go/v4 v4.10.0
 	github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214
-	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221214222327-081efebdbda3
+	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221216212853-daf7faacefab
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
 	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea
 	github.com/gofiber/fiber/v2 v2.40.1
@@ -18,16 +18,14 @@ require (
 require (
 	cloud.google.com/go v0.107.0 // indirect
 	cloud.google.com/go/compute v1.14.0 // indirect
-	cloud.google.com/go/compute/metadata v0.2.2 // indirect
+	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	cloud.google.com/go/firestore v1.9.0 // indirect
-	cloud.google.com/go/iam v0.8.0 // indirect
+	cloud.google.com/go/iam v0.9.0 // indirect
 	cloud.google.com/go/longrunning v0.3.0 // indirect
 	cloud.google.com/go/storage v1.28.1 // indirect
 	github.com/MicahParks/keyfunc v1.7.0 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/clubo-app/clubben/libs/types v0.0.0-20220827222432-a4db85a02d7b // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
-	github.com/gofiber/jwt/v3 v3.2.14 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

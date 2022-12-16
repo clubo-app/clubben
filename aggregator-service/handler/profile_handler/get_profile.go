@@ -4,8 +4,8 @@ import (
 	"sync"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -13,7 +13,10 @@ import (
 
 func (h profileHandler) GetProfile(c *fiber.Ctx) error {
 	id := c.Params("id")
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
 
 	p, err := h.profileClient.GetProfile(c.Context(), &pg.GetProfileRequest{
 		Id: id,
@@ -35,11 +38,11 @@ func (h profileHandler) GetProfile(c *fiber.Ctx) error {
 		defer wg.Done()
 		relation := new(rg.FriendRelation)
 		// if somebody wants the Profile of somebody else we also return the friendship status between them two
-		if id != user.Sub {
-			relation, _ = h.relationClient.GetFriendRelation(c.Context(), &rg.GetFriendRelationRequest{UserId: user.Sub, FriendId: id})
+		if id != user.UserID {
+			relation, _ = h.relationClient.GetFriendRelation(c.Context(), &rg.GetFriendRelationRequest{UserId: user.UserID, FriendId: id})
 		}
 		if relation != nil {
-			fs := datastruct.ParseFriendShipStatus(user.Sub, relation)
+			fs := datastruct.ParseFriendShipStatus(user.UserID, relation)
 			res.AddFs(fs)
 		}
 	}()

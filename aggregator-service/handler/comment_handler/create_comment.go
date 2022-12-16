@@ -2,8 +2,8 @@ package commenthandler
 
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	cg "github.com/clubo-app/clubben/protobuf/comment"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
@@ -16,9 +16,12 @@ func (h commentHandler) CreateComment(c *fiber.Ctx) error {
 	}
 
 	pId := c.Params("id")
-	user := middleware.ParseUser(c)
+	user, useErr := firebaseauth.GetUser(c)
+	if useErr != nil {
+		return useErr
+	}
 
-	req.AuthorId = user.Sub
+	req.AuthorId = user.UserID
 	req.PartyId = pId
 
 	co, err := h.commentClient.CreateComment(c.Context(), req)

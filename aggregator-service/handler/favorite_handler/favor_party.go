@@ -4,19 +4,22 @@ import (
 	"time"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/clubo-app/clubben/protobuf/party"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (h favoriteHandler) FavorParty(c *fiber.Ctx) error {
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
 
 	pId := c.Params("pId")
 
-	f, err := h.relationClient.FavorParty(c.Context(), &rg.PartyAndUserRequest{UserId: user.Sub, PartyId: pId})
+	f, err := h.relationClient.FavorParty(c.Context(), &rg.PartyAndUserRequest{UserId: user.UserID, PartyId: pId})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

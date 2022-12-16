@@ -20,7 +20,7 @@ func ProfileToAgg(p *profile.Profile) *AggregatedProfile {
 	return &AggregatedProfile{
 		Id:        p.Id,
 		Username:  p.Username,
-		Firstname: p.Lastname,
+		Firstname: p.Firstname,
 		Lastname:  p.Lastname,
 		Avatar:    p.Avatar,
 	}

@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	"github.com/clubo-app/clubben/protobuf/participation"
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/protobuf/types/known/durationpb"
@@ -15,7 +15,10 @@ func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	uId := c.Params("uid")
 	validFor := c.Query("validFor")
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return userErr
+	}
 
 	duration, err := time.ParseDuration(validFor)
 	if err != nil {
@@ -23,7 +26,7 @@ func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
 	}
 
 	i, err := h.participationClient.InviteToParty(c.Context(), &participation.InviteToPartyRequest{
-		InviterId: user.Sub,
+		InviterId: user.UserID,
 		UserId:    uId,
 		PartyId:   pId,
 		ValidFor:  durationpb.New(duration),

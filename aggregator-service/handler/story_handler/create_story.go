@@ -2,8 +2,8 @@ package storyhandler
 
 import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
+	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/libs/utils/middleware"
 	pg "github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
@@ -21,10 +21,13 @@ func (h storyHandler) CreateStory(c *fiber.Ctx) error {
 		return err
 	}
 
-	user := middleware.ParseUser(c)
+	user, userErr := firebaseauth.GetUser(c)
+	if userErr != nil {
+		return nil
+	}
 
 	s, err := h.storyClient.CreateStory(c.Context(), &sg.CreateStoryRequest{
-		RequesterId:   user.Sub,
+		RequesterId:   user.UserID,
 		PartyId:       req.PartyId,
 		Url:           req.Url,
 		TaggedFriends: req.TaggedFriends,
