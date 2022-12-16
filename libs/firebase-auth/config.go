@@ -18,13 +18,11 @@ type errorResponse struct {
 	Message string `json:"message"`
 }
 
+const contextKey = "user"
+
 type Config struct {
 	FirebaseApp  *firebase.App
 	ErrorHandler fiber.ErrorHandler
-
-	// Context key to store user information from the token into context.
-	// Optional. Default: "user".
-	ContextKey string
 
 	// Skip Email Check.
 	// Optional. Default: false
@@ -60,10 +58,6 @@ func makeCfg(config []Config) (cfg Config) {
 			}
 			return c.Status(fiber.StatusUnauthorized).JSON(errorResponse{Message: err.Error()})
 		}
-	}
-
-	if cfg.ContextKey == "" {
-		cfg.ContextKey = "user"
 	}
 
 	return cfg

@@ -51,7 +51,7 @@ func New(config ...Config) fiber.Handler {
 			return cfg.ErrorHandler(c, errors.New("Email not verified"))
 		}
 
-		c.Locals(cfg.ContextKey, FirebaseUser{
+		c.Locals(contextKey, FirebaseUser{
 			UserID:        token.Claims["user_id"].(string),
 			Email:         token.Claims["email"].(string),
 			EmailVerified: token.Claims["email_verified"].(bool),
@@ -59,4 +59,12 @@ func New(config ...Config) fiber.Handler {
 
 		return c.Next()
 	}
+}
+
+func GetUser(c *fiber.Ctx) (FirebaseUser, *fiber.Error) {
+	user, ok := c.Locals(contextKey).(FirebaseUser)
+	if !ok {
+		return FirebaseUser{}, fiber.NewError(fiber.ErrBadRequest.Code, "User not avilable in context")
+	}
+	return user, nil
 }
