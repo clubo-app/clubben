@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 )
 
-func (h participationHandler) InviteToParty(c *fiber.Ctx) error {
+func (h *participationHandler) InviteToParty(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	uId := c.Params("uid")
 	validFor := c.Query("validFor")

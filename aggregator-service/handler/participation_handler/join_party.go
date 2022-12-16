@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h participationHandler) JoinParty(c *fiber.Ctx) error {
+func (h *participationHandler) JoinParty(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {

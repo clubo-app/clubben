@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h storyHandler) GetStoryByParty(c *fiber.Ctx) error {
+func (h *storyHandler) GetStoryByParty(c *fiber.Ctx) error {
 	pId := c.Params("id")
 
 	limitStr := c.Query("limit")

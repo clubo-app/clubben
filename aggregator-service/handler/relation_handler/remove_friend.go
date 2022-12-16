@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationHandler) RemoveFriend(c *fiber.Ctx) error {
+func (h *relationHandler) RemoveFriend(c *fiber.Ctx) error {
 	uId := c.Params("id")
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {

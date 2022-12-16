@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentHandler) CreateReply(c *fiber.Ctx) error {
+func (h *commentHandler) CreateReply(c *fiber.Ctx) error {
 	req := new(cg.CreateReplyRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err

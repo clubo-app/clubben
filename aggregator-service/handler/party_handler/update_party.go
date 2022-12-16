@@ -27,7 +27,7 @@ type UpdatePartyReq struct {
 	EntryDate       timestamppb.Timestamp `json:"entry_date"`
 }
 
-func (h partyHandler) UpdateParty(c *fiber.Ctx) error {
+func (h *partyHandler) UpdateParty(c *fiber.Ctx) error {
 	req := new(UpdatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err

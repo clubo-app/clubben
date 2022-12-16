@@ -21,7 +21,7 @@ type UpdateRequest struct {
 	Avatar    string `json:"avatar,omitempty"`
 }
 
-func (h profileHandler) UpdateUser(c *fiber.Ctx) error {
+func (h *profileHandler) UpdateUser(c *fiber.Ctx) error {
 	req := new(UpdateRequest)
 	if err := c.BodyParser(req); err != nil {
 		return err

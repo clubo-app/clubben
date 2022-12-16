@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
+func (h *participationHandler) GetPartyParticipants(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	nextPage := c.Query("nextPage")
 	limitStr := c.Query("limit")

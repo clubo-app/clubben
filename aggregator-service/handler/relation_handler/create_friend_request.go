@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationHandler) CreateFriendRequest(c *fiber.Ctx) error {
+func (h *relationHandler) CreateFriendRequest(c *fiber.Ctx) error {
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {
 		return userErr

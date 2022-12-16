@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h favoriteHandler) FavorParty(c *fiber.Ctx) error {
+func (h *favoriteHandler) FavorParty(c *fiber.Ctx) error {
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {
 		return userErr

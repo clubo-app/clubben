@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h storyHandler) PresignURL(c *fiber.Ctx) error {
+func (h *storyHandler) PresignURL(c *fiber.Ctx) error {
 	key := c.Params("key")
 
 	res, err := h.storyClient.PresignURL(c.Context(), &story.PresignURLRequest{Key: key})

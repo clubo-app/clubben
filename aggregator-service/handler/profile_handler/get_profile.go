@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h profileHandler) GetProfile(c *fiber.Ctx) error {
+func (h *profileHandler) GetProfile(c *fiber.Ctx) error {
 	id := c.Params("id")
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {

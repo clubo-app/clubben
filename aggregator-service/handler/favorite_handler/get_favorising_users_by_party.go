@@ -11,7 +11,7 @@ import (
 	"github.com/clubo-app/clubben/libs/utils"
 )
 
-func (h favoriteHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
+func (h *favoriteHandler) GetFavorisingUsersByParty(c *fiber.Ctx) error {
 	pId := c.Params("pId")
 	nextPage := c.Query("nextPage")
 

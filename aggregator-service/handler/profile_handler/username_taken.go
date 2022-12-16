@@ -10,7 +10,7 @@ type UsernameTakenResponse struct {
 	Taken bool `json:"taken"`
 }
 
-func (h profileHandler) UsernameTaken(c *fiber.Ctx) error {
+func (h *profileHandler) UsernameTaken(c *fiber.Ctx) error {
 	uName := c.Params("username")
 
 	res, err := h.profileClient.UsernameTaken(c.Context(), &profile.UsernameTakenRequest{Username: uName})

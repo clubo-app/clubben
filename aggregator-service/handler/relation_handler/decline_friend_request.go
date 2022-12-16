@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationHandler) DeclineFriendRequest(c *fiber.Ctx) error {
+func (h *relationHandler) DeclineFriendRequest(c *fiber.Ctx) error {
 	fId := c.Params("id")
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {

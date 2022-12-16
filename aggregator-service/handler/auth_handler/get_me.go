@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h authHandler) GetMe(c *fiber.Ctx) error {
+func (h *authHandler) GetMe(c *fiber.Ctx) error {
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {
 		return userErr

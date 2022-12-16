@@ -15,7 +15,7 @@ type CreatePartyReq struct {
 	TaggedFriends []string `json:"tagged_friends"`
 }
 
-func (h storyHandler) CreateStory(c *fiber.Ctx) error {
+func (h *storyHandler) CreateStory(c *fiber.Ctx) error {
 	req := new(CreatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err

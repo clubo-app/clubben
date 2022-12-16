@@ -9,7 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyHandler) GeoSearch(c *fiber.Ctx) error {
+func (h *partyHandler) GeoSearch(c *fiber.Ctx) error {
 	limitStr := c.Query("limit")
 	limit, _ := strconv.ParseInt(limitStr, 10, 32)
 	if limit > 20 {

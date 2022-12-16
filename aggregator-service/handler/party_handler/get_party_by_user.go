@@ -12,7 +12,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h partyHandler) GetPartyByUser(c *fiber.Ctx) error {
+func (h *partyHandler) GetPartyByUser(c *fiber.Ctx) error {
 	uId := c.Params("id")
 
 	limitStr := c.Query("limit")

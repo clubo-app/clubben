@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentHandler) GetReplyByComment(c *fiber.Ctx) error {
+func (h *commentHandler) GetReplyByComment(c *fiber.Ctx) error {
 	cId := c.Params("id")
 	nextPage := c.Query("nextPage")
 

@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h storyHandler) GetStoryByUser(c *fiber.Ctx) error {
+func (h *storyHandler) GetStoryByUser(c *fiber.Ctx) error {
 	userId := c.Params("id")
 
 	limitStr := c.Query("limit")

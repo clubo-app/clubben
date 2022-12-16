@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h relationHandler) GetFriends(c *fiber.Ctx) error {
+func (h *relationHandler) GetFriends(c *fiber.Ctx) error {
 	user, userErr := firebaseauth.GetUser(c)
 
 	uId := c.Params("id")

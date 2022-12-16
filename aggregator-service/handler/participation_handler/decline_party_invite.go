@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h participationHandler) DeclinePartyInvite(c *fiber.Ctx) error {
+func (h *participationHandler) DeclinePartyInvite(c *fiber.Ctx) error {
 	pId := c.Params("pid")
 	uId := c.Params("uid")
 	user, userErr := firebaseauth.GetUser(c)

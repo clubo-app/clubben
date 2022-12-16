@@ -11,7 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h participationHandler) GetFriendsPartyParticipation(c *fiber.Ctx) error {
+func (h *participationHandler) GetFriendsPartyParticipation(c *fiber.Ctx) error {
 	uId := c.Params("uid")
 	nextPage := c.Query("nextPage")
 	limitStr := c.Query("limit")

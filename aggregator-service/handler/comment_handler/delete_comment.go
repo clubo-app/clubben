@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h commentHandler) DeleteComment(c *fiber.Ctx) error {
+func (h *commentHandler) DeleteComment(c *fiber.Ctx) error {
 	user, userErr := firebaseauth.GetUser(c)
 	if userErr != nil {
 		return userErr

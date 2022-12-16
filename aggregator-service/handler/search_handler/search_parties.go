@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (h searchHandler) SearchParties(c *fiber.Ctx) error {
+func (h *searchHandler) SearchParties(c *fiber.Ctx) error {
 	q := c.Params("query")
 
 	latStr := c.Query("lat")

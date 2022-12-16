@@ -25,7 +25,7 @@ type CreatePartyReq struct {
 	EntryDate       timestamppb.Timestamp `json:"entry_date"`
 }
 
-func (h partyHandler) CreateParty(c *fiber.Ctx) error {
+func (h *partyHandler) CreateParty(c *fiber.Ctx) error {
 	req := new(CreatePartyReq)
 	if err := c.BodyParser(req); err != nil {
 		return err
