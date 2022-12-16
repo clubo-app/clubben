@@ -7,7 +7,6 @@ import (
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/participation-service/repository"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -16,11 +15,6 @@ func (s *server) GetUserInvites(ctx context.Context, req *participation.GetUserI
 	p, err := base64.URLEncoding.DecodeString(req.NextPage)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Next Page Param")
-	}
-
-	_, err = ksuid.Parse(req.UserId)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid User id")
 	}
 
 	pp, p, err := s.pi.GetUserInvites(ctx, repository.GetUserInvitesParams{
