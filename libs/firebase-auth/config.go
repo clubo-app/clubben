@@ -14,6 +14,10 @@ type FirebaseUser struct {
 	EmailVerified bool
 }
 
+type errorResponse struct {
+	Message string `json:"message"`
+}
+
 type Config struct {
 	FirebaseApp  *firebase.App
 	ErrorHandler fiber.ErrorHandler
@@ -51,11 +55,10 @@ func makeCfg(config []Config) (cfg Config) {
 
 	if cfg.ErrorHandler == nil {
 		cfg.ErrorHandler = func(c *fiber.Ctx, err error) error {
-			fmt.Println(err)
 			if err.Error() != invalidToken.Error() {
-				return c.Status(fiber.StatusBadRequest).SendString(err.Error())
+				return c.Status(fiber.StatusBadRequest).JSON(errorResponse{Message: err.Error()})
 			}
-			return c.Status(fiber.StatusUnauthorized).SendString(invalidToken.Error())
+			return c.Status(fiber.StatusUnauthorized).JSON(errorResponse{Message: err.Error()})
 		}
 	}
 

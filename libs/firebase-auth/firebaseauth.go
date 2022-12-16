@@ -15,8 +15,7 @@ func New(config ...Config) fiber.Handler {
 
 		bearerToken := c.Get(fiber.HeaderAuthorization)
 		IDToken := strings.TrimPrefix(bearerToken, "Bearer ")
-		fmt.Println("Bearer: ", bearerToken)
-		fmt.Println("IDToken: ", IDToken)
+
 		// Validate token
 		if len(IDToken) == 0 {
 			return cfg.ErrorHandler(c, missingErrMsg)
@@ -36,11 +35,7 @@ func New(config ...Config) fiber.Handler {
 
 		// Verify IDToken
 		token, err := client.VerifyIDToken(context.Background(), IDToken)
-		if err != nil {
-			if cfg.AuthOptional {
-				return c.Next()
-			}
-			println("Error from Firebase: ", err.Error())
+		if err != nil && !cfg.AuthOptional {
 			return cfg.ErrorHandler(c, invalidToken)
 		}
 
@@ -48,7 +43,6 @@ func New(config ...Config) fiber.Handler {
 			if cfg.AuthOptional {
 				return c.Next()
 			} else {
-				println("Token is nil")
 				return cfg.ErrorHandler(c, invalidToken)
 			}
 		}
