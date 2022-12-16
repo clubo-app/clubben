@@ -208,8 +208,6 @@ github.com/clubo-app/clubben/libs/stream v0.0.0-20220930151732-11d516e2bc15 h1:h
 github.com/clubo-app/clubben/libs/stream v0.0.0-20220930151732-11d516e2bc15/go.mod h1:0/n96AVREvD1kHWPlX6wkFX8mM7o2EaBAqTVpD7JcOg=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b h1:3vb7ADYUEpG9NL/SIFqJ0sAGE+KEezfSy6kzIXR5IHM=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20220827214751-554765ad172b/go.mod h1:W+b3iIsqN0szEhuAoninnnRY+Jd04xjJ5m92JLd+gQU=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220930161354-b3aea6d7d062 h1:nNxJM74JsJh61iEBg2Pft++HQ1MktvsVzOAcrpxsu5M=
-github.com/clubo-app/clubben/protobuf v0.0.0-20220930161354-b3aea6d7d062/go.mod h1:7FoaN4ZTQtz1tzZykefw24A2vL+2+/AmS6dppX3pADM=
 github.com/clubo-app/clubben/protobuf v0.0.0-20220930162625-0f6fe78ac888 h1:SiRCoPRhvy8nMjJ8ldeKSZzVd8dRXZqWFXT+lqZTdGA=
 github.com/clubo-app/clubben/protobuf v0.0.0-20220930162625-0f6fe78ac888/go.mod h1:7FoaN4ZTQtz1tzZykefw24A2vL+2+/AmS6dppX3pADM=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
@@ -1047,8 +1045,6 @@ github.com/scylladb/gocqlx/v2 v2.7.0/go.mod h1:jKhM0/LkEAhEOSwd10TCMQdlC5x8aEzK7
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/seccomp/libseccomp-golang v0.9.1/go.mod h1:GbW5+tmTXfcxTToHLXlScSlAvWlF4P2Ca7zGrPiEpWo=
 github.com/seccomp/libseccomp-golang v0.9.2-0.20210429002308-3879420cc921/go.mod h1:JA8cRccbGaA1s33RQf7Y1+q9gHmZX1yB/z9WDN1C6fg=
-github.com/segmentio/ksuid v1.0.4 h1:sBo2BdShXjmcugAMwjugoGUdUV0pcxY5mW4xKRn3v4c=
-github.com/segmentio/ksuid v1.0.4/go.mod h1:/XUiZBD3kVx5SmUOl55voK5yeAbBNNIed+2O73XgrPE=
 github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24/go.mod h1:M+9NzErvs504Cn4c5DxATwIqPbtswREoFCre64PpcG4=
 github.com/shopspring/decimal v0.0.0-20200227202807-02e2044944cc/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=
 github.com/shopspring/decimal v1.2.0/go.mod h1:DKyhrW/HYNuLGql+MJL6WCR6knT2jwCFRcu2hWCYk4o=

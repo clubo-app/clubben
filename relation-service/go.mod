@@ -11,7 +11,6 @@ require (
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/nats-io/nats.go v1.17.0
 	github.com/scylladb/gocqlx/v2 v2.7.0
-	github.com/segmentio/ksuid v1.0.4
 	github.com/spf13/viper v1.13.0
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1

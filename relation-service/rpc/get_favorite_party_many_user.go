@@ -5,17 +5,9 @@ import (
 
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/relation"
-	"github.com/segmentio/ksuid"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func (r *relationServer) GetFavoritePartyManyUser(ctx context.Context, req *relation.GetFavoritePartyManyUserRequest) (*relation.ManyFavoritePartiesMap, error) {
-	_, err := ksuid.Parse(req.PartyId)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
-	}
-
 	favoriteParties, err := r.fp.GetFavoritePartyManyUser(ctx, req.UserIds, req.PartyId)
 	if err != nil {
 		return nil, utils.HandleError(err)
