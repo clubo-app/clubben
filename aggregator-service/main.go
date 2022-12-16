@@ -75,7 +75,7 @@ func main() {
 		log.Fatalf("did not connect to search service: %v", err)
 	}
 
-	authHandler := authhandler.NewAuthHandler(authClient, profileClient)
+	authHandler := authhandler.NewAuthHandler(authClient, profileClient, relationClient)
 	profileHandler := profilehandler.NewUserHandler(profileClient, relationClient, authClient)
 	storyHandler := storyhandler.NewStoryHandler(storyClient, profileClient, partyClient)
 	relationHandler := relationhandler.NewRelationHandler(relationClient, profileClient)

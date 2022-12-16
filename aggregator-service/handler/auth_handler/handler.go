@@ -19,9 +19,14 @@ type AuthHandler interface {
 	RegisterAnonymously(c *fiber.Ctx) error
 }
 
-func NewAuthHandler(authClient pbauth.AuthServiceClient, profileClient pg.ProfileServiceClient) AuthHandler {
+func NewAuthHandler(
+	authClient pbauth.AuthServiceClient,
+	profileClient pg.ProfileServiceClient,
+	relationClient pbrelation.RelationServiceClient,
+) AuthHandler {
 	return &authHandler{
-		authClient:    authClient,
-		profileClient: profileClient,
+		authClient:     authClient,
+		profileClient:  profileClient,
+		relationClient: relationClient,
 	}
 }
