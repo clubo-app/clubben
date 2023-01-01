@@ -3,6 +3,7 @@ package firebaseauth
 import (
 	"errors"
 	"fmt"
+	"log"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/gofiber/fiber/v2"
@@ -53,6 +54,7 @@ func makeCfg(config []Config) (cfg Config) {
 
 	if cfg.ErrorHandler == nil {
 		cfg.ErrorHandler = func(c *fiber.Ctx, err error) error {
+			log.Println(err)
 			if err.Error() != invalidToken.Error() {
 				return c.Status(fiber.StatusBadRequest).JSON(errorResponse{Message: err.Error()})
 			}
