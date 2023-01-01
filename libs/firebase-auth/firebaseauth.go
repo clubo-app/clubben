@@ -36,7 +36,7 @@ func New(config ...Config) fiber.Handler {
 		// Verify IDToken
 		token, err := client.VerifyIDToken(context.Background(), IDToken)
 		if err != nil && !cfg.AuthOptional {
-			println("Error verifyIDToken: ", err)
+			println("Error verifyIDToken: ", err.Error())
 			return cfg.ErrorHandler(c, invalidToken)
 		}
 
