@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	firebase.google.com/go/v4 v4.10.0
-	github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214
+	github.com/clubo-app/clubben/auth-service v0.0.0-20230101192322-bbbe427e28fb
 	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221216212853-daf7faacefab
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
 	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea

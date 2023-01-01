@@ -63,8 +63,8 @@ github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWR
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214 h1:SVhbo3Q4Jd3sEkTxxTvQq6VJSZzi+GBHPP5EXknOxr0=
-github.com/clubo-app/clubben/auth-service v0.0.0-20221210195236-2c74264a1214/go.mod h1:7YBTYnMhXMopyfLS4Dvd2qL+QMXcCOSB+8vnL1bkUAU=
+github.com/clubo-app/clubben/auth-service v0.0.0-20230101192322-bbbe427e28fb h1:Bu21+DIYWJUg0t3yzX+8K9MBdu2TLc4jmIcANR1FDl0=
+github.com/clubo-app/clubben/auth-service v0.0.0-20230101192322-bbbe427e28fb/go.mod h1:7YBTYnMhXMopyfLS4Dvd2qL+QMXcCOSB+8vnL1bkUAU=
 github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221216212853-daf7faacefab h1:IdTHXFTdc++6fyAIO7uYF4Lc/3rk3dpbjlKbi3k5N1k=
 github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221216212853-daf7faacefab/go.mod h1:y9/DLSmfrosCqd1hhExnZ3qZN94l9f+JffSaFZd/PuA=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96 h1:qTMUIiMpkPk+PeY3JpGunaDKqe2tMEWcEg9z2FaiYSc=

@@ -11,9 +11,9 @@ type UsernameTakenResponse struct {
 }
 
 func (h *profileHandler) UsernameTaken(c *fiber.Ctx) error {
-	uName := c.Params("username")
+	name := c.Params("username")
 
-	res, err := h.profileClient.UsernameTaken(c.Context(), &profile.UsernameTakenRequest{Username: uName})
+	res, err := h.profileClient.UsernameTaken(c.Context(), &profile.UsernameTakenRequest{Username: name})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

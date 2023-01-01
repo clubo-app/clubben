@@ -17,6 +17,7 @@ type AuthHandler interface {
 	GetMe(c *fiber.Ctx) error
 	Register(c *fiber.Ctx) error
 	RegisterAnonymously(c *fiber.Ctx) error
+  GetToken(c *fiber.Ctx) error
 }
 
 func NewAuthHandler(

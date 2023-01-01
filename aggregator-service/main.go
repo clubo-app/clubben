@@ -124,14 +124,16 @@ func main() {
 
 	auth := app.Group("/auth")
 	auth.Get("/me", requireAuth, authHandler.GetMe)
+	auth.Get("/login/:id", authHandler.GetToken)
 	auth.Post("/register", authHandler.Register)
 	auth.Post("/register-anon", authHandler.RegisterAnonymously)
 
-	profile := app.Group("/profiles")
-	profile.Patch("/", requireAuth, profileHandler.UpdateUser)
-	profile.Get("/:id", optionalAuth, profileHandler.GetProfile)
-	profile.Get("/username-taken/:username", profileHandler.UsernameTaken)
-	profile.Get("/search/:query", searchHandler.SearchUsers)
+	app.Route("/profiles", func(api fiber.Router) {
+		api.Patch("/", requireAuth, profileHandler.UpdateUser)
+		api.Get("/:id", optionalAuth, profileHandler.GetProfile)
+		api.Get("/username-taken/:username", profileHandler.UsernameTaken)
+		api.Get("/search/:query", searchHandler.SearchUsers)
+	})
 
 	party := app.Group("/parties")
 	party.Post("/", requireAuth, partyHandler.CreateParty)
