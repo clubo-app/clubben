@@ -136,3 +136,7 @@ func (repo *FirebaseRepository) GetByEmail(ctx context.Context, email string) (d
 
 	return account, nil
 }
+
+func (repo *FirebaseRepository) CreateToken(ctx context.Context, uId string) (string, error) {
+	return repo.client.CustomToken(ctx, uId)
+}

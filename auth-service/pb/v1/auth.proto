@@ -9,6 +9,8 @@ service AuthService {
   rpc Register (RegisterRequest) returns (RegisterResponse) {};
   rpc RegisterAnonymously (google.protobuf.Empty) returns (RegisterAnonymouslyResponse) {};
 
+  rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse) {};
+
   rpc GetAccount (GetAccountRequest) returns (Account) {};
   rpc UpdateAccount (UpdateAccountRequest) returns (Account) {};
   rpc DeleteAccount (DeleteAccountRequest) returns (google.protobuf.Empty) {};
@@ -24,6 +26,14 @@ message RegisterRequest {
 message GetAccountRequest {
   string id = 1;
 }
+
+message CreateTokenRequest {
+  string id = 1;
+}
+
+message CreateTokenResponse {
+    string token = 1;
+  }
 
 message UpdateAccountRequest {
   string id = 1;

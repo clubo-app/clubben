@@ -25,6 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AuthServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RegisterAnonymouslyResponse, error)
+	CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error)
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	UpdateAccount(ctx context.Context, in *UpdateAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -51,6 +52,15 @@ func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, o
 func (c *authServiceClient) RegisterAnonymously(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*RegisterAnonymouslyResponse, error) {
 	out := new(RegisterAnonymouslyResponse)
 	err := c.cc.Invoke(ctx, "/pb.v1.AuthService/RegisterAnonymously", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error) {
+	out := new(CreateTokenResponse)
+	err := c.cc.Invoke(ctx, "/pb.v1.AuthService/CreateToken", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,6 +109,7 @@ func (c *authServiceClient) EmailTaken(ctx context.Context, in *EmailTakenReques
 type AuthServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	RegisterAnonymously(context.Context, *emptypb.Empty) (*RegisterAnonymouslyResponse, error)
+	CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error)
 	GetAccount(context.Context, *GetAccountRequest) (*Account, error)
 	UpdateAccount(context.Context, *UpdateAccountRequest) (*Account, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
@@ -115,6 +126,9 @@ func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest
 }
 func (UnimplementedAuthServiceServer) RegisterAnonymously(context.Context, *emptypb.Empty) (*RegisterAnonymouslyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterAnonymously not implemented")
+}
+func (UnimplementedAuthServiceServer) CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateToken not implemented")
 }
 func (UnimplementedAuthServiceServer) GetAccount(context.Context, *GetAccountRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
@@ -173,6 +187,24 @@ func _AuthService_RegisterAnonymously_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServiceServer).RegisterAnonymously(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_CreateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).CreateToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.v1.AuthService/CreateToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).CreateToken(ctx, req.(*CreateTokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -263,6 +295,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterAnonymously",
 			Handler:    _AuthService_RegisterAnonymously_Handler,
+		},
+		{
+			MethodName: "CreateToken",
+			Handler:    _AuthService_CreateToken_Handler,
 		},
 		{
 			MethodName: "GetAccount",
