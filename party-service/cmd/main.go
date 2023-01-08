@@ -5,10 +5,10 @@ import (
 
 	"github.com/clubo-app/clubben/libs/stream"
 	"github.com/clubo-app/clubben/party-service/config"
-	"github.com/clubo-app/clubben/party-service/consumer"
-	"github.com/clubo-app/clubben/party-service/repository"
-	"github.com/clubo-app/clubben/party-service/rpc"
-	"github.com/clubo-app/clubben/party-service/service"
+	"github.com/clubo-app/clubben/party-service/internal/consumer"
+	"github.com/clubo-app/clubben/party-service/internal/repository"
+	"github.com/clubo-app/clubben/party-service/internal/rpc"
+	"github.com/clubo-app/clubben/party-service/internal/service"
 	"github.com/nats-io/nats.go"
 )
 

@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/party-service/dto"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/party-service/internal/dto"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/paulmach/orb"
 )
 
-func (s partyServer) CreateParty(c context.Context, req *pg.CreatePartyRequest) (*pg.Party, error) {
+func (s partyServer) CreateParty(c context.Context, req *pbparty.CreatePartyRequest) (*pbparty.Party, error) {
 	d := dto.Party{
 		Title:           req.Title,
 		Description:     req.Description,

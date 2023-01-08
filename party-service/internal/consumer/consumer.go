@@ -7,23 +7,23 @@ import (
 	"time"
 
 	"github.com/clubo-app/clubben/libs/stream"
-	"github.com/clubo-app/clubben/party-service/repository"
+	"github.com/clubo-app/clubben/party-service/internal/repository"
 	"github.com/clubo-app/clubben/protobuf/events"
 	"github.com/jackc/pgx/v4"
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
 )
 
-type consumer struct {
+type Consumer struct {
 	stream    *stream.Stream
 	partyRepo *repository.PartyRepository
 }
 
-func New(stream *stream.Stream, repo *repository.PartyRepository) consumer {
-	return consumer{stream: stream, partyRepo: repo}
+func New(stream *stream.Stream, repo *repository.PartyRepository) Consumer {
+	return Consumer{stream: stream, partyRepo: repo}
 }
 
-func (c *consumer) Start() {
+func (c *Consumer) Start() {
 	wg := sync.WaitGroup{}
 	wg.Add(4)
 
@@ -66,7 +66,7 @@ func (c *consumer) Start() {
 	log.Println("All Consumers unexpectedly stopped")
 }
 
-func (c *consumer) partyFavorited(sub *nats.Subscription) {
+func (c *Consumer) partyFavorited(sub *nats.Subscription) {
 	msgs, err := sub.Fetch(100, nats.MaxWait(time.Second*30))
 	if err != nil {
 		log.Println("Error fetching PartyFavorited Events: ", err)
@@ -103,7 +103,7 @@ func (c *consumer) partyFavorited(sub *nats.Subscription) {
 	log.Printf("%v Rows were effected by Increate Party Favorite Count in Batch", bRes.RowsAffected())
 }
 
-func (c *consumer) partyUnfavorited(sub *nats.Subscription) {
+func (c *Consumer) partyUnfavorited(sub *nats.Subscription) {
 	msgs, err := sub.Fetch(100, nats.MaxWait(time.Second*30))
 	if err != nil {
 		log.Println("Error fetching PartyUnfavorited Events: ", err)
@@ -140,7 +140,7 @@ func (c *consumer) partyUnfavorited(sub *nats.Subscription) {
 	log.Printf("%v Rows were effected by Decreasing Party Favorite Count in Batch", bRes.RowsAffected())
 }
 
-func (c *consumer) partyJoined(msg *nats.Msg) {
+func (c *Consumer) partyJoined(msg *nats.Msg) {
 	e := &events.PartyJoined{}
 	err := proto.Unmarshal(msg.Data, e)
 	if err != nil {
@@ -157,7 +157,7 @@ func (c *consumer) partyJoined(msg *nats.Msg) {
 	})
 }
 
-func (c *consumer) partyLeft(msg *nats.Msg) {
+func (c *Consumer) partyLeft(msg *nats.Msg) {
 	e := &events.PartyLeft{}
 	err := proto.Unmarshal(msg.Data, e)
 	if err != nil {

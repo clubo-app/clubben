@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package pb.v1;
+option go_package = "github.com/clubo-app/clubben/party-service/pb/v1;pbparty";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service PartyService {
+    rpc CreateParty (CreatePartyRequest) returns (Party) {};
+    rpc GetParty (GetPartyRequest) returns (Party) {};
+    rpc UpdateParty (UpdatePartyRequest) returns (Party) {};
+    rpc DeleteParty (DeletePartyRequest) returns (google.protobuf.Empty) {};
+    rpc GetByUser (GetByUserRequest) returns (PagedParties) {};
+    rpc GeoSearch (GeoSearchRequest) returns (PagedParties) {};
+
+    rpc GetManyParties (GetManyPartiesRequest) returns (GetManyPartiesResponse) {}
+    rpc GetManyPartiesMap (GetManyPartiesRequest) returns (GetManyPartiesMapResponse) {}
+
+}
+
+// Requests
+message CreatePartyRequest {
+    string requester_id = 1;
+    string title = 2;
+    string description = 3;
+    float lat = 4;
+    float long = 5;
+    bool is_public = 6;
+    int32 max_participants = 7;
+    string street_address = 8;
+    string postal_code = 9;
+    string state = 10;
+    string country = 11;
+    google.protobuf.Timestamp entry_date = 12;
+    string music_genre = 13;
+}
+
+message GetPartyRequest {
+    string party_id = 1;
+}
+
+message UpdatePartyRequest {
+    string requester_id = 1;
+    string party_id = 2;
+    string title = 3;
+    string description = 4;
+    float lat = 5;
+    float long = 6;
+    string street_address = 7;
+    string postal_code = 8;
+    string state = 9;
+    string country = 10;
+    google.protobuf.Timestamp entry_date = 11;
+    string music_genre = 12;
+}
+
+message DeletePartyRequest {
+    string requester_id = 1;
+    string party_id = 2;
+}
+
+message GetByUserRequest {
+    string user_id = 1;
+    bool is_public = 2;
+    int32 offset = 3;
+    int32 limit = 4;
+}
+
+message GeoSearchRequest {
+    float radius_in_degrees = 1;
+    bool is_public = 2;
+    float lat = 3;
+    float long = 4;
+    int32 offset = 5;
+    int32 limit = 6;
+}
+
+message GetManyPartiesRequest {
+    repeated string ids = 1;
+}
+
+// Response
+message Party {
+    string id = 1;
+    string user_id = 2;
+    string title = 3;
+    string description = 4;
+    bool is_public = 5;
+    int32 max_participants = 6;
+    float lat = 7;
+    float long = 8;
+    string street_address = 9;
+    string postal_code = 10;
+    string state = 11;
+    string country = 12;
+    google.protobuf.Timestamp entry_date = 13;
+    google.protobuf.Timestamp created_at = 14;
+    string music_genre = 15;
+    int32 favorite_count = 20;
+    int32 participants_count = 21;
+}
+
+message PagedParties {
+    repeated Party parties = 1;
+}
+
+message GetManyPartiesResponse {
+    repeated Party parties = 1;
+}
+
+message GetManyPartiesMapResponse {
+    map<string, Party> parties = 1;
+}

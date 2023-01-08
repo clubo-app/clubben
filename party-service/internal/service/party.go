@@ -5,19 +5,17 @@ import (
 	"database/sql"
 
 	"github.com/clubo-app/clubben/libs/stream"
-	"github.com/clubo-app/clubben/party-service/dto"
-	"github.com/clubo-app/clubben/party-service/repository"
-	"github.com/clubo-app/clubben/protobuf/events"
-	"github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/party-service/internal/dto"
+	"github.com/clubo-app/clubben/party-service/internal/repository"
+	// TODO: "github.com/clubo-app/clubben/protobuf/events"
 	"github.com/segmentio/ksuid"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type PartyService interface {
 	Create(ctx context.Context, p dto.Party) (repository.Party, error)
 	Update(ctx context.Context, p dto.Party) (repository.Party, error)
-	Delete(ctx context.Context, uId, pId string) error
-	Get(ctx context.Context, pId string) (repository.Party, error)
+	Delete(ctx context.Context, uID, pID string) error
+	Get(ctx context.Context, pID string) (repository.Party, error)
 	GetMany(ctx context.Context, ids []string) ([]repository.Party, error)
 	GetByUser(ctx context.Context, params repository.GetPartiesByUserParams) ([]repository.Party, error)
 	GeoSearch(ctx context.Context, params repository.GeoSearchParams) ([]repository.Party, error)
@@ -59,7 +57,7 @@ func (s partyService) Create(ctx context.Context, p dto.Party) (res repository.P
 		return res, err
 	}
 
-	s.stream.PublishEvent(&events.PartyCreated{Party: res.ToGRPCParty()})
+	//s.stream.PublishEvent(&events.PartyCreated{Party: res.ToGRPCParty()})
 
 	return res, nil
 }
@@ -81,29 +79,29 @@ func (s partyService) Update(ctx context.Context, p dto.Party) (res repository.P
 		return res, err
 	}
 
-	updatedValues := party.Party{
-		Id:              p.ID,
-		UserId:          p.UserId,
-		Title:           p.Title,
-		Description:     p.Description,
-		MusicGenre:      p.MusicGenre,
-		MaxParticipants: p.MaxParticipants,
-		StreetAddress:   p.StreetAddress,
-		PostalCode:      p.PostalCode,
-		State:           p.State,
-		Country:         p.Country,
-	}
+	//	updatedValues := party.Party{
+	//		Id:              p.ID,
+	//		UserId:          p.UserId,
+	//		Title:           p.Title,
+	//		Description:     p.Description,
+	//		MusicGenre:      p.MusicGenre,
+	//		MaxParticipants: p.MaxParticipants,
+	//		StreetAddress:   p.StreetAddress,
+	//		PostalCode:      p.PostalCode,
+	//		State:           p.State,
+	//		Country:         p.Country,
+	//	}
+	//
+	//	if p.Location.Lat() != 0 && p.Location.Lon() != 0 {
+	//		updatedValues.Lat = float32(p.Location.Lat())
+	//		updatedValues.Long = float32(p.Location.Lon())
+	//	}
+	//	entryYear := p.EntryDate.Year()
+	//	if !(entryYear == 1970) {
+	//		updatedValues.EntryDate = timestamppb.New(p.EntryDate)
+	//	}
 
-	if p.Location.Lat() != 0 && p.Location.Lon() != 0 {
-		updatedValues.Lat = float32(p.Location.Lat())
-		updatedValues.Long = float32(p.Location.Lon())
-	}
-	entryYear := p.EntryDate.Year()
-	if !(entryYear == 1970) {
-		updatedValues.EntryDate = timestamppb.New(p.EntryDate)
-	}
-
-	s.stream.PublishEvent(&events.PartyUpdated{Party: &updatedValues})
+	// TODO:  s.stream.PublishEvent(&events.PartyUpdated{Party: &updatedValues})
 
 	return res, nil
 }

@@ -328,12 +328,12 @@ func (r PartyRepository) GetPartiesByUser(ctx context.Context, arg GetPartiesByU
 }
 
 type GeoSearchParams struct {
-	Lat      float32
-	Long     float32
-	Radius   int32
-	IsPublic bool
-	Limit    int32
-	Offset   int32
+	Lat            float32
+	Long           float32
+	RadiusInDegree float32
+	IsPublic       bool
+	Limit          int32
+	Offset         int32
 }
 
 func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]Party, error) {
@@ -341,7 +341,7 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 	b := sqlf.
 		Select(selectStmt).
 		From(TABLE_NAME).
-		Where("ST_DWithin(location,ST_MakePoint(?, ?)::geography, ?)", arg.Long, arg.Lat, arg.Radius).
+		Where("ST_DWithin(location,ST_MakePoint(?, ?), ?)", arg.Long, arg.Lat, arg.RadiusInDegree).
 		Where("is_public = ?", arg.IsPublic)
 
 	if arg.Limit == 0 {

@@ -4,15 +4,15 @@ import (
 	"context"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/party-service/dto"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	"github.com/clubo-app/clubben/party-service/internal/dto"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/paulmach/orb"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s partyServer) UpdateParty(c context.Context, req *pg.UpdatePartyRequest) (*pg.Party, error) {
+func (s partyServer) UpdateParty(c context.Context, req *pbparty.UpdatePartyRequest) (*pbparty.Party, error) {
 	id, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
