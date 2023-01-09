@@ -64,6 +64,7 @@ func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscriptio
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
 func (s Stream) PushSubscribe(queue string, event any, handler nats.MsgHandler) (*nats.Subscription, error) {
 	sub := EventToSubject(event)
+	log.Printf("Subject is: %v", sub)
 
 	if queue != "" {
 		return s.js.QueueSubscribe(sub, queue, handler)
@@ -94,14 +95,16 @@ func EventToSubject(event any) string {
 
 	str := strings.ReplaceAll(t.String(), "*", "")
 
-	log.Printf("String reprecentation of %v is %v", t, str)
-
 	lower := camelcaseStringToDotString(str)
 
 	s := strings.Split(lower, ".")
 
-	log.Printf("Splitted: %v", s)
-	return s[len(s)-1]
+	// if type is events.ImportantType, remove events prefix from string
+	if len(s) > 1 {
+		return camelcaseStringToDotString(s[len(s)-1])
+	}
+
+	return camelcaseStringToDotString(t.String())
 }
 
 func camelcaseStringToDotString(camelcase string) string {
