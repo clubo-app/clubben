@@ -94,14 +94,14 @@ func EventToSubject(event any) string {
 
 	str := strings.ReplaceAll(t.String(), "*", "")
 
-	s := strings.Split(str, ".")
+	log.Printf("String reprecentation of %v is %v", t, str)
 
-	// if type is events.ImportantType, remove events prefix from string
-	if len(s) == 2 && s[0] == "events" {
-		return camelcaseStringToDotString(s[1])
-	}
+	lower := camelcaseStringToDotString(str)
 
-	return camelcaseStringToDotString(t.String())
+	s := strings.Split(lower, ".")
+
+	log.Printf("Splitted: %v", s)
+	return s[len(s)-1]
 }
 
 func camelcaseStringToDotString(camelcase string) string {
