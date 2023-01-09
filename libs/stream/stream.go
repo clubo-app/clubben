@@ -95,13 +95,16 @@ func EventToSubject(event any) string {
 
 	str := strings.ReplaceAll(t.String(), "*", "")
 
-	lower := camelcaseStringToDotString(str)
+	log.Println("Type of event: ", str)
 
-	s := strings.Split(lower, ".")
+	split := strings.Split(str, ".")
+
+	log.Println("Splitted: ", split)
 
 	// if type is events.ImportantType, remove events prefix from string
-	if len(s) > 1 {
-		return camelcaseStringToDotString(s[len(s)-1])
+	if len(split) > 1 {
+		concat := strings.Join(split[1:], ".")
+		return camelcaseStringToDotString(concat)
 	}
 
 	return camelcaseStringToDotString(t.String())
