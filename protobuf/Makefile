@@ -1,4 +1,4 @@
-all: gen-ticket gen-participation gen-comment gen-common gen-party gen-profile gen-relation gen-story gen-events gen-search
+all: gen-ticket gen-participation gen-comment gen-common gen-profile gen-relation gen-story gen-events gen-search
 
 gen-ticket:
 	protoc \
@@ -24,12 +24,6 @@ gen-common:
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	common/*.proto
 
-gen-party:
-	protoc \
-	--go_out . --go_opt paths=source_relative \
-	--go-grpc_out . --go-grpc_opt paths=source_relative  \
-	party/*.proto
-
 gen-profile:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
@@ -41,7 +35,7 @@ gen-relation:
 	--go_out . --go_opt paths=source_relative \
 	--go-grpc_out . --go-grpc_opt paths=source_relative  \
 	relation/*.proto
-	
+
 gen-story:
 	protoc \
 	--go_out . --go_opt paths=source_relative \
