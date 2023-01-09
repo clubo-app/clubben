@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
@@ -52,7 +52,7 @@ func (h *storyHandler) GetStoryByUser(c *fiber.Ctx) error {
 		ids[i] = s.PartyId
 	}
 	// here we aggregated all the profiles if the story creators
-	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(ids)})
+	parties, _ := h.partyClient.GetManyPartiesMap(c.Context(), &pbparty.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(ids)})
 
 	aggS := make([]*datastruct.AggregatedStory, len(stories.Stories))
 	for i, s := range stories.Stories {

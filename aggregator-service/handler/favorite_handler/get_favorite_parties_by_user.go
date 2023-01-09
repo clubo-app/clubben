@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
@@ -35,7 +35,7 @@ func (h *favoriteHandler) GetFavoritePartiesByUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).JSON(res)
 	}
 
-	parties, _ := h.partyClient.GetManyParties(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
+	parties, _ := h.partyClient.GetManyParties(c.Context(), &pbparty.GetManyPartiesRequest{Ids: partyIds})
 
 	aggP := make([]*datastruct.AggregatedParty, len(favParties.FavoriteParties))
 	for i, p := range parties.Parties {

@@ -7,8 +7,8 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	"github.com/clubo-app/clubben/protobuf/party"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/clubo-app/clubben/protobuf/relation"
 	sg "github.com/clubo-app/clubben/protobuf/story"
@@ -19,7 +19,7 @@ func (h *partyHandler) GetParty(c *fiber.Ctx) error {
 	id := c.Params("id")
 	user, userErr := firebaseauth.GetUser(c)
 
-	party, err := h.partyClient.GetParty(c.Context(), &party.GetPartyRequest{PartyId: id})
+	party, err := h.partyClient.GetParty(c.Context(), &pbparty.GetPartyRequest{PartyId: id})
 	if err != nil {
 		return utils.ToHTTPError(err)
 	}

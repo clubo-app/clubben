@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -32,18 +32,18 @@ func (h *partyHandler) GeoSearch(c *fiber.Ctx) error {
 	}
 
 	radiusStr := c.Query("radius")
-	radius, _ := strconv.ParseInt(radiusStr, 10, 32)
+	radius, _ := strconv.ParseFloat(radiusStr, 32)
 
 	isPublicStr := c.Query("is_public")
 	isPublic, _ := strconv.ParseBool(isPublicStr)
 
-	parties, err := h.partyClient.GeoSearch(c.Context(), &pg.GeoSearchRequest{
-		Lat:      float32(lat),
-		Long:     float32(lon),
-		Limit:    int32(limit),
-		Offset:   int32(offset),
-		Radius:   int32(radius),
-		IsPublic: isPublic,
+	parties, err := h.partyClient.GeoSearch(c.Context(), &pbparty.GeoSearchRequest{
+		Lat:             float32(lat),
+		Long:            float32(lon),
+		Limit:           int32(limit),
+		Offset:          int32(offset),
+		RadiusInDegrees: float32(radius),
+		IsPublic:        isPublic,
 	})
 	if err != nil {
 		return utils.ToHTTPError(err)

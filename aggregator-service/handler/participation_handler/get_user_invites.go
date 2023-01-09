@@ -7,7 +7,7 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 )
@@ -33,7 +33,7 @@ func (h *participationHandler) GetUserInvites(c *fiber.Ctx) error {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	var parties *party.GetManyPartiesMapResponse
+	var parties *pbparty.GetManyPartiesMapResponse
 	go func() {
 		defer wg.Done()
 		partyIds := make([]string, len(pi.Invites))
@@ -41,7 +41,7 @@ func (h *participationHandler) GetUserInvites(c *fiber.Ctx) error {
 			partyIds[i] = in.PartyId
 		}
 
-		parties, _ = h.partyClient.GetManyPartiesMap(c.Context(), &party.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
+		parties, _ = h.partyClient.GetManyPartiesMap(c.Context(), &pbparty.GetManyPartiesRequest{Ids: utils.UniqueStringSlice(partyIds)})
 	}()
 
 	var inviters *profile.GetManyProfilesMapResponse

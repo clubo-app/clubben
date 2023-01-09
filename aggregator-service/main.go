@@ -20,7 +20,7 @@ import (
 	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	cg "github.com/clubo-app/clubben/protobuf/comment"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	prf "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/clubo-app/clubben/protobuf/search"
@@ -46,13 +46,16 @@ func main() {
 	defer authConn.Close()
 	authClient := pbauth.NewAuthServiceClient(authConn)
 
+  partyConn, err := grpc.Dial(c.PARTY_SERVICE_ADDRESS, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("Failed to connect to PartyService: %v", err)
+	}
+	defer partyConn.Close()
+	partyClient := pbparty.NewPartyServiceClient(partyConn)
+
 	profileClient, err := prf.NewClient(c.PROFILE_SERVICE_ADDRESS)
 	if err != nil {
 		log.Fatalf("did not connect to profile service: %v", err)
-	}
-	partyClient, err := pg.NewClient(c.PARTY_SERVICE_ADDRESS)
-	if err != nil {
-		log.Fatalf("did not connect to party service: %v", err)
 	}
 	storyClient, err := sg.NewClient(c.STORY_SERVICE_ADDRESS)
 	if err != nil {

@@ -2,7 +2,7 @@ package participationhandler
 
 import (
 	"github.com/clubo-app/clubben/protobuf/participation"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +10,7 @@ import (
 
 type participationHandler struct {
 	profileClient       profile.ProfileServiceClient
-	partyClient         party.PartyServiceClient
+	partyClient         pbparty.PartyServiceClient
 	participationClient participation.ParticipationServiceClient
 	relationClient      relation.RelationServiceClient
 }
@@ -30,7 +30,7 @@ type ParticipationHandler interface {
 
 func NewParticipationHandler(
 	participationClient participation.ParticipationServiceClient,
-	partyClient party.PartyServiceClient,
+	partyClient pbparty.PartyServiceClient,
 	profileClient profile.ProfileServiceClient,
 	relationClient relation.RelationServiceClient,
 ) ParticipationHandler {

@@ -7,7 +7,7 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
@@ -47,10 +47,10 @@ func (h *participationHandler) GetUserPartyParticipation(c *fiber.Ctx) error {
 	wg := new(sync.WaitGroup)
 	wg.Add(2)
 
-	var parties []*party.Party
+	var parties []*pbparty.Party
 	go func() {
 		defer wg.Done()
-		partiesRes, _ := h.partyClient.GetManyParties(c.Context(), &party.GetManyPartiesRequest{Ids: partyIds})
+		partiesRes, _ := h.partyClient.GetManyParties(c.Context(), &pbparty.GetManyPartiesRequest{Ids: partyIds})
 		parties = partiesRes.Parties
 	}()
 

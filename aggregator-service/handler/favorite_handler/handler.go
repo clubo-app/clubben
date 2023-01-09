@@ -1,7 +1,7 @@
 package favoritehandler
 
 import (
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
@@ -16,13 +16,13 @@ type FavoriteHandler interface {
 
 type favoriteHandler struct {
 	relationClient relation.RelationServiceClient
-	partyClient    party.PartyServiceClient
+	partyClient    pbparty.PartyServiceClient
 	profileClient  profile.ProfileServiceClient
 }
 
 func NewFavoriteHandler(
 	relationClient relation.RelationServiceClient,
-	partyClient party.PartyServiceClient,
+	partyClient pbparty.PartyServiceClient,
 	profileClient profile.ProfileServiceClient,
 ) FavoriteHandler {
 	return &favoriteHandler{

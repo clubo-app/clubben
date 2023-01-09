@@ -1,7 +1,7 @@
 package storyhandler
 
 import (
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	prfg "github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
@@ -9,7 +9,7 @@ import (
 
 type storyHandler struct {
 	storyClient   sg.StoryServiceClient
-	partyClient   pg.PartyServiceClient
+	partyClient   pbparty.PartyServiceClient
 	profileClient prfg.ProfileServiceClient
 }
 
@@ -22,7 +22,7 @@ type StoryHandler interface {
 	PresignURL(c *fiber.Ctx) error
 }
 
-func NewStoryHandler(storyClient sg.StoryServiceClient, profileClient prfg.ProfileServiceClient, partyClient pg.PartyServiceClient) StoryHandler {
+func NewStoryHandler(storyClient sg.StoryServiceClient, profileClient prfg.ProfileServiceClient, partyClient pbparty.PartyServiceClient) StoryHandler {
 	return &storyHandler{
 		storyClient:   storyClient,
 		profileClient: profileClient,

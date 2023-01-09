@@ -5,9 +5,10 @@ go 1.18
 require (
 	firebase.google.com/go/v4 v4.10.0
 	github.com/clubo-app/clubben/auth-service v0.0.0-20230101192322-bbbe427e28fb
-	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20221216212853-daf7faacefab
+	github.com/clubo-app/clubben/libs/firebase-auth v0.0.0-20230101205229-3becae5bef4d
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
-	github.com/clubo-app/clubben/protobuf v0.0.0-20221016210732-f089dab429ea
+	github.com/clubo-app/clubben/party-service v0.0.0-20230108231201-38c79e9a6e55
+	github.com/clubo-app/clubben/protobuf v0.0.0-20230109132736-8e3112127a1d
 	github.com/gofiber/fiber/v2 v2.40.1
 	github.com/spf13/viper v1.13.0
 	google.golang.org/api v0.105.0
@@ -23,7 +24,7 @@ require (
 	cloud.google.com/go/iam v0.9.0 // indirect
 	cloud.google.com/go/longrunning v0.3.0 // indirect
 	cloud.google.com/go/storage v1.28.1 // indirect
-	github.com/MicahParks/keyfunc v1.7.0 // indirect
+	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/golang-jwt/jwt/v4 v4.4.3 // indirect
@@ -37,7 +38,7 @@ require (
 	github.com/klauspost/compress v1.15.13 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
@@ -61,7 +62,7 @@ require (
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/appengine/v2 v2.0.2 // indirect
-	google.golang.org/genproto v0.0.0-20221207170731-23e4bf6bdc37 // indirect
+	google.golang.org/genproto v0.0.0-20221227171554-f9683d7f8bef // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

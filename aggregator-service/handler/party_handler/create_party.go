@@ -4,7 +4,7 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -36,7 +36,7 @@ func (h *partyHandler) CreateParty(c *fiber.Ctx) error {
 		return userErr
 	}
 
-	p, err := h.partyClient.CreateParty(c.Context(), &party.CreatePartyRequest{
+	p, err := h.partyClient.CreateParty(c.Context(), &pbparty.CreatePartyRequest{
 		RequesterId:     user.UserID,
 		Title:           req.Title,
 		Description:     req.Description,

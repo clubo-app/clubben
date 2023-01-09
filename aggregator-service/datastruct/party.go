@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 )
 
@@ -33,7 +33,7 @@ type AggregatedParty struct {
 	ParticipantsCount   int32                `json:"participants_count"`
 }
 
-func PartyToAgg(p *pg.Party) *AggregatedParty {
+func PartyToAgg(p *pbparty.Party) *AggregatedParty {
 	if p == nil {
 		return &AggregatedParty{}
 	}

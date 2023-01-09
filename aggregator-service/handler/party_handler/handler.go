@@ -1,8 +1,8 @@
 package partyhandler
 
 import (
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/participation"
-	pg "github.com/clubo-app/clubben/protobuf/party"
 	prfg "github.com/clubo-app/clubben/protobuf/profile"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	sg "github.com/clubo-app/clubben/protobuf/story"
@@ -10,7 +10,7 @@ import (
 )
 
 type partyHandler struct {
-	partyClient         pg.PartyServiceClient
+	partyClient         pbparty.PartyServiceClient
 	profileClient       prfg.ProfileServiceClient
 	storyClient         sg.StoryServiceClient
 	relationClient      rg.RelationServiceClient
@@ -28,7 +28,7 @@ type PartyHandler interface {
 }
 
 func NewPartyHandler(
-	partyClient pg.PartyServiceClient,
+	partyClient pbparty.PartyServiceClient,
 	profileClient prfg.ProfileServiceClient,
 	storyClient sg.StoryServiceClient,
 	relationClient rg.RelationServiceClient,

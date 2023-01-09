@@ -6,7 +6,7 @@ import (
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	firebaseauth "github.com/clubo-app/clubben/libs/firebase-auth"
 	"github.com/clubo-app/clubben/libs/utils"
-	"github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	rg "github.com/clubo-app/clubben/protobuf/relation"
 	"github.com/gofiber/fiber/v2"
 )
@@ -26,7 +26,7 @@ func (h *favoriteHandler) FavorParty(c *fiber.Ctx) error {
 
 	res := datastruct.AggregatedFavoriteParty{
 		UserId:      f.UserId,
-		Party:       datastruct.PartyToAgg(&party.Party{Id: f.PartyId}),
+		Party:       datastruct.PartyToAgg(&pbparty.Party{Id: f.PartyId}),
 		FavoritedAt: f.FavoritedAt.AsTime().UTC().Format(time.RFC3339),
 	}
 

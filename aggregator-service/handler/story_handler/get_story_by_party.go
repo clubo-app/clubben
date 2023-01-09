@@ -5,7 +5,7 @@ import (
 
 	"github.com/clubo-app/clubben/aggregator-service/datastruct"
 	"github.com/clubo-app/clubben/libs/utils"
-	pg "github.com/clubo-app/clubben/protobuf/party"
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/clubo-app/clubben/protobuf/profile"
 	sg "github.com/clubo-app/clubben/protobuf/story"
 	"github.com/gofiber/fiber/v2"
@@ -31,7 +31,7 @@ func (h *storyHandler) GetStoryByParty(c *fiber.Ctx) error {
 		return utils.ToHTTPError(err)
 	}
 
-	party, _ := h.partyClient.GetParty(c.Context(), &pg.GetPartyRequest{
+	party, _ := h.partyClient.GetParty(c.Context(), &pbparty.GetPartyRequest{
 		PartyId: pId,
 	})
 
