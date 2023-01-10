@@ -204,8 +204,8 @@ github.com/cilium/ebpf v0.6.2/go.mod h1:4tRaxcgiL706VnOzHOdBlY8IEAIdxINsQBcU4xJJ
 github.com/cilium/ebpf v0.7.0/go.mod h1:/oI2+1shJiTGAMgl6/RgJr36Eo1jzrRcAWbcXO2usCA=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cloudflare/golz4 v0.0.0-20150217214814-ef862a3cdc58/go.mod h1:EOBUe0h4xcZ5GoxqC5SDxFQ8gwyZPKQoEzownBlhI80=
-github.com/clubo-app/clubben/libs/stream v0.0.0-20230110200315-ebc2fce39254 h1:nm6h/WHfktSzjp91DQIQEckHL5C2lDLd9lYju8jMHtg=
-github.com/clubo-app/clubben/libs/stream v0.0.0-20230110200315-ebc2fce39254/go.mod h1:1kFtdpFxXcYUH1LN5qTR1oZZMoFhbxB8ckcCY2qLxh4=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20230110205354-0fd12ced6457 h1:4FZr+TXVtuBIgFL3wOWWbUC/D5RVPgtdrtIRx/LVqKE=
+github.com/clubo-app/clubben/libs/stream v0.0.0-20230110205354-0fd12ced6457/go.mod h1:1kFtdpFxXcYUH1LN5qTR1oZZMoFhbxB8ckcCY2qLxh4=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96 h1:qTMUIiMpkPk+PeY3JpGunaDKqe2tMEWcEg9z2FaiYSc=
 github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96/go.mod h1:KZ4K1P29pflx7iVgKccOxauJcPwx+McqiXm8cLuEy9Q=
 github.com/clubo-app/clubben/protobuf v0.0.0-20230101205229-3becae5bef4d h1:jz+pjY6slfUh9eHeDewh3328bGfTn/f0kW2pAlAGebs=

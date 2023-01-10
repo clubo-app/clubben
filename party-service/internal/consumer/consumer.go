@@ -47,18 +47,22 @@ func (c *Consumer) Start() {
 
 	go func() {
 		defer wg.Done()
-		_, err := c.stream.PushSubscribe(events.PartyJoined{}, "party-service.party.joined.count", c.partyJoined)
+		sub, err := c.stream.PushSubscribe(events.PartyJoined{}, "party-service.party.joined.count")
 		if err != nil {
 			log.Fatalln("Failed to subscribe to PartyJoined Event: ", err)
 		}
+
+		c.partyJoined(sub)
 	}()
 
 	go func() {
 		defer wg.Done()
-		_, err := c.stream.PushSubscribe(events.PartyLeft{}, "party-service.party.left.count", c.partyLeft)
+		sub, err := c.stream.PushSubscribe(events.PartyLeft{}, "party-service.party.left.count")
 		if err != nil {
 			log.Fatalln("Failed to subscribe to PartyLeft Event: ", err)
 		}
+
+		c.partyLeft(sub)
 	}()
 
 	wg.Wait()
@@ -140,15 +144,20 @@ func (c *Consumer) partyUnfavorited(sub *nats.Subscription) {
 	log.Printf("%v Rows were effected by Decreasing Party Favorite Count in Batch", bRes.RowsAffected())
 }
 
-func (c *Consumer) partyJoined(msg *nats.Msg) {
-	e := &events.PartyJoined{}
-	err := proto.Unmarshal(msg.Data, e)
+func (c *Consumer) partyJoined(sub *nats.Subscription) {
+	msg, err := sub.NextMsg(1 * time.Second)
 	if err != nil {
-		log.Println("Error unmarshaling PartyJoined: ", err)
+		log.Print("PartyJoined nextMsg: ")
+	}
+
+	e := &events.PartyJoined{}
+	err = proto.Unmarshal(msg.Data, e)
+	if err != nil {
+		log.Println("PartyJoined Unmarshal: ", err)
 	}
 
 	if e.PartyId == "" {
-		log.Printf("Invalid PartyJoined Event %+v", &e)
+		log.Printf("PartyJoined invalid event: %+v", &e)
 		return
 	}
 	c.partyRepo.IncreaseParticipantsCount(context.Background(), repository.IncreaseParticipantsCountParams{
@@ -157,15 +166,20 @@ func (c *Consumer) partyJoined(msg *nats.Msg) {
 	})
 }
 
-func (c *Consumer) partyLeft(msg *nats.Msg) {
-	e := &events.PartyLeft{}
-	err := proto.Unmarshal(msg.Data, e)
+func (c *Consumer) partyLeft(sub *nats.Subscription) {
+	msg, err := sub.NextMsg(1 * time.Second)
 	if err != nil {
-		log.Println("Error unmarshaling PartyLeft: ", err)
+		log.Print("PartyLeft nextMsg: ")
+	}
+
+	e := &events.PartyLeft{}
+	err = proto.Unmarshal(msg.Data, e)
+	if err != nil {
+		log.Println("PartyLeft Unmarshal: ", err)
 	}
 
 	if e.PartyId == "" {
-		log.Printf("Invalid PartyLeft Event %+v", &e)
+		log.Printf("PartyLeft invalid event: %+v", &e)
 		return
 	}
 	c.partyRepo.DecreaseParticipantsCount(context.Background(), repository.DecreaseParticipantsCountParams{
