@@ -74,15 +74,12 @@ func (s Stream) PushSubscribe(event any, queue string, opts ...nats.SubOpt) (*na
 }
 
 func (s Stream) makeSureStreamExists(name string, subject string) {
-	stream, err := s.js.StreamInfo(name)
-	if err != nil {
-		log.Fatalln("makeSureStreamExists: ", err)
-	}
+	stream, _ := s.js.StreamInfo(name)
 
 	if stream == nil {
 		log.Printf("Creating stream: %s\n", name)
 
-		_, err = s.js.AddStream(&nats.StreamConfig{
+		_, err := s.js.AddStream(&nats.StreamConfig{
 			Name:     name,
 			Subjects: []string{name + ".*"},
 		})
