@@ -52,7 +52,7 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 }
 
 // PullSubscribe crates a Pull based Consumer
-func (s Stream) PullSubscribe(event event, opts ...nats.SubOpt) (*nats.Subscription, error) {
+func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
 
 	return s.js.PullSubscribe(e.subject, "pull-consumer", opts...)
@@ -60,7 +60,7 @@ func (s Stream) PullSubscribe(event event, opts ...nats.SubOpt) (*nats.Subscript
 
 // PushSubscribe creates a push-based Consumer.
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
-func (s Stream) PushSubscribe(queue string, event event, handler nats.MsgHandler) (*nats.Subscription, error) {
+func (s Stream) PushSubscribe(queue string, event any, handler nats.MsgHandler) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
 
 	if queue != "" {
