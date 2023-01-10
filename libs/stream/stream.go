@@ -54,18 +54,20 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 // PullSubscribe crates a Pull based Consumer.
 func (s Stream) PullSubscribe(event any, queue string, opts ...nats.SubOpt) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
-	return s.js.PullSubscribe(e.subject, queue, opts...)
+	return s.js.PullSubscribe(e.subject, queue, append([]nats.SubOpt{nats.BindStream(e.streamName)}, opts...)...)
 }
 
 // PushSubscribe creates a push-based Consumer.
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
-func (s Stream) PushSubscribe(event any, queue string, handler nats.MsgHandler) (*nats.Subscription, error) {
+func (s Stream) PushSubscribe(event any, queue string, opts ...nats.SubOpt) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
 
+	opt := append([]nats.SubOpt{nats.BindStream(e.streamName)}, opts...)
+
 	if queue != "" {
-		return s.js.QueueSubscribe(e.subject, queue, handler)
+		return s.js.QueueSubscribeSync(e.subject, queue, opt...)
 	}
-	return s.js.Subscribe(e.subject, handler)
+	return s.js.SubscribeSync(e.subject, opt...)
 }
 
 func (s Stream) makeSureStreamExists(name string, subject string) {
