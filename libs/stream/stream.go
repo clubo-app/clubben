@@ -2,10 +2,7 @@ package stream
 
 import (
 	"log"
-	"reflect"
-	"strings"
 	"time"
-	"unicode"
 
 	"github.com/nats-io/nats.go"
 	"google.golang.org/protobuf/proto"
@@ -48,28 +45,47 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 		return nil, err
 	}
 
-	sub := EventToSubject(event)
+	e := eventFromProtobufMessage(event)
 
-	return s.js.Publish(sub, msg)
+	s.makeSureStreamExists(e.streamName, e.subject)
+	return s.js.Publish(e.subject, msg)
 }
 
 // PullSubscribe crates a Pull based Consumer
-func (s Stream) PullSubscribe(event any, opts ...nats.SubOpt) (*nats.Subscription, error) {
-	sub := EventToSubject(event)
+func (s Stream) PullSubscribe(event proto.Message, opts ...nats.SubOpt) (*nats.Subscription, error) {
+	e := eventFromProtobufMessage(event)
 
-	return s.js.PullSubscribe(sub, "pull-consumer", opts...)
+	return s.js.PullSubscribe(e.subject, "pull-consumer", opts...)
 }
 
 // PushSubscribe creates a push-based Consumer.
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
-func (s Stream) PushSubscribe(queue string, event any, handler nats.MsgHandler) (*nats.Subscription, error) {
-	sub := EventToSubject(event)
-	log.Printf("Subject is: %v", sub)
+func (s Stream) PushSubscribe(queue string, event proto.Message, handler nats.MsgHandler) (*nats.Subscription, error) {
+	e := eventFromProtobufMessage(event)
 
 	if queue != "" {
-		return s.js.QueueSubscribe(sub, queue, handler)
+		return s.js.QueueSubscribe(e.subject, queue, handler)
 	}
-	return s.js.Subscribe(sub, handler)
+	return s.js.Subscribe(e.subject, handler)
+}
+
+func (s Stream) makeSureStreamExists(name string, subject string) {
+	stream, err := s.js.StreamInfo(name)
+	if err != nil {
+		log.Fatalln("makeSureStreamExists: ", err)
+	}
+
+	if stream == nil {
+		log.Printf("Creating stream: %s\n", name)
+
+		_, err = s.js.AddStream(&nats.StreamConfig{
+			Name:     name,
+			Subjects: []string{subject},
+		})
+		if err != nil {
+			log.Fatalf("Err creating stream: %v\n", err)
+		}
+	}
 }
 
 func setupConnOptions(opts []nats.Option) []nats.Option {
@@ -88,40 +104,4 @@ func setupConnOptions(opts []nats.Option) []nats.Option {
 		log.Fatalf("Exiting: %v", nc.LastError())
 	}))
 	return opts
-}
-
-func EventToSubject(event any) string {
-	t := reflect.TypeOf(event)
-
-	str := strings.ReplaceAll(t.String(), "*", "")
-
-	log.Println("Type of event: ", str)
-
-	split := strings.Split(str, ".")
-
-	log.Println("Splitted: ", split)
-
-	// if type is events.ImportantType, remove events prefix from string
-	if len(split) > 1 {
-		concat := strings.Join(split[1:], ".")
-		return camelcaseStringToDotString(concat)
-	}
-
-	return camelcaseStringToDotString(t.String())
-}
-
-func camelcaseStringToDotString(camelcase string) string {
-	var b strings.Builder
-
-	for i, c := range camelcase {
-		if unicode.IsUpper(c) {
-			if i != 0 {
-				b.WriteString(".")
-			}
-			b.WriteRune(unicode.ToLower(c))
-		} else {
-			b.WriteRune(c)
-		}
-	}
-	return b.String()
 }
