@@ -80,7 +80,7 @@ func (s Stream) makeSureStreamExists(name string, subject string) {
 
 		_, err = s.js.AddStream(&nats.StreamConfig{
 			Name:     name,
-			Subjects: []string{subject},
+			Subjects: []string{name + ".*"},
 		})
 		if err != nil {
 			log.Fatalf("Err creating stream: %v\n", err)
