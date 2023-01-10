@@ -3,7 +3,7 @@ module github.com/clubo-app/clubben/party-service
 go 1.18
 
 require (
-	github.com/clubo-app/clubben/libs/stream v0.0.0-20230110193909-0ce6ae7955bb
+	github.com/clubo-app/clubben/libs/stream v0.0.0-20230110200315-ebc2fce39254
 	github.com/clubo-app/clubben/libs/utils v0.0.0-20221016211613-6567a25c8b96
 	github.com/clubo-app/clubben/protobuf v0.0.0-20230101205229-3becae5bef4d
 	github.com/golang-migrate/migrate/v4 v4.15.2
