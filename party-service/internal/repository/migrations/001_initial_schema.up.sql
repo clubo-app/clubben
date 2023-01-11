@@ -1,4 +1,4 @@
-CREATE EXTENSION postgis;
+CREATE EXTENSION IF NOT EXISTS postgis;
 
 CREATE TABLE parties (
     id varchar(27) PRIMARY KEY,
@@ -22,4 +22,4 @@ CREATE INDEX parties_by_user_id_idx ON parties (user_id, is_public, id);
 
 CREATE INDEX party_location_idx
 ON parties
-USING GIST( (location::geography) );
+USING GIST( location );

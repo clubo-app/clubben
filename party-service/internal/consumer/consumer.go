@@ -28,28 +28,38 @@ func (c *Consumer) Start() {
 	wg.Add(4)
 
 	go func() {
-		sub, err := c.stream.PullSubscribe(events.PartyFavorited{}, "party-service.party.favorited.count")
-		if err != nil {
-			log.Fatalln("Failed to subscribe to PartyFavorited Event: ", err)
-		}
 		defer wg.Done()
+
+		sub, err := c.stream.PullSubscribe(events.PartyFavorited{}, "party-service")
+		if err != nil {
+			log.Println("Failed to subscribe to PartyFavorited Event: ", err)
+			return
+		}
 		c.partyFavorited(sub)
 	}()
 
 	go func() {
-		sub, err := c.stream.PullSubscribe(events.PartyUnfavorited{}, "party-service.party.unfavorited.count")
-		if err != nil {
-			log.Fatalln("Failed to subscribe to PartyUnfavorited Event: ", err)
-		}
 		defer wg.Done()
+
+		sub, err := c.stream.PullSubscribe(events.PartyUnfavorited{}, "party-service")
+		if err != nil {
+			log.Println("Failed to subscribe to PartyUnfavorited Event: ", err)
+			return
+		}
 		c.partyUnfavorited(sub)
 	}()
 
 	go func() {
 		defer wg.Done()
-		sub, err := c.stream.PushSubscribe(events.PartyJoined{}, "party-service.party.joined.count")
+
+		sub, err := c.stream.PushSubscribe(
+			events.PartyJoined{},
+			"party-service.party.joined.count",
+			"party-service",
+		)
 		if err != nil {
-			log.Fatalln("Failed to subscribe to PartyJoined Event: ", err)
+			log.Println("Failed to subscribe to PartyJoined Event: ", err)
+			return
 		}
 
 		c.partyJoined(sub)
@@ -57,9 +67,15 @@ func (c *Consumer) Start() {
 
 	go func() {
 		defer wg.Done()
-		sub, err := c.stream.PushSubscribe(events.PartyLeft{}, "party-service.party.left.count")
+
+		sub, err := c.stream.PushSubscribe(
+			events.PartyLeft{},
+			"party-service.party.left.count",
+			"party-service",
+		)
 		if err != nil {
-			log.Fatalln("Failed to subscribe to PartyLeft Event: ", err)
+			log.Println("Failed to subscribe to PartyLeft Event: ", err)
+			return
 		}
 
 		c.partyLeft(sub)
@@ -164,6 +180,8 @@ func (c *Consumer) partyJoined(sub *nats.Subscription) {
 		ParticipantsCount: 1,
 		ID:                e.PartyId,
 	})
+
+	msg.Ack()
 }
 
 func (c *Consumer) partyLeft(sub *nats.Subscription) {
@@ -186,4 +204,6 @@ func (c *Consumer) partyLeft(sub *nats.Subscription) {
 		ParticipantsCount: 1,
 		ID:                e.PartyId,
 	})
+
+	msg.Ack()
 }
