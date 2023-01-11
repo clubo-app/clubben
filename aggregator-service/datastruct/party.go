@@ -17,8 +17,8 @@ type AggregatedParty struct {
 	Description         string               `json:"description,omitempty"`
 	IsPublic            bool                 `json:"is_public"`
 	MusicGenre          string               `json:"music_genre,omitempty"`
-	Lat                 float32              `json:"lat,omitempty"`
-	Lon                 float32              `json:"lon,omitempty"`
+	Lat                 float32              `json:"lat"`
+	Lon                 float32              `json:"lon"`
 	StreetAddress       string               `json:"street_address,omitempty"`
 	PostalCode          string               `json:"postal_code,omitempty"`
 	State               string               `json:"state,omitempty"`
@@ -37,6 +37,7 @@ func PartyToAgg(p *pbparty.Party) *AggregatedParty {
 	if p == nil {
 		return &AggregatedParty{}
 	}
+	log.Printf("%+v", p)
 	agg := &AggregatedParty{
 		Id:                p.Id,
 		Title:             p.Title,
