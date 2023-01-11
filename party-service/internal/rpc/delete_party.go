@@ -12,17 +12,12 @@ import (
 )
 
 func (s partyServer) DeleteParty(c context.Context, req *pbparty.DeletePartyRequest) (*emptypb.Empty, error) {
-	_, err := ksuid.Parse(req.PartyId)
+	id, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
 	}
 
-	_, err = ksuid.Parse(req.RequesterId)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid Requester id")
-	}
-
-	err = s.ps.Delete(c, req.RequesterId, req.PartyId)
+	err = s.ps.Delete(c, req.RequesterId, id.String())
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}

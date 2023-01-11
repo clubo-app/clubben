@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"net/url"
 
+	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/pgx"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/segmentio/ksuid"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	pbparty "github.com/clubo-app/clubben/party-service/pb/v1"
 )
 
 func (p Party) ToGRPCParty() *pbparty.Party {

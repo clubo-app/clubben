@@ -11,12 +11,12 @@ import (
 )
 
 func (s partyServer) GetParty(c context.Context, req *pbparty.GetPartyRequest) (*pbparty.Party, error) {
-	_, err := ksuid.Parse(req.PartyId)
+	id, err := ksuid.Parse(req.PartyId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
 	}
 
-	p, err := s.ps.Get(c, req.PartyId)
+	p, err := s.ps.Get(c, id.String())
 	if err != nil {
 		return nil, utils.HandleError(err)
 	}
