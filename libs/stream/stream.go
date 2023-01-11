@@ -52,18 +52,24 @@ func (s Stream) PublishEvent(event proto.Message) (*nats.PubAck, error) {
 }
 
 // PullSubscribe crates a Pull based Consumer.
-func (s Stream) PullSubscribe(event any, queue string, opts ...nats.SubOpt) (*nats.Subscription, error) {
+// When specifying a consumerName the consumer will be durable.
+func (s Stream) PullSubscribe(event any, consumerName string) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
 
-	return s.js.PullSubscribe(e.subject, queue, append([]nats.SubOpt{nats.BindStream(e.streamName)}, opts...)...)
+	return s.js.PullSubscribe(e.subject, consumerName)
 }
 
 // PushSubscribe creates a push-based Consumer.
 // When specifying a queue the messages will be distributed when using multiple Consumer on the same Subject.
-func (s Stream) PushSubscribe(event any, queue string, opts ...nats.SubOpt) (*nats.Subscription, error) {
+// When specifying a consumerName the consumer will be durable.
+func (s Stream) PushSubscribe(event any, queue string, consumerName string) (*nats.Subscription, error) {
 	e := eventFromProtobufMessage(event)
 
-	opt := append([]nats.SubOpt{nats.BindStream(e.streamName)}, opts...)
+	opt := []nats.SubOpt{nats.AckExplicit()}
+
+	if consumerName != "" {
+		opt = append(opt, nats.Durable(consumerName))
+	}
 
 	if queue != "" {
 		return s.js.QueueSubscribeSync(e.subject, queue, opt...)
