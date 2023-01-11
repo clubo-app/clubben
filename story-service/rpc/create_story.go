@@ -17,11 +17,6 @@ func (s storyServer) CreateStory(c context.Context, req *sg.CreateStoryRequest) 
 		return nil, status.Error(codes.InvalidArgument, "Invalid Party id")
 	}
 
-	_, err = ksuid.Parse(req.RequesterId)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid Requester id")
-	}
-
 	d := dto.Story{
 		Id:            ksuid.New(),
 		PartyId:       req.PartyId,

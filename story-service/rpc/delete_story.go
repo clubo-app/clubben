@@ -18,11 +18,6 @@ func (s storyServer) DeleteStory(c context.Context, req *sg.DeleteStoryRequest) 
 		return nil, status.Error(codes.InvalidArgument, "Invalid Story id")
 	}
 
-	_, err = ksuid.Parse(req.RequesterId)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Invalid Requester id")
-	}
-
 	err = s.ss.Delete(c, repository.DeleteParams{
 		SId: req.StoryId,
 		UId: req.RequesterId,
