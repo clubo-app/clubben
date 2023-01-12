@@ -341,7 +341,7 @@ func (r PartyRepository) GeoSearch(ctx context.Context, arg GeoSearchParams) ([]
 	b := sqlf.
 		Select(selectStmt).
 		From(TABLE_NAME).
-		Where("ST_DWithin(location,ST_MakePoint(?, ?), ?)", arg.Long, arg.Lat, arg.RadiusInDegree).
+		Where("ST_DWithin(location, ST_SetSRID(ST_MakePoint(?, ?), 4326), ?)", arg.Long, arg.Lat, arg.RadiusInDegree).
 		Where("is_public = ?", arg.IsPublic)
 
 	if arg.Limit == 0 {
